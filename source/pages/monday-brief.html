@@ -1,0 +1,547 @@
+<title>WeYield Monday Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F7F7FB; --paper:#FFFFFF; --ink:#0E1230; --ink-2:#3A3E5C; --muted:#6B6F86;
+  --line:#DDDEEA; --line-2:#ECEDF5; --mono-bg:#F1F1F8;
+  --accent:#3B2FE6; --accent-ink:#FFFFFF; --accent-soft:#ECEAFF;
+  --warm:#F0907A; --warm-soft:#FDEBE6; --warm-ink:#7A2E1E;
+  --ok:#1E7F4F; --ok-soft:#E4F4EB; --amber:#B36B00; --amber-soft:#FBF0DE; --bad:#B5341D; --bad-soft:#FBE6E1;
+  --shadow:0 1px 2px rgba(14,18,48,.06),0 12px 32px -16px rgba(14,18,48,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B0D1F; --paper:#141735; --ink:#E8E9F5; --ink-2:#C5C8E0; --muted:#9A9EB8;
+    --line:#2A2E52; --line-2:#1E2144; --mono-bg:#0F1128;
+    --accent:#8B83FF; --accent-ink:#0B0D1F; --accent-soft:#232659;
+    --warm:#F5A38F; --warm-soft:#3A2530; --warm-ink:#FFD9CF;
+    --ok:#5FCB8E; --ok-soft:#173A2A; --amber:#E0A44A; --amber-soft:#3A2E14; --bad:#F0806B; --bad-soft:#3F1E18;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B0D1F; --paper:#141735; --ink:#E8E9F5; --ink-2:#C5C8E0; --muted:#9A9EB8;
+  --line:#2A2E52; --line-2:#1E2144; --mono-bg:#0F1128;
+  --accent:#8B83FF; --accent-ink:#0B0D1F; --accent-soft:#232659;
+  --warm:#F5A38F; --warm-soft:#3A2530; --warm-ink:#FFD9CF;
+  --ok:#5FCB8E; --ok-soft:#173A2A; --amber:#E0A44A; --amber-soft:#3A2E14; --bad:#F0806B; --bad-soft:#3F1E18;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px -16px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.serif{font-family:"Fraunces","Iowan Old Style",Georgia,serif;font-variation-settings:"opsz" 96}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0 0 1em}
+.eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+/* ---------- masthead ---------- */
+.mast{padding:40px 0 28px;border-bottom:1px solid var(--line)}
+.mast-grid{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.mast h1{font-family:"Fraunces",Georgia,serif;font-variation-settings:"opsz" 144;font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.02;letter-spacing:-.01em}
+.mast .sub{max-width:62ch;font-size:17px;color:var(--ink-2);margin-top:14px}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:10px 28px;font-size:13px;color:var(--muted)}
+.meta b{display:block;color:var(--ink);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:3px 8px;border-radius:3px;background:var(--accent-soft);color:var(--accent)}
+
+/* ---------- hero: the brief ---------- */
+.hero{padding:36px 0 56px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:36px;align-items:start}
+.email{background:var(--paper);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);overflow:hidden}
+.email-bar{display:flex;flex-wrap:wrap;gap:6px 18px;padding:12px 22px;border-bottom:1px solid var(--line-2);font-size:12.5px;color:var(--muted);background:var(--mono-bg)}
+.email-bar span b{color:var(--ink-2);font-weight:500}
+.ribbon{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--amber);background:var(--amber-soft);padding:6px 22px}
+.email-body{padding:24px 26px 22px}
+.email-body .who{font-size:13px;color:var(--muted);margin-bottom:14px}
+.email-body .head{font-family:"Fraunces",Georgia,serif;font-variation-settings:"opsz" 72;font-weight:500;font-size:clamp(19px,2vw,23px);line-height:1.3;color:var(--ink);margin:0 0 20px}
+.email-body h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:22px 0 8px;font-weight:600}
+.email-body p{font-size:14.5px;line-height:1.6;color:var(--ink-2);margin:0 0 10px}
+.email-body p b{color:var(--ink)}
+.ref{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent);background:var(--accent-soft);padding:0 5px;border-radius:3px;line-height:1.6;vertical-align:baseline;white-space:nowrap}
+.numbers{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.numbers th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;font-weight:600;padding:0 8px 8px;border-bottom:1px solid var(--line)}
+.numbers th:first-child,.numbers td:first-child{text-align:left;padding-left:0}
+.numbers td{padding:7px 8px;border-bottom:1px solid var(--line-2);text-align:right;color:var(--ink-2)}
+.numbers td:first-child{color:var(--ink)}
+.numbers td.mono{font-family:"IBM Plex Mono",monospace;font-size:13px}
+.numbers tr:last-child td{border-bottom:0}
+.action{padding:14px 16px;border:1px solid var(--line);border-radius:5px;margin:0 0 10px;background:var(--bg)}
+.action .a-top{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+.action .a-title{font-weight:600;font-size:14.5px;color:var(--ink);line-height:1.4;flex:1 1 280px}
+.action .a-title .n{font-family:"Fraunces",Georgia,serif;color:var(--accent);margin-right:6px}
+.value{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;color:var(--ok);background:var(--ok-soft);padding:2px 8px;border-radius:3px;white-space:nowrap}
+.action p{font-size:13.5px;margin:0 0 4px}
+.conf{font-size:12px;color:var(--muted)}
+.conf b{font-weight:500;color:var(--ink-2)}
+.reply{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2);font-size:13.5px;color:var(--ink-2)}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--warm-soft);color:var(--warm-ink);border:1px solid color-mix(in srgb,var(--warm) 55%,transparent)}
+.sources{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5}
+.annots{display:flex;flex-direction:column;gap:14px;position:sticky;top:20px}
+.annot{padding:16px 18px;border-left:2px solid var(--accent);background:var(--paper);border-radius:0 5px 5px 0}
+.annot h3{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:17px;line-height:1.3;margin-bottom:6px}
+.annot p{font-size:13.5px;color:var(--ink-2);margin:0}
+.annot.warm{border-left-color:var(--warm)}
+.annot .kicker{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;display:block;margin-bottom:6px}
+
+/* ---------- spec body ---------- */
+.spec{border-top:1px solid var(--line);padding:48px 0 80px}
+.spec-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;align-items:start}
+.toc{position:sticky;top:20px;font-size:13px;line-height:1.5}
+.toc a{display:block;padding:5px 0 5px 12px;color:var(--muted);border-left:1px solid var(--line)}
+.toc a:hover{color:var(--ink);text-decoration:none;border-left-color:var(--accent)}
+.toc .eyebrow{margin-bottom:8px;padding-left:12px}
+.content{max-width:760px}
+section{padding:0 0 44px;margin:0 0 44px;border-bottom:1px solid var(--line-2)}
+section:last-child{border-bottom:0}
+section h2{font-family:"Fraunces",Georgia,serif;font-variation-settings:"opsz" 96;font-weight:500;font-size:28px;line-height:1.15;margin:0 0 14px;letter-spacing:-.005em}
+section h3{font-size:16px;font-weight:600;margin:26px 0 8px;color:var(--ink)}
+section p{max-width:68ch;color:var(--ink-2)}
+section p.lead{font-size:17px;color:var(--ink)}
+section ul,section ol{max-width:68ch;color:var(--ink-2);padding-left:1.2em;margin:0 0 1em}
+section li{margin-bottom:.45em}
+section li b,section p b{color:var(--ink)}
+.callout{padding:16px 20px;background:var(--accent-soft);border-radius:5px;color:var(--ink);max-width:68ch;margin:18px 0}
+.callout.plain{background:var(--mono-bg)}
+.tablewrap{overflow-x:auto;margin:14px 0 6px}
+table.spec{width:100%;border-collapse:collapse;font-size:13.5px}
+table.spec th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:bottom}
+table.spec td{padding:10px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
+table.spec td:first-child{color:var(--ink);font-weight:500}
+table.spec tr.win td{background:var(--accent-soft)}
+table.spec tr.win td:first-child{color:var(--accent)}
+table.spec td.num,table.spec th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace;font-size:13px}
+table.spec td.c{text-align:center}
+table.spec .code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink)}
+.yes{color:var(--ok);font-weight:600}.no{color:var(--bad);font-weight:600}.part{color:var(--amber);font-weight:600}
+pre{background:var(--mono-bg);border:1px solid var(--line-2);border-radius:5px;padding:16px 18px;overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);max-height:480px;overflow-y:auto;margin:12px 0 6px}
+pre .k{color:var(--accent)}
+.steps{list-style:none;padding:0;margin:14px 0 6px;counter-reset:s}
+.steps li{position:relative;padding:12px 0 12px 56px;border-left:1px solid var(--line);margin-left:16px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:-16px;top:12px;width:31px;height:31px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+.steps li.model::before{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+.steps .s-name{font-weight:600;color:var(--ink);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.steps .s-name .tag.det{background:var(--mono-bg);color:var(--muted)}
+.steps .s-body{font-size:13.5px;color:var(--ink-2);margin-top:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;max-width:760px}
+.two h3{margin-top:10px}
+.rules li{margin-bottom:.6em}
+.rules .r{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);margin-right:6px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 6px;max-width:760px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:14px 16px}
+.kpi b{display:block;font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:24px;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.foot{border-top:1px solid var(--line);padding:24px 0 48px;font-size:12.5px;color:var(--muted);max-width:80ch}
+
+@media (max-width:900px){
+  .mast-grid{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+  .annots{position:static;display:grid;grid-template-columns:1fr 1fr}
+  .spec-grid{grid-template-columns:1fr}
+  .toc{display:none}
+  .kpis{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .annots{grid-template-columns:1fr}
+  .wrap{padding:0 18px}
+  .email-body{padding:18px}
+}
+@media (prefers-reduced-motion: no-preference){
+  .toc a{transition:color .15s,border-color .15s}
+}
+</style>
+
+<header class="mast">
+  <div class="wrap mast-grid">
+    <div>
+      <span class="tag">Product specification · v0.1 for discussion</span>
+      <h1 style="margin-top:14px">WeYield <em class="serif" style="font-style:italic;font-weight:400">Monday</em> Brief</h1>
+      <p class="sub">Every Monday, every account's owner receives a short brief in the voice of a WeYield coach — what moved, what the market did, what is coming, and three actions with a euro value each. They reply <span class="mono">DONE</span>, <span class="mono">SKIP</span> or <span class="mono">WHY</span>. The first AI-native product the current team can ship without a hire, a partnership, or a user interface.</p>
+    </div>
+    <dl class="meta" style="margin:0">
+      <div><b>8 weeks</b>to general availability</div>
+      <div><b>2 engineers</b>+ one coach at 30%</div>
+      <div><b>€0.12–0.20</b>per brief, all-in</div>
+      <div><b>0 new integrations</b>only data WeYield holds</div>
+    </dl>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <article class="email" aria-label="Sample Monday Brief">
+      <div class="ribbon">Illustrative · fictional operator, stations and figures · format demonstration</div>
+      <div class="email-bar">
+        <span>From <b>Your WeYield coaching team &lt;brief@weyield.io&gt;</b></span>
+        <span>To <b>Sophie Marchetti · Karim Belaïd</b></span>
+        <span>Mon 7 Sep 2026, 06:30</span>
+      </div>
+      <div class="email-body">
+        <div class="who"><b style="color:var(--ink)">Riviera Cars</b> · Monday Brief · Week 36 · 31 Aug – 6 Sep 2026</div>
+        <p class="head">Hold your compact rates at Nice Airport for the October half-term — pace is nine points ahead of last year even though two competitors cut on Tuesday — and move twelve idle intermediates from Toulon before the 18th.</p>
+
+        <h4>Last week in numbers</h4>
+        <table class="numbers">
+          <thead><tr><th></th><th>This week</th><th>vs LY</th><th>vs forecast</th></tr></thead>
+          <tbody>
+            <tr><td>RPD</td><td class="mono">€68.40</td><td class="mono">+3.1%</td><td class="mono">+1.8%</td></tr>
+            <tr><td>Utilisation</td><td class="mono">79%</td><td class="mono">−2 pts</td><td class="mono">−1 pt</td></tr>
+            <tr><td>Bookings taken</td><td class="mono">1,284</td><td class="mono">+6%</td><td class="mono">+4%</td></tr>
+            <tr><td>Top mover ↑ · NCE Airport compact RPD</td><td class="mono">+7%</td><td></td><td></td></tr>
+            <tr><td>Top mover ↓ · Toulon utilisation</td><td class="mono">61%</td><td colspan="2" style="text-align:right;font-size:12.5px">third week below your 70% floor</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Market</h4>
+        <p>Competitor A cut Compact (ECMR) at Nice Airport by 6% on Tuesday <span class="ref">MR-4471</span>; Competitor B held. On the broker channel you are 4th on price for Intermediate (CDMR) at Nice for 12–19 October <span class="ref">MR-4480</span>. Comparable Mediterranean airport franchisees (7 operators, anonymised) are running October compact rates 4% above yours <span class="ref">BM-oct-ecmr</span>.</p>
+
+        <h4>Ahead</h4>
+        <p>Inbound seat capacity to Nice for 12–25 October is +5% on last year (UK +9%, Germany +3%) <span class="ref">RH-0906</span>. Search interest for Nice car hire in October is up 11% week on week <span class="ref">RH-0906-s</span>. For 12–19 October you already hold 91% of last year's final compact bookings and 72% of intermediates <span class="ref">PH-pace-w41</span>.</p>
+
+        <h4>This week's three actions</h4>
+        <div class="action">
+          <div class="a-top"><div class="a-title"><span class="n">1</span>Hold Compact rates at Nice Airport for 12–19 October. Do not follow Competitor A's cut.</div><span class="value">€4,100 protected</span></div>
+          <p>You are nine points ahead of last year's pace at this date and 91% of the way to last year's final volume <span class="ref">PH-pace-w41</span>. Following the cut would give away an estimated €4,100 across the remaining bookings. If you do nothing different: you very likely sell out anyway.</p>
+          <div class="conf">Confidence <b>high</b></div>
+        </div>
+        <div class="action">
+          <div class="a-top"><div class="a-title"><span class="n">2</span>Move 12 Intermediates from Toulon to Nice Airport by 18 October.</div><span class="value">€2,100 net</span></div>
+          <p>Toulon has 14 CDMR idle for five days or more <span class="ref">PH-fleet-TLN</span>; Nice Airport shows a forecast shortfall of 11 CDMR for 18–20 October <span class="ref">PH-fc-NCE</span>. Transfer cost about €47 a unit. If you do nothing: Nice turns away intermediate demand while Toulon pays to park them.</p>
+          <div class="conf">Confidence <b>medium</b> — depends on Toulon's own October pickup</div>
+        </div>
+        <div class="action">
+          <div class="a-top"><div class="a-title"><span class="n">3</span>Open an upgrade step Compact → Intermediate at Marseille Airport, October weekends, +€9 a day.</div><span class="value">€1,300</span></div>
+          <p>Compact is forecast to sell out both October weekends at Marseille; Intermediate sits at 68% <span class="ref">PH-fc-MRS</span>.</p>
+          <div class="conf">Confidence <b>medium</b></div>
+        </div>
+
+        <h4>Watch</h4>
+        <p>Toulon utilisation 61% — third consecutive week below your 70% floor; worth a conversation about October fleet size there. Monaco data feed missed 2–3 September <span class="ref">DQ-MCO</span>; Monaco figures above exclude those two days.</p>
+
+        <div class="reply">Reply <span class="chip">DONE 1</span><span class="chip">SKIP 2</span><span class="chip">WHY 3</span> — or ask anything.</div>
+        <div class="sources">Sources: Performance Hub W36 · Market Radar alerts 4471, 4480 · Revenue Horizon run 6 Sep · Benchmark cell oct-ecmr (n=7). Your WeYield coaching team.</div>
+      </div>
+    </article>
+
+    <aside class="annots" aria-label="What makes the brief safe to send">
+      <div class="annot"><span class="kicker">Reasoning contract</span><h3>Every number carries a reference</h3><p>The model never computes. A deterministic facts pack supplies each figure; the <span class="ref">PH-pace-w41</span> tags point at it. A verifier matches every numeric token to a fact before send — or drops the sentence.</p></div>
+      <div class="annot"><span class="kicker">Rules, not prompts</span><h3>Actions come from a rules engine the coach owns</h3><p>Ten rules to start. The model ranks and explains candidates; it cannot invent one. New actions are added by adding rules, with the coach — not by prompting.</p></div>
+      <div class="annot"><span class="kicker">Owner's decision</span><h3>The Toulon line is the first step up the value chain</h3><p>Fleet size at a station is the owner's call, surfaced by revenue data WeYield already holds. No residual data needed yet — that is Horizon 2.</p></div>
+      <div class="annot warm"><span class="kicker">The reply is the Analyst</span><h3>DONE and SKIP are telemetry. WHY is a conversation.</h3><p>A WHY gets an answer in the thread within two minutes, grounded in the same facts and a bounded set of drill queries. This is the conversational analyst — with a narrower, safer surface than a chat box.</p></div>
+    </aside>
+  </div>
+</div>
+
+<div class="spec">
+  <div class="wrap spec-grid">
+    <nav class="toc" aria-label="Sections">
+      <div class="eyebrow">Specification</div>
+      <a href="#why">Why this product first</a>
+      <a href="#readers">Readers and the job</a>
+      <a href="#anatomy">Anatomy and cadence</a>
+      <a href="#contract">Reasoning contract</a>
+      <a href="#arch">Architecture</a>
+      <a href="#facts">Facts pack</a>
+      <a href="#rules">Rules engine v0</a>
+      <a href="#cost">Model and cost</a>
+      <a href="#pricing">Packaging</a>
+      <a href="#plan">Eight-week plan</a>
+      <a href="#accept">Acceptance and evals</a>
+      <a href="#risks">Risks</a>
+      <a href="#unlocks">What it unlocks</a>
+      <a href="#questions">Open questions</a>
+    </nav>
+
+    <div class="content">
+
+      <section id="why">
+        <h2>Why this product, not the others</h2>
+        <p class="lead">The strategy names five candidate first builds. Scored against what the <em>immediate</em> team can do, one clears every column.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Candidate</th><th class="c">Held data only</th><th class="c">No partnership</th><th class="c">2 people, ≤8 wks</th><th class="c">Sellable alone</th><th class="c">Reaches owner</th><th class="c">Telemetry loop</th><th class="c">Encodes method</th></tr></thead>
+          <tbody>
+            <tr><td>Conversational Analyst</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c part">Feature</td><td class="c no">No</td><td class="c part">Partly</td><td class="c no">No</td></tr>
+            <tr class="win"><td>Monday Brief</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td></tr>
+            <tr><td>Answer-layer monitoring</td><td class="c yes">Scraping</td><td class="c yes">Yes</td><td class="c part">Fragile</td><td class="c yes">Yes</td><td class="c part">Partly</td><td class="c no">No</td><td class="c no">No</td></tr>
+            <tr><td>Decision Feed</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c no">Needs method + telemetry</td><td class="c yes">Yes</td><td class="c part">Partly</td><td class="c yes">Yes</td><td class="c part">Requires it</td></tr>
+            <tr><td>Fleet P&amp;L</td><td class="c no">Residuals</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c no">No</td></tr>
+          </tbody>
+        </table></div>
+        <p>The Brief also <b>contains</b> the Analyst — the reply channel is the Analyst with a narrower surface — and it <b>is</b> the Decision Feed at weekly cadence with a human in the loop. Nothing built here is thrown away.</p>
+      </section>
+
+      <section id="readers">
+        <h2>Readers and the job to be done</h2>
+        <div class="callout plain">“Tell me in five minutes, every Monday, what happened across my stations last week, what is coming, and what my revenue manager should do — in my language, without opening a dashboard.”</div>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Reader</th><th>Today</th><th>With the Brief</th><th>Why they pay</th></tr></thead>
+          <tbody>
+            <tr><td>Owner / GM / CEO<br><span style="font-weight:400;color:var(--muted);font-size:12.5px">franchisee or independent, 50–3,000 cars</span></td><td>Sees a dashboard rarely; decides fleet and pricing questions by gut in a weekly meeting</td><td>Five minutes on Monday, in their language, on their phone</td><td>Control without a dashboard. Three actions with euro values — the first WeYield artefact that speaks P&amp;L</td></tr>
+            <tr><td>Revenue manager<br><span style="font-weight:400;color:var(--muted);font-size:12.5px">WeYield's current user</span></td><td>Writes their own weekly summary for the boss; reacts to alerts one by one</td><td>Same brief as the owner, plus the action list as their agenda</td><td>Saves the write-up; the coach's judgement on demand</td></tr>
+            <tr><td>RM consultant<br><span style="font-weight:400;color:var(--muted);font-size:12.5px">runs WeYield for several operators</span></td><td>Writes a weekly note per client by hand, 45–60 min each</td><td>One drafted brief per client; five minutes to edit and forward</td><td>Twice the clients on the same hours — the consultant channel as a multiplier</td></tr>
+          </tbody>
+        </table></div>
+        <p><b>Internal edition (week 6, free):</b> WeYield's own sales and coaching team receives the same facts per account with a churn-risk lens — utilisation falling, alerts ignored three weeks, no logins. Account management on autopilot.</p>
+        <p>The coach's weekly note for top accounts becomes a five-minute edit. For the ~100 accounts that get no coach note today, the Brief is new value at near-zero marginal cost. That is the whole cost-to-serve argument in one product.</p>
+      </section>
+
+      <section id="anatomy">
+        <h2>Anatomy, cadence and the reply loop</h2>
+        <p>400–600 words. Seven blocks, always in this order. Blocks with nothing to say are omitted, never padded.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Block</th><th>Content</th><th>Source of truth</th></tr></thead>
+          <tbody>
+            <tr><td>Headline</td><td>One sentence: the single most important thing this week</td><td>Composer, from the top-ranked candidate</td></tr>
+            <tr><td>Last week in numbers</td><td>RPD, utilisation, bookings, pace vs LY and forecast; top movers by station × car group</td><td>Performance Hub — rendered deterministically, not prose</td></tr>
+            <tr><td>Market</td><td>Competitor moves; cross-tenant benchmark for opted-in accounts</td><td>Market Radar; benchmark cells with k ≥ 5</td></tr>
+            <tr><td>Ahead</td><td>Demand signal 4–8 weeks out; on-the-books pace for upcoming windows</td><td>Revenue Horizon; Performance Hub</td></tr>
+            <tr><td>Three actions</td><td>Ranked: what · where · why · € value · if you do nothing · confidence</td><td>Rules engine (candidates, values) + Composer (rank, explain)</td></tr>
+            <tr><td>Watch</td><td>Anomalies and data gaps — floors breached, feeds missing, alerts unresolved</td><td>Facts builder</td></tr>
+            <tr><td>Reply line</td><td><span class="mono">DONE n · SKIP n · WHY n</span> — or ask anything</td><td>Reply handler</td></tr>
+          </tbody>
+        </table></div>
+        <div class="two">
+          <div><h3>Cadence and channels</h3><ul><li>Monday 06:30 local to the account's head office. Daily for top accounts is a Horizon 2 option.</li><li>Email by default; WhatsApp Business where owners read that way (islands, North Africa — verify by region); PDF attached for forwarding.</li><li>Six languages from day one. The facts pack is language-neutral; the Composer writes natively.</li></ul></div>
+          <div><h3>The coach in the loop</h3><ul><li><b>Tier A (top ~20 by ACV):</b> the brief is created as a draft in the coach's own mailbox. Five minutes to edit and send under their name. No review UI to build.</li><li><b>Tier B/C:</b> auto-sent, signed “Your WeYield coaching team”. A daily digest to the coaching lead.</li><li>Anything the verifier flags is held for a coach regardless of tier. Coach edits are captured as training signal.</li></ul></div>
+        </div>
+        <h3>The reply loop — the Analyst, narrowed</h3>
+        <ul>
+          <li><span class="mono">DONE / SKIP / MODIFIED n</span> → recorded against the action. One-line acknowledgement.</li>
+          <li><span class="mono">WHY n</span> → the Analyst answers in-thread within two minutes, grounded in the same facts pack, using a bounded set of drill templates — parameterised queries by station, group, window, channel. Never free-form SQL. Every figure verified the same way as the brief.</li>
+          <li>Out-of-scope questions get an honest <em>“that is outside this week's pack — I'll flag it to your coach”</em> and a ticket.</li>
+          <li><b>A quiet week is a valid brief.</b> If no rule fires, the actions block reads: <em>“No action recommended this week — pace and rates are where they should be.”</em> Manufacturing actions to look useful is the failure mode.</li>
+        </ul>
+      </section>
+
+      <section id="contract">
+        <h2>The reasoning contract</h2>
+        <p class="lead">Product rules, not engineering preferences. They are what make the Brief sellable to an industry whose stated adoption blocker is black-box distrust.</p>
+        <ol class="rules">
+          <li><b>The model never computes.</b> Every number in prose comes from the facts pack, built deterministically. The Composer is forbidden — in the prompt and by the verifier — to add, subtract, percentage or estimate.</li>
+          <li><b>Every claim carries a reference.</b> Each sentence in the structured output carries <span class="mono">refs: []</span> pointing at fact IDs. A sentence with a number and no reference is dropped before send.</li>
+          <li><b>Actions come from rules, not the model.</b> The Composer ranks, selects up to three, and explains. It cannot originate an action the rules did not propose.</li>
+          <li><b>The Brief recommends; the human executes.</b> v1 writes no rates and moves no cars. Pricing Insights write-back remains the execution path, triggered by a person.</li>
+          <li><b>Competitor information is what the customer already sees</b> in Market Radar — nothing more.</li>
+          <li><b>Benchmarks are opt-in and k-anonymous.</b> Shown only if the account opted in and the peer set has at least five operators. Indices, never absolute rates.</li>
+          <li><b>Confidence is stated</b>, and hedged where the forecast is the basis.</li>
+          <li><b>Missing data renders as missing.</b> Never as zero. The Monaco line in the sample is the pattern.</li>
+          <li><b>A quiet week is a valid brief.</b> Zero actions is an allowed and expected output.</li>
+          <li><b>The verifier is a hard gate.</b> Numeric fidelity below 100% holds the brief for a coach. There is no “mostly right” send.</li>
+        </ol>
+      </section>
+
+      <section id="arch">
+        <h2>Architecture — deterministic core, generative surface</h2>
+        <p>The model does two things: write, and answer. Everything else is code. That is the same shape the Decision Feed will have.</p>
+        <ol class="steps">
+          <li><div class="s-name">Facts Builder <span class="tag det">deterministic</span></div><div class="s-body">SQL/Python, per account per week → <span class="mono">facts.json</span>: KPIs, movers, pace, competitors, forecast, fleet, benchmark, data quality. Every fact has an ID, a source and a link.</div></li>
+          <li><div class="s-name">Rules Engine <span class="tag det">deterministic</span></div><div class="s-body">Methodology encoded as rules; each fires with evidence and a value estimate → <span class="mono">candidates.json</span>. Coach owns the rules; engineering owns the runtime.</div></li>
+          <li class="model"><div class="s-name">Composer <span class="tag">model</span></div><div class="s-body">Frozen, cached system prompt: coach persona, style guide with real exemplars, the reasoning contract, output schema, language policy. Volatile inputs after the cache breakpoint: facts, candidates, account profile, the last four briefs, telemetry summary. Structured output → <span class="mono">brief.json</span>.</div></li>
+          <li><div class="s-name">Verifier <span class="tag det">deterministic + judge</span></div><div class="s-body">(a) Every numeric token ↔ a fact value in its refs; every candidate ID exists; values match. Fail → drop sentence → regenerate once → hold for coach. (b) LLM judge on a 10% sample: action logic, tone, brevity.</div></li>
+          <li><div class="s-name">Renderer <span class="tag det">deterministic</span></div><div class="s-body">Email HTML · WhatsApp text · PDF · coach draft. The numbers table is rendered from facts, never generated.</div></li>
+          <li><div class="s-name">Delivery <span class="tag det">deterministic</span></div><div class="s-body">Tier A → draft in the coach's mailbox. Tier B/C → auto-send. Digest to the coaching lead. Weekly generation runs through the Batch API at half price.</div></li>
+          <li class="model"><div class="s-name">Reply Handler <span class="tag">model on WHY</span></div><div class="s-body"><span class="mono">DONE / SKIP / MODIFIED</span> parsed deterministically → telemetry. <span class="mono">WHY</span> and free text → the Analyst over facts + 6–10 drill templates, streamed, verified, in-thread.</div></li>
+          <li><div class="s-name">Telemetry <span class="tag det">deterministic</span></div><div class="s-body"><span class="mono">briefs · brief_actions · action_responses · outcomes (T+7, T+28 on the action's scope vs forecast baseline) · analyst_turns</span>. Outcomes is the point: in six months it says which rules make money, for whom, at what confidence. It cannot be backfilled.</div></li>
+        </ol>
+      </section>
+
+      <section id="facts">
+        <h2>Facts pack — the only thing the Composer may quote</h2>
+        <p>Every fact has a stable <span class="mono">id</span>, a <span class="mono">source</span> (PH, MR, RH, BM, DQ) and a <span class="mono">link</span>. Values are typed and unit-bearing. Recipient names and emails are merged at render time and never sent to the model.</p>
+<pre>{
+  <span class="k">"account"</span>: {
+    "id": "acc_riviera", "name": "Riviera Cars", "type": "franchisee",
+    "language": "fr", "currency": "EUR", "tier": "A",
+    "stations": ["NCE-AP", "NCE-CTY", "CEQ", "MRS-AP", "TLN", "MCO"],
+    "car_groups": ["MCMR", "ECMR", "CDMR", "IDAR", "SFAR"],
+    "prefs": { "util_floor": 0.70, "benchmark_opt_in": true, "channels": ["email"] }
+  },
+  <span class="k">"period"</span>: { "iso_week": "2026-W36", "from": "2026-08-31", "to": "2026-09-06" },
+  <span class="k">"kpis"</span>: [
+    { "id": "PH-rpd-w36", "metric": "rpd", "scope": { "station": "*", "group": "*" },
+      "value": 68.40, "unit": "EUR", "vs_ly": 0.031, "vs_forecast": 0.018, "source": "PH", "link": "…" }
+  ],
+  <span class="k">"pace"</span>: [
+    { "id": "PH-pace-w41", "window": { "from": "2026-10-12", "to": "2026-10-19" },
+      "scope": { "station": "NCE-AP", "group": "ECMR" }, "otb_vs_ly_final": 0.91, "pace_pts_vs_ly": 9, "source": "PH" }
+  ],
+  <span class="k">"competitors"</span>: [
+    { "id": "MR-4471", "competitor": "A", "scope": { "station": "NCE-AP", "group": "ECMR" },
+      "change": -0.06, "observed": "2026-09-01", "source": "MR" }
+  ],
+  <span class="k">"forecast"</span>: [
+    { "id": "RH-0906", "signal": "seat_capacity", "market": "NCE",
+      "window": { "from": "2026-10-12", "to": "2026-10-25" }, "delta_vs_ly": 0.05,
+      "breakdown": { "UK": 0.09, "DE": 0.03 }, "source": "RH" }
+  ],
+  <span class="k">"fleet"</span>: [
+    { "id": "PH-fleet-TLN", "scope": { "station": "TLN", "group": "CDMR" }, "idle_units": 14, "idle_days_min": 5, "source": "PH" },
+    { "id": "PH-fc-NCE", "scope": { "station": "NCE-AP", "group": "CDMR" },
+      "window": { "from": "2026-10-18", "to": "2026-10-20" }, "shortfall_units": 11, "source": "PH" }
+  ],
+  <span class="k">"benchmark"</span>: { "opted_in": true,
+    "cells": [{ "id": "BM-oct-ecmr", "peer_set": "med_airport_franchisee", "n": 7, "metric": "rate_index_oct_ecmr", "value": 1.04 }] },
+  <span class="k">"data_quality"</span>: [{ "id": "DQ-MCO", "station": "MCO", "missing_days": ["2026-09-02", "2026-09-03"] }]
+}</pre>
+        <h3>Composer output — structured, referenced</h3>
+<pre>{
+  "language": "fr",
+  "headline": { "text": "…", "refs": ["PH-pace-w41", "MR-4471", "PH-fleet-TLN"] },
+  "numbers_table": "rendered deterministically from facts — not generated",
+  "market":  [{ "text": "…", "refs": ["MR-4471"] }],
+  "ahead":   [{ "text": "…", "refs": ["RH-0906", "PH-pace-w41"] }],
+  "actions": [{ "candidate_id": "act_1", "rank": 1, "title": "…",
+                "why": { "text": "…", "refs": ["PH-pace-w41"] },
+                "value_eur": 4100, "if_nothing": "…", "confidence": "high" }],
+  "watch":   [{ "text": "…", "refs": ["PH-kpi-TLN-util", "DQ-MCO"] }],
+  "omitted_blocks": [],
+  "composer_notes": "internal — anything the model wants a coach to know"
+}</pre>
+      </section>
+
+      <section id="rules">
+        <h2>Rules engine — the v0 set</h2>
+        <p>Ten rules to start; 25–30 by week 8; one added or refined per week from coach edits and telemetry. Rules never touch the model. Their output is the only pool the Composer may draw actions from.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Rule</th><th>Trigger (over facts)</th><th>Candidate action</th><th>Value method</th><th>Confidence</th></tr></thead>
+          <tbody>
+            <tr><td><span class="code">R1</span> Pace-ahead hold</td><td><span class="code">pace_pts_vs_ly ≥ +5</span> and <span class="code">otb_vs_ly_final ≥ 0.85</span> for a window ≥ 3 weeks out, and a competitor cut in scope within 7 days</td><td>Hold (or test +x%) — do not follow the cut</td><td>expected remaining rentals × (current − competitor rate)</td><td>High if both strong; else medium</td></tr>
+            <tr><td><span class="code">R2</span> Pace-behind, undercut</td><td><span class="code">pace_pts_vs_ly ≤ −5</span> and ≥ 2 competitors cut ≥ 5% in scope within 7 days</td><td>Targeted cut on the affected channel only</td><td>incremental rentals × rate − dilution on existing bookings</td><td>Medium</td></tr>
+            <tr><td><span class="code">R3</span> Idle vs shortfall transfer</td><td>Station A <span class="code">idle_units ≥ 8</span> for ≥ 5 days in group G; station B forecast <span class="code">shortfall ≥ 5</span> in G within 21 days</td><td>Move n units A → B before date</td><td>expected revenue at B − transfer cost × n</td><td>Medium; high if B is the main airport</td></tr>
+            <tr><td><span class="code">R4</span> Upgrade ladder</td><td>Group G forecast sold out on ≥ 2 dates; G+1 forecast ≤ 75% same dates</td><td>Open upgrade step G → G+1 at +€x/day</td><td>sold-out days × expected upgrades × €x</td><td>Medium</td></tr>
+            <tr><td><span class="code">R5</span> Utilisation floor</td><td>Station utilisation below the account's <span class="code">util_floor</span> ≥ 3 consecutive weeks</td><td>Watch item; if forecast persists → fleet-size conversation</td><td>— (watch)</td><td>—</td></tr>
+            <tr><td><span class="code">R6</span> Market growing, you are not</td><td>Demand <span class="code">delta_vs_ly ≥ +5%</span> for market M and pace ≤ 0 in M</td><td>Investigate rate positioning / channel visibility in M</td><td>pace gap × ADR (informational)</td><td>Medium</td></tr>
+            <tr><td><span class="code">R7</span> Alert backlog</td><td>≥ 5 Market Radar alerts unresolved for one scope over 14 days</td><td>Consolidate: one positioning decision</td><td>—</td><td>—</td></tr>
+            <tr><td><span class="code">R8</span> Length-of-rent drift</td><td>Share of 1–2 day rentals up ≥ 5 pts vs LY at an airport station</td><td>Review minimum-LOR rules for peak dates</td><td>dilution estimate</td><td>Low–medium</td></tr>
+            <tr><td><span class="code">R9</span> Event window</td><td>Known event/holiday in next 6 weeks in market M and pace flat</td><td>Pre-position rates for the window</td><td>pace gap × ADR</td><td>Medium</td></tr>
+            <tr><td><span class="code">R10</span> Data integrity</td><td>Any <span class="code">data_quality</span> entry</td><td>Watch item; affected figures footnoted</td><td>—</td><td>—</td></tr>
+            <tr><td><span class="code">R0</span> Quiet week</td><td>No R1–R9 fired</td><td><em>“No action recommended this week”</em></td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="cost">
+        <h2>Model, cost and residency</h2>
+        <p><b>Composer and Analyst:</b> a frontier model — the Brief's quality <em>is</em> the writing and the judgement across six languages. Current recommendation Claude Opus 5, adaptive thinking at medium effort, structured output, prompt caching on the frozen prefix. <b>Verifier (a):</b> no model. <b>Verifier (b):</b> the same model on a 10% sample. Weekly generation is not latency-sensitive → Batch API at half list price.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Component</th><th class="num">Tokens</th><th class="num">List price / M</th><th class="num">Cost</th></tr></thead>
+          <tbody>
+            <tr><td>Composer — cached prefix (persona, style guide, contract)</td><td class="num">10K read</td><td class="num">$0.50</td><td class="num">$0.005</td></tr>
+            <tr><td>Composer — volatile input (facts, candidates, profile)</td><td class="num">8K</td><td class="num">$5.00</td><td class="num">$0.040</td></tr>
+            <tr><td>Composer — output incl. thinking</td><td class="num">5K</td><td class="num">$25.00</td><td class="num">$0.125</td></tr>
+            <tr><td>Verifier judge, 10% sample, amortised</td><td class="num">~1.2K</td><td class="num"></td><td class="num">$0.010</td></tr>
+            <tr><td>Analyst reply, 30% of briefs, amortised</td><td class="num">~4.2K</td><td class="num"></td><td class="num">$0.033</td></tr>
+            <tr><td><b>Per brief, standard API</b></td><td class="num"></td><td class="num"></td><td class="num"><b>≈ $0.21</b></td></tr>
+            <tr class="win"><td><b>Per brief, Composer via Batch API</b></td><td class="num"></td><td class="num"></td><td class="num"><b>≈ $0.13 · €0.12</b></td></tr>
+          </tbody>
+        </table></div>
+        <div class="kpis">
+          <div class="kpi"><b>$800–1,300</b><span>a year, whole base, weekly · 120 × 52 briefs</span></div>
+          <div class="kpi"><b>&lt; $7,000</b><span>at five times the volume — daily top accounts, internal edition, consultant clients</span></div>
+          <div class="kpi"><b>0.1%</b><span>of revenue. Olivier's “token cost line” — for this product, a rounding error against the coach hour</span></div>
+        </div>
+        <h3>Data residency</h3>
+        <p>The facts pack holds <b>no traveller personal data</b> — aggregates, rates, counts, forecasts. Recipients are merged at render time. The provider is a sub-processor for business-confidential data and is listed as such in the DPA. Run inference in an EU region (Claude on Bedrock EU or Vertex <span class="mono">eu</span>, or first-party inference-geography controls) and confirm zero-data-retention terms in week 1. Benchmark aggregates: k ≥ 5, index form, opt-in, reviewed once by counsel against existing customer terms.</p>
+      </section>
+
+      <section id="pricing">
+        <h2>Packaging — three tests, run in parallel</h2>
+        <p class="lead">Positioning: <em>“your revenue coach, every Monday.”</em> Owners buy RPD, utilisation and hours back. The word “AI” appears in the sub-processor list and nowhere else.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Package</th><th>Who</th><th>Price hypothesis</th><th>What it tests</th></tr></thead>
+          <tbody>
+            <tr><td>A · Included</td><td>Pricing Insights tier</td><td>Included; measured as retention and upsell lift</td><td>Does the Brief move renewals and pull Performance-Hub-only accounts up a tier</td></tr>
+            <tr><td>B · Add-on, per vehicle</td><td>Performance Hub–only accounts</td><td>$1.00–1.50 per vehicle per month (300 cars → ~€3.5–5K a year)</td><td>Willingness to pay for coach judgement without buying the pricing engine</td></tr>
+            <tr><td>C · Consultant</td><td>RM consultants</td><td>€150–250 per managed operator per month</td><td>The channel economics</td></tr>
+          </tbody>
+        </table></div>
+        <p>Anchor for B: less than one hour of a coach a week, and every brief carries three quantified actions — the value is on the page. Four free briefs, then paid. If B converts above 30% of Performance-Hub-only pilots, it is the lever that lifts blended ACV from €12.5K toward €16K in Year 1 — the number the strategy assumed.</p>
+      </section>
+
+      <section id="plan">
+        <h2>Eight weeks</h2>
+        <p><b>Team.</b> Engineer 1 (data/backend): facts builder, rules runtime, delivery, telemetry, reply parsing. Engineer 2 (AI): composer, structured output, verifier, evals, Analyst, drill templates. Coach at 30%: methodology → rules, style guide, tier-A review, weekly rule review. Emmanuel at 10%: design partners, pricing call. Everyone else stays on the frozen stack.</p>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Week</th><th>Deliverable</th><th>Gate</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Facts builder over 5 pilot accounts (franchisee, independent, consultant, one WhatsApp market). Style guide from 20 anonymised coach notes. Rules R0–R5 specified with the coach. Provider chosen; EU inference and retention terms confirmed.</td><td>Facts pack validates for all 5; every fact has a link</td></tr>
+            <tr><td class="num">2</td><td>Composer v0 with structured output; verifier (a); eval harness — 30 replayed account-weeks. R0–R5 running.</td><td>100% numeric fidelity on replay; coach rubric ≥ 3.5/5</td></tr>
+            <tr><td class="num">3</td><td>Renderer (email, PDF); coach-draft delivery; telemetry tables; reply parser. R6–R10.</td><td>First internal briefs on real data</td></tr>
+            <tr><td class="num">4</td><td><b>Pilot send</b> to 5 design partners via the tier-A path. Multilingual on. Analyst v0 with 6 drill templates.</td><td>Lands Monday 06:30 local; coach edit ≤ 10 min; zero verifier escapes</td></tr>
+            <tr><td class="num">5</td><td>Iterate rubric and rules (→ 20). Benchmark block for opted-in accounts. WhatsApp for one market. Pricing tests briefed.</td><td>Reply rate ≥ 20% among pilots</td></tr>
+            <tr><td class="num">6</td><td>20 accounts; tier-B auto-send begins. <b>Internal edition</b> to sales and coaching. Batch API for weekly generation.</td><td>Cost per brief measured ≤ €0.30; digest live</td></tr>
+            <tr><td class="num">7</td><td>60 accounts. Outcome measurement at T+7 live. Weekly rule review cadence set.</td><td>≥ 1 action DONE per account per month</td></tr>
+            <tr><td class="num">8</td><td><b>General availability.</b> Pricing decision. Board readout: briefs sent, open/reply, actions accepted, coach minutes saved, cost per brief, first outcome deltas, add-on conversion.</td><td>Go/no-go on Horizon 2 sequencing</td></tr>
+          </tbody>
+        </table></div>
+        <p><b>Deliberately not built:</b> a UI, a chatbot, a forecasting model, a rate-writing path, a fleet-value view. Each is a later horizon or a partnership, and each would turn eight weeks into twenty.</p>
+      </section>
+
+      <section id="accept">
+        <h2>Acceptance criteria and evals</h2>
+        <div class="two">
+          <div><h3>Hard gates</h3><ul><li>Numeric fidelity <b>100%</b> on replay and on every production brief</li><li>Zero invented figures in production in the first 90 days</li><li>Every action traceable to a rule and a candidate ID</li><li>Missing data rendered as missing — never a zero for an unknown</li></ul></div>
+          <div><h3>Quality, week 8</h3><ul><li>Coach rubric ≥ <b>4.0 / 5</b> on 30 sampled briefs</li><li>Tier-A coach edit time ≤ <b>5 minutes</b></li><li>≥ <b>25%</b> of briefs receive a reply; ≥ 1 action DONE per account per month</li><li>Open rate ≥ <b>60%</b> among named recipients</li></ul></div>
+          <div><h3>Economics, week 8</h3><ul><li>Cost per brief ≤ <b>€0.30</b> all-in</li><li>Package B trial-to-paid ≥ <b>30%</b> — or a clear reason to bundle instead</li></ul></div>
+          <div><h3>Evals, built week 2, run on every change</h3><ul><li><b>Replay set:</b> 30 historical account-weeks → fidelity, ref coverage, action validity</li><li><b>Adversarial set:</b> gaps, contradictions, a quiet week, a data-quality flag — degrade gracefully, say nothing when there is nothing</li><li><b>Language set:</b> same facts in six languages — numbers identical, prose native</li></ul></div>
+        </div>
+      </section>
+
+      <section id="risks">
+        <h2>Risks</h2>
+        <div class="tablewrap"><table class="spec">
+          <thead><tr><th>Risk</th><th>Likelihood</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td>Model invents or mis-states a figure</td><td>Low with controls</td><td>Facts-only contract; deterministic verifier as hard gate; drop-sentence; hold-for-coach</td></tr>
+            <tr><td>Briefs read as generic AI text; owners stop opening</td><td>Medium</td><td>Real coach exemplars; rules-driven specificity; “no action” allowed; 400–600 words; coach voice on tier A</td></tr>
+            <tr><td>A recommended action loses money</td><td>Low–medium</td><td>v1 recommends, humans execute; confidence stated; outcomes telemetry surfaces any rule that misfires — retire it</td></tr>
+            <tr><td>Rules too crude for varied operators</td><td>Medium early</td><td>Ten conservative rules; coach-owned weekly review; account preferences in the facts pack; telemetry shows which rules get skipped where</td></tr>
+            <tr><td>Data gaps in tail accounts</td><td>High for some</td><td>Graceful degradation; data-quality block; ship with what is known</td></tr>
+            <tr><td>Coach resistance</td><td>Low–medium</td><td>Coach is editor and rule-owner; time saved is measured; drafts land in their own mailbox</td></tr>
+            <tr><td>Contracts don't permit LLM processing or benchmarking</td><td>Possible for some</td><td>Counsel review week 1; per-account opt-in; EU inference; no personal data in the model path</td></tr>
+            <tr><td>No clean per-account query path into Performance Hub</td><td>Unknown</td><td>Open question 1 — if true, week 1 becomes a data-access sprint; the plan slips two weeks, not eight</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="unlocks">
+        <h2>What it unlocks</h2>
+        <p>This is Horizon 1 of the strategy in a single product.</p>
+        <ul>
+          <li><b>Methodology encoded</b> — the rule set is the written-down coaching method, and it grows weekly.</li>
+          <li><b>The loop instrumented</b> — <span class="mono">outcomes</span> is the evidence base for outcome pricing and the Decision Feed's learning.</li>
+          <li><b>The Analyst shipped</b> — as the reply channel, with a narrower and safer surface than a chat box.</li>
+          <li><b>The owner reached</b> — with data WeYield already holds. The Toulon fleet-size line is the first fleet conversation.</li>
+          <li><b>Cost-to-serve collapsed</b> — the 100 accounts that get no coach note today get one every Monday for €0.20.</li>
+          <li><b>The Decision Feed</b> becomes the Brief at daily cadence, guardrails per operator, execution via Pricing Insights write-back, learning from outcomes. Same builder, rules, composer, verifier.</li>
+          <li><b>The Fleet P&amp;L</b> becomes new fact types (acquisition cost, residual index from Indicata) and new rules (R11+: de-fleet timing). The brief already has the slot.</li>
+        </ul>
+      </section>
+
+      <section id="questions">
+        <h2>Open questions for Emmanuel</h2>
+        <p>The assumptions this spec rests on. Number 1 decides the timeline.</p>
+        <ol>
+          <li><b>Data access.</b> Does Performance Hub expose a per-account API or warehouse at station × car group × day grain for RPD, utilisation, bookings, pace, fleet counts and idle days?</li>
+          <li><b>Coach notes today.</b> Do coaches write weekly notes now — how many accounts, in what form? These are the style exemplars.</li>
+          <li><b>Coverage.</b> How many accounts run all three of Market Radar, Performance Hub and Revenue Horizon?</li>
+          <li><b>Languages.</b> Which six cover 90% of recipients?</li>
+          <li><b>Contracts.</b> Do current terms permit an LLM sub-processor and opt-in aggregate benchmarking? Who reviews?</li>
+          <li><b>Channels by region.</b> Where do owners read WhatsApp rather than email?</li>
+          <li><b>Tiering.</b> The top-20 accounts by ACV — the same list the repricing exercise needs.</li>
+          <li><b>Fleet fields.</b> Do idle-unit counts and station fleet plans already flow into Performance Hub, as the site implies? Rule R3 depends on it.</li>
+        </ol>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap">Prepared by Ram Badrinathan, September 2026, for Emmanuel Scuto. Companion to <em>WeYield — Building the AI-Native Business</em>. Product facts from weyield.io and Olivier Jager's briefing of 10 September 2026; the operator, stations and figures in the sample brief are fictional; model prices are Anthropic list prices at the date of writing; token budgets are engineering estimates to be replaced by measured usage in week 2.</div>
+</footer>

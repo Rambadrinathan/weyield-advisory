@@ -1,0 +1,239 @@
+# -*- coding: utf-8 -*-
+"""Build the /deck slide-viewer page for the WeYield advisory site."""
+import io, json, os
+
+OUT = r"E:\weyield-advisory"
+N = 21
+
+TITLES = [
+    "Cover",
+    "Executive summary",
+    "Where WeYield stands",
+    "Rule of 40 — what the market pays",
+    "The addressable ceiling",
+    "Salesperson payback",
+    "Five levers, one covered",
+    "Where the profit is made",
+    "Why now — five conditions",
+    "The stack, and the plugin risk",
+    "The recommendation",
+    "Fleet P&L Copilot",
+    "Rebuild — and what never to touch",
+    "The data moat",
+    "Three horizons",
+    "Organisation",
+    "Three-year shape",
+    "Growth comes from ACV",
+    "Three kill-risks",
+    "Six decisions for Monday",
+    "Appendix — provenance",
+]
+
+FAVICON = ('data:image/svg+xml,'
+           '<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>'
+           '<text y=%22.92em%22 font-size=%2290%22>%F0%9F%9A%99</text></svg>')
+
+HEAD_BASE = """<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="%s">
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}img{max-width:100%%}[hidden]{display:none!important}</style>
+""" % FAVICON
+
+THEME_SCRIPT = """<script>
+(function(){try{var t=localStorage.getItem('wy-theme');
+if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>"""
+
+TOGGLE_SCRIPT = """<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('wy-tog');
+  if(!b)return;
+  function cur(){var a=r.getAttribute('data-theme');if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=cur()==='dark'?'Light':'Dark';
+    b.setAttribute('aria-label','Switch to '+(cur()==='dark'?'light':'dark')+' theme');}
+  paint();
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);try{localStorage.setItem('wy-theme',n);}catch(e){}paint();});
+})();
+</script>"""
+
+NAV_ITEMS = [("deck", "Deck"), ("five-moves", "Five Moves"), ("monday-brief", "Monday Brief"),
+             ("residual-radar", "Residual Radar"), ("agentic-gtm", "Agentic GTM"),
+             ("tech-stack", "Tech Stack")]
+
+NAV_CSS = """
+.pack-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:4px 14px;
+  padding:10px 30px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap;
+  font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+.pack-nav .home{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;
+  letter-spacing:-.01em;padding-right:16px;border-right:1px solid var(--line);white-space:nowrap}
+.pack-nav .home span{color:var(--muted);font-weight:500}
+.pack-nav .links{display:flex;gap:3px;flex-wrap:wrap;flex:1 1 auto}
+.pack-nav .links a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:5px 11px;border-radius:5px;white-space:nowrap;line-height:1.3}
+.pack-nav .links a:hover{color:var(--ink);background:var(--sunk,var(--line-2))}
+.pack-nav .links a[aria-current="page"]{color:var(--accent-ink);background:var(--accent);font-weight:600}
+.pack-nav .tog{flex:0 0 auto;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line);
+  border-radius:5px;padding:5px 10px;cursor:pointer;line-height:1.3}
+.pack-nav .tog:hover{color:var(--ink);border-color:var(--muted)}
+@media (max-width:700px){
+  .pack-nav{padding:9px 18px;gap:4px 10px}
+  .pack-nav .home{border-right:none;padding-right:0;width:100%}
+  .pack-nav .links a{font-size:12px;padding:4px 8px}
+}
+@media print{.pack-nav{display:none}}
+"""
+
+TOKENS = """
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+"""
+
+CSS = """
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,.eyebrow{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dhead{padding:26px 0 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.dhead h1{margin:7px 0 0;font-size:clamp(23px,2.8vw,32px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.dhead .src{font-size:13.5px;color:var(--muted)}
+.dhead .src a{color:var(--accent);text-decoration:none}
+.dhead .src a:hover{text-decoration:underline}
+.stage{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.stage img{display:block;width:100%;height:auto;aspect-ratio:1800/1014;background:var(--sunk)}
+.bar{display:flex;align-items:center;gap:14px;padding:13px 0 2px;flex-wrap:wrap}
+.bar button{font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:7px 15px;cursor:pointer}
+.bar button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.bar button:disabled{opacity:.35;cursor:default}
+.count{font-family:"JetBrains Mono",monospace;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.count i{font-style:normal;color:var(--muted)}
+.caption{flex:1 1 220px;font-size:15px;color:var(--ink-2);font-weight:600;
+  font-family:Archivo,sans-serif;letter-spacing:-.01em}
+.hint{font-size:12.5px;color:var(--muted);font-family:Archivo,sans-serif}
+.rail{display:flex;gap:8px;overflow-x:auto;padding:16px 0 30px}
+.th{flex:0 0 auto;position:relative;padding:0;border:1px solid var(--line);border-radius:5px;
+  background:var(--paper);cursor:pointer;line-height:0;overflow:hidden}
+.th img{width:112px;height:auto;display:block;opacity:.7}
+.th:hover img{opacity:1}
+.th[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.th[aria-current="true"] img{opacity:1}
+.th b{position:absolute;left:0;bottom:0;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+  font-weight:500;line-height:1;padding:3px 4px;background:var(--accent);color:var(--accent-ink)}
+@media (max-width:640px){.wrap{padding:0 16px}.th img{width:84px}}
+@media print{.bar,.rail,.dhead .src,.pack-nav{display:none}}
+"""
+
+
+def nav_html(active):
+    links = "".join(
+        '<a href="/%s"%s>%s</a>' % (s, ' aria-current="page"' if s == active else "", l)
+        for s, l in NAV_ITEMS)
+    return ('<nav class="pack-nav" aria-label="Advisory pack">'
+            '<a class="home" href="/">WeYield <span>· advisory pack</span></a>'
+            '<div class="links">%s</div>'
+            '<button class="tog" id="wy-tog" type="button">Dark</button></nav>' % links)
+
+
+thumbs = "".join(
+    '<button class="th" data-i="%d" type="button" aria-label="Slide %d, %s">'
+    '<img src="/slides/t%02d.webp" alt="" width="240" height="135" loading="lazy">'
+    '<b>%d</b></button>' % (i, i, TITLES[i - 1].replace('"', ""), i, i)
+    for i in range(1, N + 1))
+
+BODY = """<div class="wrap">
+  <div class="dhead">
+    <div>
+      <span class="eyebrow">Strategy deck &middot; 21 slides &middot; September 2026</span>
+      <h1>Building the AI-Native WeYield</h1>
+    </div>
+    <div class="src">Editable original in
+      <a href="https://docs.google.com/presentation/d/1-tBUAFx9sy_matkUt6UWys64sCcNvBaI3-guEI2WtqM/edit"
+         target="_blank" rel="noopener">Google Slides &#8599;</a></div>
+  </div>
+
+  <div class="stage">
+    <img id="sl" src="/slides/01.webp" alt="Slide 1 of 21 — Cover" width="1800" height="1014">
+  </div>
+
+  <div class="bar">
+    <button id="prev" type="button">&larr; Prev</button>
+    <button id="next" type="button">Next &rarr;</button>
+    <span class="count"><span id="cur">1</span><i> / 21</i></span>
+    <span class="caption" id="cap">Cover</span>
+    <span class="hint">&larr; &rarr; arrow keys &middot; Home &middot; End</span>
+  </div>
+
+  <div class="rail" id="rail">%s</div>
+</div>""" % thumbs
+
+SCRIPT = """<script>
+(function(){
+  var N=%d, T=%s;
+  var img=document.getElementById('sl'), cur=document.getElementById('cur'),
+      cap=document.getElementById('cap'), rail=document.getElementById('rail'),
+      prev=document.getElementById('prev'), next=document.getElementById('next');
+  var ths=[].slice.call(rail.querySelectorAll('.th')), i=1;
+  function pad(n){return (n<10?'0':'')+n;}
+  function pre(n){if(n<1||n>N)return;var p=new Image();p.src='/slides/'+pad(n)+'.webp';}
+  function go(n,scroll){
+    i=Math.min(N,Math.max(1,n));
+    img.src='/slides/'+pad(i)+'.webp';
+    img.alt='Slide '+i+' of '+N+' \\u2014 '+T[i-1];
+    cur.textContent=i; cap.textContent=T[i-1];
+    prev.disabled=(i===1); next.disabled=(i===N);
+    for(var k=0;k<ths.length;k++){ths[k].setAttribute('aria-current',(k+1===i)?'true':'false');}
+    if(scroll!==false&&ths[i-1]){ths[i-1].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}
+    if(history.replaceState){history.replaceState(null,'','#'+i);}
+    pre(i+1); pre(i-1);
+  }
+  for(var k=0;k<ths.length;k++){
+    (function(t){t.addEventListener('click',function(){go(+t.getAttribute('data-i'));});})(ths[k]);
+  }
+  prev.addEventListener('click',function(){go(i-1);});
+  next.addEventListener('click',function(){go(i+1);});
+  document.addEventListener('keydown',function(e){
+    var tag=(e.target&&e.target.tagName)||'';
+    if(tag==='INPUT'||tag==='TEXTAREA')return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}
+    else if(e.key==='Home'){e.preventDefault();go(1);}
+    else if(e.key==='End'){e.preventDefault();go(N);}
+  });
+  var h=parseInt((location.hash||'').slice(1),10);
+  go((isNaN(h)||h<1||h>N)?1:h,false);
+})();
+</script>""" % (N, json.dumps(TITLES))
+
+doc = ("<!doctype html>\n<html lang=\"en\">\n<head>\n" + HEAD_BASE + THEME_SCRIPT
+       + '\n<title>WeYield Strategy Deck</title>\n'
+       '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+       '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+       'family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600'
+       '&family=JetBrains+Mono:wght@400;500&display=swap">\n'
+       "<style>" + TOKENS + CSS + NAV_CSS + "</style>\n</head>\n<body>\n"
+       + nav_html("deck") + "\n" + BODY + "\n" + TOGGLE_SCRIPT + SCRIPT + "\n</body>\n</html>\n")
+
+io.open(os.path.join(OUT, "deck.html"), "w", encoding="utf-8").write(doc)
+print("built deck.html (%d slides, %d bytes)" % (N, len(doc)))

@@ -1,0 +1,450 @@
+<title>The Two-Engineer Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --warn:#B3661A; --warn-soft:#F7E9DA;
+  --bad:#A8341C; --bad-soft:#F7E3DE;
+  --ok:#1D7049; --ok-soft:#DEEDE5;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+    --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+    --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+    --warn:#E0A25C; --warn-soft:#3A2A17;
+    --bad:#EE8468; --bad-soft:#3D1E16;
+    --ok:#59C08C; --ok-soft:#16352A;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --bad:#EE8468; --bad-soft:#3D1E16;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+p{margin:0 0 1em;max-width:66ch}
+.mono,code{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+code{font-size:.88em;background:var(--sunk);padding:1px 5px;border-radius:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.hero{padding:52px 0 40px}
+.hero h1{font-size:clamp(33px,4.5vw,56px);font-weight:700;max-width:17ch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:44px;align-items:end}
+.hero-note{border-left:2px solid var(--warn);padding:2px 0 2px 18px;font-size:15.5px;color:var(--ink-2)}
+.hero-note p{margin:0 0 .7em}.hero-note p:last-child{margin:0}
+.hero-note b{color:var(--ink);font-weight:600}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-bottom:26px}
+.sec-head h2{font-size:clamp(25px,3vw,34px);font-weight:600}
+.sec-head p{font-size:16px;color:var(--ink-2);margin:0}
+.sec-head p+p{margin-top:.8em}
+h3.sub{font-size:19px;font-weight:600;margin:34px 0 10px}
+
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px 16px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2);max-width:84ch}
+figcaption b{color:var(--ink);font-weight:600}
+svg text{font-family:Archivo,system-ui,sans-serif;fill:var(--ink)}
+svg .tm{fill:var(--muted)} svg .ta{fill:var(--accent)} svg .tw{fill:var(--warn)}
+svg .tk{fill:var(--ok)} svg .tb{fill:var(--bad)} svg .ti{fill:var(--accent-ink)}
+svg .num{font-family:"JetBrains Mono",monospace}
+svg .fp{fill:var(--paper)} svg .fs{fill:var(--sunk)} svg .fa{fill:var(--accent)}
+svg .fas{fill:var(--accent-soft)} svg .fw{fill:var(--warn)} svg .fws{fill:var(--warn-soft)}
+svg .fb{fill:var(--bad)} svg .fbs{fill:var(--bad-soft)} svg .fk{fill:var(--ok)} svg .fks{fill:var(--ok-soft)}
+svg .fn{fill:none}
+svg .sl{stroke:var(--line)} svg .sl2{stroke:var(--line-2)} svg .si{stroke:var(--ink)}
+svg .sa{stroke:var(--accent)} svg .sw{stroke:var(--warn)} svg .sb{stroke:var(--bad)}
+svg .sk{stroke:var(--ok)} svg .sm{stroke:var(--muted)}
+
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:8px 0 0}
+.rule{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.rule .n{flex:0 0 auto;width:26px;height:26px;border-radius:5px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:12.5px;font-weight:500}
+.rule b{font-family:Archivo,sans-serif;font-size:15px;display:block;margin-bottom:2px}
+.rule span{font-size:14px;color:var(--muted);display:block;line-height:1.45}
+
+.tablewrap{overflow-x:auto;margin:6px 0 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:bottom}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px}
+td.n{font-family:"JetBrains Mono",monospace;font-size:13.5px;text-align:right;white-space:nowrap}
+th.n{text-align:right}
+tr.total td{border-bottom:none;border-top:1px solid var(--line);color:var(--ink);font-weight:600}
+.badge{display:inline-block;font-family:Archivo,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.b-buy{background:var(--sunk);color:var(--muted)}
+.b-build{background:var(--accent-soft);color:var(--accent)}
+.b-never{background:var(--bad-soft);color:var(--bad)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px}
+.panel h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.panel p{font-size:15px;margin:0 0 .8em}.panel p:last-child{margin:0}
+.panel b{color:var(--ink);font-weight:600}
+.panel .lede{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+
+.call{padding:18px 22px;border-radius:8px;background:var(--accent-soft);margin:22px 0;max-width:78ch}
+.call.w{background:var(--warn-soft)} .call.b{background:var(--bad-soft)}
+.call p{margin:0 0 .6em;font-size:15.5px;color:var(--ink)}
+.call p:last-child{margin:0}
+.call .hd{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.call.w .hd{color:var(--warn)} .call.b .hd{color:var(--bad)}
+
+.nope{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.nope div{background:var(--bad-soft);border-radius:6px;padding:13px 16px;font-size:14.5px;color:var(--ink)}
+.nope div b{font-family:Archivo,sans-serif;display:block;font-size:14.5px;margin-bottom:2px;color:var(--bad)}
+.nope div span{color:var(--ink-2);font-size:13.5px;line-height:1.45}
+
+footer{border-top:1px solid var(--line);padding:26px 0 54px;font-size:13.5px;color:var(--muted)}
+footer p{max-width:88ch}
+
+@media (max-width:940px){
+  .hero-grid,.sec-head,.two,.rules{grid-template-columns:1fr;gap:22px}
+  .nope{grid-template-columns:1fr}
+  figure{padding:16px 16px 12px}
+}
+@media (max-width:560px){ .wrap{padding:0 18px} }
+</style>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="s-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="s-arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fa"/></marker>
+    <marker id="s-arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fb"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">WeYield · technical architecture · Sept 2026</span>
+      <h1 style="margin-top:14px">A stack two engineers can run at three in the morning.</h1>
+    </div>
+    <div class="hero-note">
+      <p>Every choice here is constrained by one fact: <b>two engineers</b> are building and operating this while five others keep the existing product alive.</p>
+      <p>That single constraint eliminates most of what a bigger company would pick — and it happens to produce a better system, because there is no room for anything that is not load-bearing.</p>
+      <p><b>The new stack is additive.</b> The integrations, the forecasting core and the rate-shop scrapers are never rewritten.</p>
+    </div>
+  </div>
+</header>
+
+<section id="unknown">
+  <div class="wrap">
+    <div class="call w">
+      <div class="hd">The one thing I could not check</div>
+      <p><b>I do not know what WeYield runs today</b> — .NET, Java, PHP and Python are all plausible for a European vertical SaaS of this age. Confirm it before acting on anything below.</p>
+      <p>It changes less than you would think. The new stack sits <em>beside</em> the old one and reads from a shared warehouse, so the languages need not match. The only real question is whether the existing product can expose a scheduled extract and an API for write-back — and if it cannot, that is the first week's work.</p>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Seven rules that answer most future questions</h2>
+      <p>Write these down. They resolve the next fifty technology arguments without a meeting, and they are the reason the stack below looks unfashionably plain.</p>
+    </div>
+    <div class="rules">
+      <div class="rule"><div class="n">1</div><div><b>If two engineers cannot debug it at 3am, do not run it.</b><span>Eliminates Kubernetes, microservices, Airflow and most of the agent-framework ecosystem in one line.</span></div></div>
+      <div class="rule"><div class="n">2</div><div><b>Buy the undifferentiated, build the moat.</b><span>Buy email, auth, hosting, monitoring. Build the facts builder, the rules engine and the verifier. Nothing else is defensible.</span></div></div>
+      <div class="rule"><div class="n">3</div><div><b>One language for the new stack.</b><span>Python on the server, TypeScript in the browser. That is two, and two is the limit.</span></div></div>
+      <div class="rule"><div class="n">4</div><div><b>Boring database, interesting product.</b><span>Postgres until it genuinely hurts — and at 120 accounts it will not.</span></div></div>
+      <div class="rule"><div class="n">5</div><div><b>Every AI call has a deterministic check around it.</b><span>No exceptions, on any surface, ever. This is the product promise expressed as architecture.</span></div></div>
+      <div class="rule"><div class="n">6</div><div><b>EU region, or it does not ship.</b><span>French company, EU customers. It also turns the DPA conversation from ten pages into one.</span></div></div>
+      <div class="rule"><div class="n">7</div><div><b>Types everywhere.</b><span>A real share of this code will be written with AI assistance, and typed codebases make that dramatically more effective. This is now an architectural decision, not a preference.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="strangler">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>How the two stacks live together</h2>
+      <div>
+        <p>The warehouse is the seam. The old stack writes to it on a schedule; the new stack reads from it and keeps its own tables.</p>
+        <p>The one hard rule: <b>the new stack never writes to the old database.</b> When it needs to change a rate, it calls the existing API — the same path a human would take.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 480" role="img" aria-label="The existing stack containing integrations, the numeric forecasting core, rate-shop scrapers and the product database, which is never rewritten. A scheduled extract feeds a shared warehouse of Postgres and Parquet files. The new Python stack reads the warehouse and keeps its own tables, and writes back to the product only through the existing API, never directly to the old database.">
+        <!-- old stack -->
+        <rect x="0" y="40" width="330" height="300" rx="8" class="fbs"/>
+        <text x="18" y="30" class="tb" font-size="12" font-weight="700" letter-spacing="1.2">EXISTING STACK — NEVER REWRITTEN</text>
+        <g font-size="12.5">
+          <rect x="18" y="58" width="294" height="52" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="32" y="80" font-size="13.5" font-weight="700">Integration lattice</text>
+          <text x="32" y="98" class="tm">Wheels/Invensys · MyRentCar · RateHighway · PMS/CRS</text>
+
+          <rect x="18" y="120" width="294" height="52" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="32" y="142" font-size="13.5" font-weight="700">Numeric forecasting core</text>
+          <text x="32" y="160" class="tm">gradient-boosted demand models — LLMs do not beat these</text>
+
+          <rect x="18" y="182" width="294" height="52" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="32" y="204" font-size="13.5" font-weight="700">Rate-shop scrapers</text>
+          <text x="32" y="222" class="tm">an asset — extend for used-car data, do not touch</text>
+
+          <rect x="18" y="244" width="294" height="52" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="32" y="266" font-size="13.5" font-weight="700">Product database + API</text>
+          <text x="32" y="284" class="tm">Market Radar · Performance Hub · Pricing Insights</text>
+        </g>
+        <text x="18" y="322" class="tb" font-size="12.5" font-weight="600">Maintenance only. No new features here, ever.</text>
+
+        <!-- warehouse -->
+        <line x1="342" y1="150" x2="404" y2="150" class="si" stroke-width="1.6" color="var(--ink)" marker-end="url(#s-ar)"/>
+        <text x="373" y="140" class="tm" font-size="11.5" text-anchor="middle">nightly</text>
+        <text x="373" y="172" class="tm" font-size="11.5" text-anchor="middle">extract</text>
+
+        <rect x="412" y="60" width="240" height="230" rx="8" class="fs"/>
+        <text x="430" y="46" class="tm" font-size="12" font-weight="700" letter-spacing="1.2">THE SEAM</text>
+        <text x="430" y="88" font-size="14" font-weight="700">Shared warehouse</text>
+        <g font-size="12.5" class="tm">
+          <text x="430" y="112">Postgres — operational,</text>
+          <text x="430" y="129">telemetry, pgvector</text>
+          <text x="430" y="155">Parquet on S3 — rate-shop</text>
+          <text x="430" y="172">history, partitioned by date</text>
+          <text x="430" y="198">DuckDB reads it; dbt models</text>
+          <text x="430" y="215">and tests it</text>
+        </g>
+        <text x="430" y="248" class="ta" font-size="12.5" font-weight="600">One place both stacks agree</text>
+        <text x="430" y="266" class="tm" font-size="12">about what is true.</text>
+
+        <line x1="662" y1="150" x2="724" y2="150" class="sa" stroke-width="1.6" marker-end="url(#s-arA)"/>
+        <text x="693" y="140" class="ta" font-size="11.5" text-anchor="middle">reads</text>
+
+        <!-- new stack -->
+        <rect x="732" y="40" width="468" height="300" rx="8" class="fas"/>
+        <text x="750" y="30" class="ta" font-size="12" font-weight="700" letter-spacing="1.2">NEW STACK — PYTHON, ADDITIVE</text>
+        <g font-size="12.5">
+          <rect x="750" y="58" width="432" height="46" rx="5" class="fp sa" stroke-width="1.4"/>
+          <text x="764" y="79" font-size="13.5" font-weight="700">Facts builder → Rules engine → Composer → Verifier</text>
+          <text x="764" y="96" class="ta">the engine every product surface shares</text>
+
+          <rect x="750" y="114" width="210" height="46" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="764" y="135" font-size="13" font-weight="700">Monday Brief</text>
+          <text x="764" y="152" class="tm">weekly, to owners</text>
+
+          <rect x="972" y="114" width="210" height="46" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="986" y="135" font-size="13" font-weight="700">Analyst + reply loop</text>
+          <text x="986" y="152" class="tm">inbound email parse</text>
+
+          <rect x="750" y="170" width="210" height="46" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="764" y="191" font-size="13" font-weight="700">Fleet P&amp;L</text>
+          <text x="764" y="208" class="tm">Next.js screen</text>
+
+          <rect x="972" y="170" width="210" height="46" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="986" y="191" font-size="13" font-weight="700">GTM agent fleet</text>
+          <text x="986" y="208" class="tm">7 scheduled jobs</text>
+
+          <rect x="750" y="226" width="432" height="46" rx="5" class="fp sl" stroke-width="1"/>
+          <text x="764" y="247" font-size="13" font-weight="700">Own tables: telemetry · outcomes · approval queue · rules</text>
+          <text x="764" y="264" class="tm">never mixed into the product database</text>
+        </g>
+        <text x="750" y="322" class="ta" font-size="12.5" font-weight="600">Every new feature ships here. Over 18 months it absorbs 60–70% of the user-facing surface.</text>
+
+        <!-- write-back path -->
+        <path d="M966 348 L966 386 L166 386 L166 302" class="fn sb" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#s-arB)"/>
+        <text x="580" y="406" class="tb" font-size="13" font-weight="700" text-anchor="middle">Write-back goes through the existing API — never into the old database</text>
+        <text x="580" y="424" class="tm" font-size="12.5" text-anchor="middle">the same path a human would take, so every safeguard the product already has still applies</text>
+
+        <line x1="0" y1="446" x2="1200" y2="446" class="sl2" stroke-width="1"/>
+        <text x="0" y="468" class="tm" font-size="12.5">One more rule that costs nothing on day one and everything later: <tspan class="ta" font-weight="600">single sign-on across both stacks</tspan>, so the user never sees the seam.</text>
+      </svg>
+      <figcaption><b>Why the seam is a warehouse and not an API.</b> An API couples the two stacks' release cycles; a nightly extract does not. At daily grain — which is all the Brief, the Fleet P&amp;L and the agents need — batch is correct, cheaper and far easier to debug. Keep streaming for the day something genuinely needs sub-hour freshness.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The stack, layer by layer</h2>
+      <div>
+        <p>Read the right-hand column first. <b>Three things are built and everything else is bought</b> — and those three are precisely the ones a competitor cannot copy by purchasing the same components.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 520" role="img" aria-label="Seven stack layers from infrastructure up to delivery, each naming its chosen technologies. Only the core logic layer — facts builder, rules engine, verifier and versioned prompts — is built in house; every other layer is bought or open source.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">BOTTOM TO TOP · BUILT LAYERS MARKED</text>
+
+        <g font-size="12.5">
+          <!-- delivery -->
+          <rect x="0" y="32" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="54" font-size="13.5" font-weight="700">Delivery</text>
+          <text x="16" y="74" class="tm">Postmark / Resend / Brevo — must have inbound parse + an EU region · WhatsApp Cloud API · PDF render</text>
+          <rect x="912" y="32" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="56" class="tm" font-size="12">Buy. The reply loop is telemetry —</text>
+          <text x="928" y="74" class="tm" font-size="12">inbound parsing is non-negotiable.</text>
+
+          <!-- application -->
+          <rect x="0" y="98" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="120" font-size="13.5" font-weight="700">Application</text>
+          <text x="16" y="140" class="tm">FastAPI · Next.js + TypeScript + Tailwind + shadcn/ui · Metabase for internal BI</text>
+          <rect x="912" y="98" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="122" class="tm" font-size="12">Buy the framework. Chosen because</text>
+          <text x="928" y="140" class="tm" font-size="12">AI assistance is strongest here.</text>
+
+          <!-- core logic -->
+          <rect x="0" y="164" width="900" height="72" rx="6" class="fa"/>
+          <text x="16" y="188" class="ti" font-size="13.5" font-weight="700">Core logic</text>
+          <text x="16" y="208" class="ti">Facts builder · Rules engine (stored as data) · <tspan font-weight="700">Verifier</tspan> · Composer prompts (versioned, owned)</text>
+          <text x="16" y="226" class="ti" font-size="11.5">Python, typed, Pydantic models, one library imported by every surface</text>
+          <rect x="912" y="164" width="288" height="72" rx="6" class="fp sa" stroke-width="1.8"/>
+          <text x="928" y="188" class="ta" font-size="12.5" font-weight="700">BUILD. This is the moat.</text>
+          <text x="928" y="208" class="tm" font-size="12">Everything else on this page is</text>
+          <text x="928" y="226" class="tm" font-size="12">purchasable by any competitor.</text>
+
+          <!-- AI -->
+          <rect x="0" y="246" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="268" font-size="13.5" font-weight="700">AI</text>
+          <text x="16" y="288" class="tm">Claude via Bedrock EU · Anthropic SDK tool runner · structured outputs · prompt caching · Batch API · Langfuse traces</text>
+          <rect x="912" y="246" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="270" class="tm" font-size="12">Buy. No agent framework —</text>
+          <text x="928" y="288" class="tm" font-size="12">the SDK's tool runner is the loop.</text>
+
+          <!-- orchestration -->
+          <rect x="0" y="312" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="334" font-size="13.5" font-weight="700">Orchestration</text>
+          <text x="16" y="354" class="tm">Dagster for scheduled assets · a Postgres-backed state machine for anything with a human in it</text>
+          <rect x="912" y="312" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="336" class="tm" font-size="12">Open source. Dagster assets map</text>
+          <text x="928" y="354" class="tm" font-size="12">one-to-one onto facts.</text>
+
+          <!-- data -->
+          <rect x="0" y="378" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="400" font-size="13.5" font-weight="700">Data</text>
+          <text x="16" y="420" class="tm">Postgres (RDS) + pgvector · Parquet on S3 · DuckDB · dbt-core for models <tspan class="tk" font-weight="600">and tests</tspan></text>
+          <rect x="912" y="378" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="402" class="tm" font-size="12">Buy the engines, build the models.</text>
+          <text x="928" y="420" class="tk" font-size="12" font-weight="600">dbt tests guard the verifier.</text>
+
+          <!-- infra -->
+          <rect x="0" y="444" width="900" height="56" rx="6" class="fs"/>
+          <text x="16" y="466" font-size="13.5" font-weight="700">Infrastructure</text>
+          <text x="16" y="486" class="tm">AWS eu-central-1 or eu-west-3 · Fargate · S3 · Secrets Manager · Sentry · GitHub Actions · monorepo</text>
+          <rect x="912" y="444" width="288" height="56" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="928" y="468" class="tm" font-size="12">Buy. One cloud, one region,</text>
+          <text x="928" y="486" class="tm" font-size="12">one DPA, one diligence story.</text>
+        </g>
+      </svg>
+      <figcaption><b>Why AWS and not a French host.</b> Scaleway and OVH are cheaper and politically comfortable, but Bedrock puts Claude <em>in the same region under the same contract</em> — one data-processing agreement covering compute and inference. At 120 EU customers that is worth more than the hosting saving, and an acquirer's technical diligence will be shorter for it.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="opinions">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Three calls most teams get wrong</h2>
+      <p>Each of these looks like an implementation detail in month one and turns out to be load-bearing by month six.</p>
+    </div>
+    <div class="two" style="align-items:start">
+      <div class="panel">
+        <div class="lede">Call one</div>
+        <h3>The rules engine is data, not code</h3>
+        <p>If rules live as Python <code>if</code> statements, the coach cannot touch them, every change needs a deploy, and <b>the methodology stops growing</b> — which breaks the central promise of the Monday Brief.</p>
+        <p>Rules belong in a table with a structured schema: trigger, evidence fact types, value method, confidence policy. Coach proposes, engineer reviews, no release required. Target 25–30 rules by week 8 and one a week thereafter — impossible at a deploy per rule.</p>
+      </div>
+      <div class="panel">
+        <div class="lede">Call two</div>
+        <h3>Prompts are versioned artifacts with named owners</h3>
+        <p>The coach owns the persona and style guide. Engineering owns the output schema and the reasoning contract. Both live in git, both have tests, both go through review.</p>
+        <p>Teams that treat prompts as configuration cannot explain a quality regression six months later — and on this product, “why did the brief get worse” is a question a customer will ask.</p>
+      </div>
+    </div>
+    <div class="call">
+      <div class="hd">Call three</div>
+      <p><b>The verifier is infrastructure, not a feature.</b> One library, its own test suite, imported by the Brief, the Analyst, the outbound audit, the Fleet P&amp;L and every agent that writes a sentence containing a number.</p>
+      <p>It is the single component that makes all of it sellable into a market that has already named black-box distrust as its adoption blocker. Give it an owner and a changelog.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cost">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What it costs to run</h2>
+      <div>
+        <p>Roughly <b>2–3% of revenue</b>, and most of it is the go-to-market agent fleet — which stands in for a €90K salesperson.</p>
+        <p>Nothing here is a reason to hesitate. The scarce resource is the two engineers, not the euros.</p>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Line</th><th>What</th><th class="n">Per month</th></tr></thead>
+        <tbody>
+          <tr><td>Cloud</td><td>RDS Postgres, S3, Fargate services, load balancer, transfer, plus a staging environment</td><td class="n">€1,000–1,400</td></tr>
+          <tr><td>Model inference</td><td>Monday Brief ~€60 · GTM agent fleet ~€1,000–1,500 · Analyst and ad-hoc ~€150. Batch API and prompt caching assumed throughout.</td><td class="n">€1,200–1,700</td></tr>
+          <tr><td>Email &amp; messaging</td><td>Transactional email with inbound parse, WhatsApp Business conversations</td><td class="n">€100–150</td></tr>
+          <tr><td>Tooling</td><td>Sentry, GitHub, Metabase hosting, Langfuse self-hosted on existing compute</td><td class="n">€150–250</td></tr>
+          <tr class="total"><td>Total</td><td>≈ €30–42K a year, against €1.5M revenue</td><td class="n">€2,500–3,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:16px;font-size:14.5px;color:var(--muted);max-width:78ch">Estimates at current list prices, to be replaced by measured usage after one month of running. The model line is the one that will move — it scales with the agent fleet's cadence, and the first instinct when something is not working will be to run it more often.</p>
+  </div>
+</section>
+
+<section id="dont">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What not to build</h2>
+      <p>Each of these is a quarter of two engineers' time, spent on something that buys nothing at this scale.</p>
+    </div>
+    <div class="nope">
+      <div><b>An agent framework</b><span>Six well-defined agents do not need an orchestration abstraction. Scheduled jobs, good prompts, a queue.</span></div>
+      <div><b>A separate vector database</b><span>pgvector in the Postgres you already run. One fewer thing with its own backup story.</span></div>
+      <div><b>Kubernetes</b><span>Fargate or plain VMs. Nothing here needs a scheduler with its own PhD.</span></div>
+      <div><b>Microservices</b><span>A modular monolith. Two engineers cannot afford distributed-systems debugging.</span></div>
+      <div><b>A fine-tuned model</b><span>Prompt + rules + verifier beats a fine-tune here, and a fine-tune locks you to one model generation.</span></div>
+      <div><b>A custom RAG platform</b><span>pgvector, sensible chunking, and citations back to the fact IDs you already have.</span></div>
+      <div><b>Streaming ingestion</b><span>Daily grain is what every product surface needs. Batch is correct, cheaper, debuggable.</span></div>
+      <div><b>A model abstraction layer</b><span>One provider's SDK, prompts kept as data, call site in one module. That <em>is</em> the abstraction.</span></div>
+      <div><b>Rewriting the integrations</b><span>The moat and the risk. This is the line the whole strategy rests on.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="gate">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Two things to start before you need them</h2>
+      <p>Both have long lead times and both will block a revenue moment if left until the moment arrives.</p>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <div class="lede">Week one, not week forty</div>
+        <h3>The telemetry schema</h3>
+        <p>Recommendations made, accepted, modified, rejected — and the outcome at T+7 and T+28 on the action's own scope. It ships <b>before</b> the features it measures.</p>
+        <p>It is the evidence base for outcome pricing, the training signal for the rules, and the thing that tells you which rules make money. <b>It cannot be backfilled.</b> Same argument as instrumenting disposals for Residual Radar: a month of delay is a month of history that never exists.</p>
+      </div>
+      <div class="panel">
+        <div class="lede">The ambush</div>
+        <h3>ISO 27001</h3>
+        <p>A franchisor's procurement will ask for it, and Network Edition is the largest GTM move on the table. Certification runs six to twelve months.</p>
+        <p>So it starts when the franchisor <b>conversation</b> starts — month one — not when the deal does. Otherwise the biggest single move in the plan stalls behind a certificate, at exactly the moment it is closest to closing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Provenance and health warning.</b> Prepared by Ram Badrinathan, September 2026, for Emmanuel Scuto. Fifth in a set with <em>Building the AI-Native Business</em>, the <em>Monday Brief</em> specification, <em>WeYield's Five Moves</em>, <em>Residual Radar</em> and <em>The Agentic Go-To-Market</em>. <b>WeYield's current technology stack is unknown to me</b> and every recommendation above assumes only that the existing product can expose a scheduled data extract and an API for write-back — confirm both before committing to any of it. Cost figures are estimates at current list prices for a fleet of this size, not quotes. Product-vendor choices in the delivery layer must be checked individually for EU data residency, which varies by provider and changes. The ISO 27001 timeline is typical, not guaranteed.</p>
+  </div>
+</footer>

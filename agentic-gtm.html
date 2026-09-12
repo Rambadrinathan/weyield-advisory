@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.92em%22 font-size=%2290%22>%F0%9F%9A%99</text></svg>">
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>
+(function(){try{var t=localStorage.getItem('wy-theme');
+if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>
+<title>The Agentic Go-To-Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --warn:#B3661A; --warn-soft:#F7E9DA;
+  --bad:#A8341C; --bad-soft:#F7E3DE;
+  --ok:#1D7049; --ok-soft:#DEEDE5;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+    --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+    --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+    --warn:#E0A25C; --warn-soft:#3A2A17;
+    --bad:#EE8468; --bad-soft:#3D1E16;
+    --ok:#59C08C; --ok-soft:#16352A;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --bad:#EE8468; --bad-soft:#3D1E16;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+p{margin:0 0 1em;max-width:66ch}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.hero{padding:52px 0 40px}
+.hero h1{font-size:clamp(33px,4.5vw,56px);font-weight:700;max-width:18ch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:44px;align-items:end}
+.hero-note{border-left:2px solid var(--accent);padding:2px 0 2px 18px;font-size:15.5px;color:var(--ink-2)}
+.hero-note p{margin:0 0 .7em}.hero-note p:last-child{margin:0}
+.hero-note b{color:var(--ink);font-weight:600}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-bottom:26px}
+.sec-head h2{font-size:clamp(25px,3vw,34px);font-weight:600}
+.sec-head p{font-size:16px;color:var(--ink-2);margin:0}
+.sec-head p+p{margin-top:.8em}
+h3.sub{font-size:19px;font-weight:600;margin:34px 0 10px}
+
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px 16px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2);max-width:84ch}
+figcaption b{color:var(--ink);font-weight:600}
+svg text{font-family:Archivo,system-ui,sans-serif;fill:var(--ink)}
+svg .tm{fill:var(--muted)} svg .ta{fill:var(--accent)} svg .tw{fill:var(--warn)}
+svg .tk{fill:var(--ok)} svg .tb{fill:var(--bad)} svg .ti{fill:var(--accent-ink)}
+svg .num{font-family:"JetBrains Mono",monospace}
+svg .fp{fill:var(--paper)} svg .fs{fill:var(--sunk)} svg .fa{fill:var(--accent)}
+svg .fas{fill:var(--accent-soft)} svg .fw{fill:var(--warn)} svg .fws{fill:var(--warn-soft)}
+svg .fb{fill:var(--bad)} svg .fbs{fill:var(--bad-soft)} svg .fk{fill:var(--ok)} svg .fks{fill:var(--ok-soft)}
+svg .fn{fill:none}
+svg .sl{stroke:var(--line)} svg .sl2{stroke:var(--line-2)} svg .si{stroke:var(--ink)}
+svg .sa{stroke:var(--accent)} svg .sw{stroke:var(--warn)} svg .sb{stroke:var(--bad)}
+svg .sk{stroke:var(--ok)} svg .sm{stroke:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.stat b{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:27px;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+.stat.a b{color:var(--accent)} .stat.w b{color:var(--warn)} .stat.k b{color:var(--ok)} .stat.b b{color:var(--bad)}
+
+.tablewrap{overflow-x:auto;margin:6px 0 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:bottom}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px}
+.badge{display:inline-block;font-family:Archivo,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.b-full{background:var(--ok-soft);color:var(--ok)}
+.b-draft{background:var(--warn-soft);color:var(--warn)}
+.b-human{background:var(--bad-soft);color:var(--bad)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px}
+.panel h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.panel p{font-size:15px;margin:0 0 .8em}.panel p:last-child{margin:0}
+.panel b{color:var(--ink);font-weight:600}
+.panel.bad{border-color:var(--bad);background:var(--bad-soft)}
+.panel.good{border-color:var(--ok);background:var(--ok-soft)}
+.panel .lede{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.panel.bad .lede{color:var(--bad)} .panel.good .lede{color:var(--ok)}
+
+.call{padding:18px 22px;border-radius:8px;background:var(--accent-soft);margin:22px 0;max-width:78ch}
+.call.w{background:var(--warn-soft)}
+.call p{margin:0 0 .6em;font-size:15.5px;color:var(--ink)}
+.call p:last-child{margin:0}
+.call .hd{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.call.w .hd{color:var(--warn)}
+
+.sample{background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.sample .bar{padding:11px 20px;background:var(--sunk);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted);font-family:Archivo,sans-serif}
+.sample .body{padding:20px 22px;font-size:15px;color:var(--ink-2)}
+.sample .body p{margin:0 0 .8em}.sample .body p:last-child{margin:0}
+.sample .body b{color:var(--ink)}
+.sample .ref{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--accent);background:var(--accent-soft);padding:0 5px;border-radius:3px}
+
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0;max-width:80ch}
+ol.steps li{position:relative;padding:0 0 22px 48px;border-left:1px solid var(--line);margin-left:15px}
+ol.steps li:last-child{border-left-color:transparent;padding-bottom:0}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:30px;height:30px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+ol.steps li b{font-family:Archivo,sans-serif;font-size:16px;display:block;margin-bottom:3px;color:var(--ink)}
+ol.steps li .when{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:4px}
+ol.steps li span.txt{font-size:15px;color:var(--ink-2);display:block}
+
+footer{border-top:1px solid var(--line);padding:26px 0 54px;font-size:13.5px;color:var(--muted)}
+footer p{max-width:88ch}
+
+@media (max-width:940px){
+  .hero-grid,.sec-head,.two{grid-template-columns:1fr;gap:26px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  figure{padding:16px 16px 12px}
+}
+@media (max-width:560px){ .wrap{padding:0 18px} .stats{grid-template-columns:1fr} }
+</style>
+<style>
+/* --- pack navigation (site build) --- */
+.pack-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:4px 14px;
+  padding:10px 30px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap;
+  font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+.pack-nav .home{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;
+  letter-spacing:-.01em;padding-right:16px;border-right:1px solid var(--line);white-space:nowrap}
+.pack-nav .home span{color:var(--muted);font-weight:500}
+.pack-nav .links{display:flex;gap:3px;flex-wrap:wrap;flex:1 1 auto}
+.pack-nav .links a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:5px 11px;border-radius:5px;white-space:nowrap;line-height:1.3}
+.pack-nav .links a:hover{color:var(--ink);background:var(--sunk,var(--line-2))}
+.pack-nav .links a[aria-current="page"]{color:var(--accent-ink);background:var(--accent);font-weight:600}
+.pack-nav .tog{flex:0 0 auto;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line);
+  border-radius:5px;padding:5px 10px;cursor:pointer;line-height:1.3}
+.pack-nav .tog:hover{color:var(--ink);border-color:var(--muted)}
+@media (max-width:700px){
+  .pack-nav{padding:9px 18px;gap:4px 10px}
+  .pack-nav .home{border-right:none;padding-right:0;width:100%}
+  .pack-nav .links a{font-size:12px;padding:4px 8px}
+}
+@media print{.pack-nav{display:none}}
+</style>
+</head>
+<body>
+<nav class="pack-nav" aria-label="Advisory pack"><a class="home" href="/">WeYield <span>· advisory pack</span></a><div class="links"><a href="/deck">Deck</a><a href="/five-moves">Five Moves</a><a href="/monday-brief">Monday Brief</a><a href="/residual-radar">Residual Radar</a><a href="/agentic-gtm" aria-current="page">Agentic GTM</a><a href="/tech-stack">Tech Stack</a></div><button class="tog" id="wy-tog" type="button">Dark</button></nav>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="g-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="g-arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fa"/></marker>
+    <marker id="g-arK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fk"/></marker>
+    <marker id="g-arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fb"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">WeYield · AI inside the company · go-to-market · Sept 2026</span>
+      <h1 style="margin-top:14px">Agents do not sell faster. They make one-to-many possible.</h1>
+    </div>
+    <div class="hero-note">
+      <p>The tempting version of this is “our reps will send more email.” That version is worth about two extra logos a year and produces slop.</p>
+      <p>The real version: <b>agentic infrastructure is the thing that makes a self-serve tier and a franchisor channel buildable at all.</b> Without it, both are just slides.</p>
+      <p>And WeYield already holds the one asset that makes AI-led acquisition work in this market — it can audit any prospect's actual pricing before ever contacting them.</p>
+    </div>
+  </div>
+</header>
+
+<section id="arithmetic">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Start with the arithmetic, because it settles the argument</h2>
+      <div>
+        <p>Two salespeople land about seven logos each a year. The gap to the addressable market is 480 operators.</p>
+        <p>Make both reps twice as effective and the picture barely moves. <b>Productivity is not the lever. Structure is.</b></p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 400" role="img" aria-label="Three scenarios for closing a gap of four hundred and eighty operators. At today's fourteen logos a year it takes thirty-four years. With agent-assisted reps at thirty-two a year it takes fifteen years. With a self-serve tier and franchisor deals it takes about three years.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">YEARS TO CLOSE THE GAP OF 480 OPERATORS</text>
+
+        <!-- scenario 1 -->
+        <text x="0" y="62" font-size="14.5" font-weight="700">Today</text>
+        <text x="0" y="80" class="tm" font-size="12.5">2 reps × 7 logos = 14 a year</text>
+        <rect x="290" y="46" width="820" height="40" rx="4" class="fbs"/>
+        <text x="306" y="72" class="tb" font-size="15" font-weight="700">34 years</text>
+        <text x="1094" y="72" class="tb" font-size="12.5" text-anchor="end">the market consolidates long before this</text>
+
+        <!-- scenario 2 -->
+        <text x="0" y="146" font-size="14.5" font-weight="700">Agent-assisted reps</text>
+        <text x="0" y="164" class="tm" font-size="12.5">prospecting and research removed;</text>
+        <text x="0" y="181" class="tm" font-size="12.5">2 reps × 16 = 32 a year</text>
+        <rect x="290" y="130" width="362" height="40" rx="4" class="fws"/>
+        <text x="306" y="156" class="tw" font-size="15" font-weight="700">15 years</text>
+        <text x="666" y="156" class="tw" font-size="12.5">better, and still not a plan</text>
+
+        <!-- scenario 3 -->
+        <text x="0" y="240" font-size="14.5" font-weight="700">Structural</text>
+        <text x="0" y="258" class="tm" font-size="12.5">self-serve tier + 2–3 franchisor deals</text>
+        <text x="0" y="275" class="tm" font-size="12.5">+ consultant channel</text>
+        <rect x="290" y="224" width="72" height="40" rx="4" class="fk"/>
+        <text x="306" y="250" class="ti" font-size="15" font-weight="700">~3 yrs</text>
+        <text x="376" y="244" class="tk" font-size="13" font-weight="700">One franchisor deal reaches 50–200 operators.</text>
+        <text x="376" y="262" class="tm" font-size="12.5">Self-serve reaches the segment no rep can afford to call.</text>
+
+        <line x1="290" y1="30" x2="290" y2="290" class="si" stroke-width="1.4"/>
+
+        <line x1="0" y1="316" x2="1200" y2="316" class="sl" stroke-width="1"/>
+        <text x="0" y="342" font-size="14" font-weight="700">So why build agents at all?</text>
+        <text x="0" y="366" class="ta" font-size="13.5" font-weight="600">Because the third bar is not reachable without them.</text>
+        <text x="0" y="388" class="tm" font-size="13">You cannot run a self-serve tier without an onboarding agent, and you cannot service 200 franchisees with network briefs written by hand. Agentic infrastructure is not the growth lever — it is the precondition for the growth lever.</text>
+      </svg>
+      <figcaption><b>Illustrative, on WeYield's own reported numbers</b> — 120 customers, 600 addressable, 10–15% growth from two salespeople. The ranking is the finding: agent-assisted selling roughly doubles rep output, and doubling rep output does not solve this.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="advantage">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The asset nobody else has: they can audit a prospect before contact</h2>
+      <div>
+        <p>Market Radar already shops rates. That means WeYield can compute — for <b>any car rental operator on earth, customer or not</b> — how their prices sit against local competitors, where they are leaving money, and whether they appear at all when a traveller asks an AI assistant.</p>
+        <p>No competitor can open with a quantified, provably-true statement about the prospect's own business. This is the whole of AI-led acquisition here, and it needs no new capability.</p>
+      </div>
+    </div>
+
+    <div class="two" style="align-items:start">
+      <div class="panel bad">
+        <div class="lede">What everyone else sends</div>
+        <h3>Generic outreach, dressed up by a model</h3>
+        <p>“Hi Marc — I noticed you run a car rental business in Nice. Many operators like you struggle with pricing. Would you be open to a 15-minute call to see how WeYield could help?”</p>
+        <p><b>It contains no information.</b> The model made it fluent, which makes it worse — fluent and empty reads as automated. This is the version that burns the domain and the brand.</p>
+      </div>
+      <div>
+        <div class="sample">
+          <div class="bar">What WeYield can send · computed, not written</div>
+          <div class="body">
+            <p><b>Marc — your compact rates at Nice Airport, last 30 days.</b></p>
+            <p>You were below all three of your closest competitors on <b>19 of 30 days</b>, by an average of 6.2% <span class="ref">MR-pub-4471</span>. On the eight days you led, you were 11% above the next operator.</p>
+            <p>Over the October half-term window you are currently 4th of 5 on the broker channel for intermediate <span class="ref">MR-pub-4480</span>, while inbound seat capacity to Nice for those dates is up 5% on last year <span class="ref">RH-pub-0906</span>.</p>
+            <p>The full daily breakdown is attached. It is built entirely from public rate data — nothing of yours.</p>
+            <p><b>If it is useful, keep it. If you want the same view every Monday, that is what we do.</b></p>
+          </div>
+        </div>
+        <p style="font-size:14px;color:var(--muted);margin-top:12px"><b style="color:var(--ink)">The audit is the demo.</b> No meeting request, no deck, no “15 minutes”. A real analysis of their business, given away — and the same facts&nbsp;→&nbsp;rules&nbsp;→&nbsp;composer&nbsp;→&nbsp;verifier pipeline that writes the Monday Brief, pointed at public data instead of connected data.</p>
+      </div>
+    </div>
+
+    <div class="call">
+      <div class="hd">Publish it before you send it</div>
+      <p><b>Ship the audit as a free public tool first, then use it for outbound.</b> Operators who run it on themselves arrive with intent, with consent, and with zero compliance exposure.</p>
+      <p>This matters more in Europe than most founders expect. <b>Germany's §7 UWG requires prior consent for commercial email even business-to-business</b>, and Austria is similar — cold outbound there is a genuine legal risk, not merely poor manners. For DACH the motion has to be inbound, LinkedIn, phone, events or partner-led. A self-serve audit solves that cleanly, and it works everywhere else too.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fleet">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The fleet: seven agents, narrow scopes, risk-tiered autonomy</h2>
+      <div>
+        <p>Every one of them writes to a single system of record, and every one runs on the Monday Brief's engine. Two of them are not sales tools at all — they are what makes Start and Network Edition exist.</p>
+        <p>Autonomy is granted by <b>consequence</b>, not by capability: research is free, sending is gated, committing is never delegated.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 520" role="img" aria-label="Seven go-to-market agents arranged by autonomy level. Cartographer, Scout, Onboarding and Account Health run fully autonomously. Approach Writer and Network Agent produce drafts only. The Conversation agent escalates any pricing or commitment question to a human. All write to one shared record and all run on the Monday Brief engine.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">AUTONOMY IS GRANTED BY CONSEQUENCE, NOT BY CAPABILITY</text>
+
+        <!-- lane labels -->
+        <rect x="0" y="34" width="1200" height="132" rx="7" class="fks" opacity=".5"/>
+        <text x="16" y="56" class="tk" font-size="12.5" font-weight="700">RUNS UNSUPERVISED · wrong output costs nothing but compute</text>
+        <rect x="0" y="178" width="1200" height="132" rx="7" class="fws" opacity=".6"/>
+        <text x="16" y="200" class="tw" font-size="12.5" font-weight="700">DRAFTS ONLY · a person reads it before anyone outside the company does</text>
+        <rect x="0" y="322" width="1200" height="96" rx="7" class="fbs" opacity=".6"/>
+        <text x="16" y="344" class="tb" font-size="12.5" font-weight="700">HARD STOP · never delegated, in any version</text>
+
+        <!-- autonomous agents -->
+        <g font-size="12.5">
+          <rect x="16" y="68" width="278" height="84" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="32" y="92" font-size="14" font-weight="700">Cartographer</text>
+          <text x="32" y="112" class="tm">Discovers and enriches every operator on</text>
+          <text x="32" y="128" class="tm">earth — brand, stations, fleet estimate,</text>
+          <text x="32" y="144" class="tm">PMS vendor, language, contact</text>
+
+          <rect x="306" y="68" width="278" height="84" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="322" y="92" font-size="14" font-weight="700">Scout</text>
+          <text x="322" y="112" class="tm">Runs the public rate audit weekly on all</text>
+          <text x="322" y="128" class="tm">of them. Scores, ranks, and produces</text>
+          <text x="322" y="144" class="tm">the reason to call</text>
+
+          <rect x="596" y="68" width="278" height="84" rx="6" class="fp sa" stroke-width="1.8"/>
+          <text x="612" y="92" class="ta" font-size="14" font-weight="700">Onboarding</text>
+          <text x="612" y="112" class="tm">Reads a messy PMS export, maps the</text>
+          <text x="612" y="128" class="tm">schema, proposes car groups and seasons</text>
+          <text x="612" y="144" class="ta" font-weight="600">→ this is what makes Start exist</text>
+
+          <rect x="886" y="68" width="298" height="84" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="902" y="92" font-size="14" font-weight="700">Account Health</text>
+          <text x="902" y="112" class="tm">Usage decline, alerts ignored three weeks,</text>
+          <text x="902" y="128" class="tm">no logins. The internal edition of the</text>
+          <text x="902" y="144" class="tm">Monday Brief, for sales and coaching</text>
+        </g>
+
+        <!-- draft agents -->
+        <g font-size="12.5">
+          <rect x="16" y="212" width="278" height="84" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="32" y="236" font-size="14" font-weight="700">Approach Writer</text>
+          <text x="32" y="256" class="tm">First touch in the prospect's language,</text>
+          <text x="32" y="272" class="tm">built on the specific audit finding,</text>
+          <text x="32" y="288" class="tm">in the coach's voice</text>
+
+          <rect x="306" y="212" width="278" height="84" rx="6" class="fp sa" stroke-width="1.8"/>
+          <text x="322" y="236" class="ta" font-size="14" font-weight="700">Network Agent</text>
+          <text x="322" y="256" class="tm">League tables and co-branded briefs for</text>
+          <text x="322" y="272" class="tm">franchisors and consultants</text>
+          <text x="322" y="288" class="ta" font-weight="600">→ this is what makes Network exist</text>
+
+          <rect x="596" y="212" width="588" height="84" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="612" y="236" font-size="14" font-weight="700">Conversation</text>
+          <text x="612" y="256" class="tm">Handles inbound replies, qualification and scheduling. Answers only from what it can cite.</text>
+          <text x="612" y="276" class="tb" font-weight="600">A reply responds — it never invents. Any question about price, terms or timing goes to a person immediately.</text>
+        </g>
+
+        <!-- hard stop -->
+        <g font-size="13">
+          <rect x="16" y="356" width="378" height="46" rx="6" class="fp sb" stroke-width="1.6"/>
+          <text x="32" y="384" class="tb" font-weight="700">Quoting a price or discount</text>
+          <rect x="406" y="356" width="378" height="46" rx="6" class="fp sb" stroke-width="1.6"/>
+          <text x="422" y="384" class="tb" font-weight="700">Committing to a date or a feature</text>
+          <rect x="796" y="356" width="388" height="46" rx="6" class="fp sb" stroke-width="1.6"/>
+          <text x="812" y="384" class="tb" font-weight="700">Anything a customer could hold you to</text>
+        </g>
+
+        <!-- shared substrate -->
+        <line x1="0" y1="440" x2="1200" y2="440" class="sl" stroke-width="1"/>
+        <text x="0" y="466" font-size="13.5" font-weight="700">All seven share two things:</text>
+        <text x="212" y="466" class="ta" font-size="13.5" font-weight="600">one system of record</text>
+        <text x="392" y="466" class="tm" font-size="13">(five agents with five views of an account is the classic failure)</text>
+        <text x="212" y="490" class="ta" font-size="13.5" font-weight="600">one engine</text>
+        <text x="312" y="490" class="tm" font-size="13">— facts builder → rules → composer → verifier, the same pipeline that writes the Monday Brief</text>
+        <text x="0" y="514" class="tk" font-size="13" font-weight="600">Which means: once the Brief exists, the go-to-market fleet is mostly configuration, not construction.</text>
+      </svg>
+      <figcaption><b>The design rule underneath all of it: the agent researches, the human sends.</b> With a 600-account market you can afford a person in the loop on every outbound. The bottleneck was never sending capacity — it was research capacity, and that is exactly what agents fix.</figcaption>
+    </figure>
+
+    <h3 class="sub">What each one costs to run</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Agent</th><th>Cadence</th><th>Autonomy</th><th>Rough monthly cost</th></tr></thead>
+        <tbody>
+          <tr><td>Cartographer</td><td>Weekly refresh, 1,000 operators</td><td><span class="badge b-full">unsupervised</span></td><td>€150–300</td></tr>
+          <tr><td>Scout</td><td>Weekly audit, all operators, batched</td><td><span class="badge b-full">unsupervised</span></td><td>€400–800</td></tr>
+          <tr><td>Approach Writer</td><td>~100 drafts a month</td><td><span class="badge b-draft">drafts only</span></td><td>€30</td></tr>
+          <tr><td>Conversation</td><td>Inbound-driven</td><td><span class="badge b-human">escalates</span></td><td>€100</td></tr>
+          <tr><td>Onboarding</td><td>Per new self-serve signup</td><td><span class="badge b-full">unsupervised</span></td><td>€50</td></tr>
+          <tr><td>Account Health</td><td>Weekly, whole base</td><td><span class="badge b-full">unsupervised</span></td><td>€80</td></tr>
+          <tr><td>Network Agent</td><td>Weekly, per network</td><td><span class="badge b-draft">drafts only</span></td><td>€120</td></tr>
+          <tr><td><b>Whole fleet</b></td><td></td><td></td><td><b>≈ €1,000–1,500 · €12–18K a year</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stats" style="margin-top:24px">
+      <div class="stat a"><b>€15K</b><span>the whole agent fleet, per year, plus a €600 server</span></div>
+      <div class="stat"><b>€90K</b><span>one additional salesperson, fully loaded, per year</span></div>
+      <div class="stat k"><b>17%</b><span>what the fleet costs, as a share of one rep</span></div>
+      <div class="stat"><b>2</b><span>GTM motions it unlocks that no rep can deliver</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="answer-layer">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Practise what you are about to sell</h2>
+      <div>
+        <p>WeYield's own market analysis says an AI interpretation layer now sits between operators and travellers, and that being invisible there is a real commercial risk.</p>
+        <p><b>The same thing is happening to WeYield.</b> When an operator asks an assistant “what revenue management software should I use for a car rental fleet”, something gets named.</p>
+      </div>
+    </div>
+    <div class="two">
+      <div class="panel good">
+        <div class="lede">The channel</div>
+        <h3>The Forum, the podcast and the Academy are already the corpus</h3>
+        <p>They are the deepest body of car-rental revenue-management knowledge in public. What they are not is <b>structured, machine-readable and comprehensive</b> — which is what gets a source cited by an answer layer rather than skimmed.</p>
+        <p>Turning years of episodes and Academy material into a properly structured public knowledge base is a content-engine job, runs continuously, and costs almost nothing once the pipeline exists.</p>
+      </div>
+      <div class="panel">
+        <h3>And it is a product argument, not just a marketing one</h3>
+        <p>Doing it gives WeYield the one thing it needs to sell answer-layer monitoring to its customers: <b>the direct experience of having done it to itself</b>, with before-and-after evidence.</p>
+        <p>Michael Meyer has already published the argument for why this matters in car rental. The category will be discussed before it is served. <b>Being second to the idea and first to the product is a good trade.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="antipatterns">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Seven ways this goes wrong</h2>
+      <p>Every one of these is common, and most of them are fatal to the brand rather than merely wasteful.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Anti-pattern</th><th>Why it kills you</th><th>Do this instead</th></tr></thead>
+        <tbody>
+          <tr><td>Building an agent platform</td><td>A nine-person company spends six months on orchestration abstractions and ships nothing.</td><td>Five scheduled jobs, good prompts, a Postgres table and an approval queue. That is the whole platform.</td></tr>
+          <tr><td>Autonomous sending</td><td>One hallucinated figure in a prospect's inbox and the brand is the story. Domain reputation is also very hard to rebuild.</td><td>Draft, verify, human sends. At 600 accounts you can afford it.</td></tr>
+          <tr><td>Model-written outreach</td><td>Fluent and empty reads as automated. The fluency makes it worse, not better.</td><td>The edge is the <b>computed audit</b>, not the prose. Lead with the number.</td></tr>
+          <tr><td>Five agents, five databases</td><td>Sales, marketing and coaching each hold a different truth about the same account, and nobody trusts any of it.</td><td>One system of record. Every agent reads and writes there.</td></tr>
+          <tr><td>No verifier on outbound</td><td>A wrong figure in a prospecting email is worse than no email — you have proven you cannot count, to the buyer of an analytics product.</td><td>Same hard gate as the Monday Brief: every number matched to a fact or the sentence is dropped.</td></tr>
+          <tr><td>Measuring activity</td><td>“Emails sent” goes up and nothing else does. Agents are extremely good at generating activity.</td><td>Measure qualified conversations, audits run, and logos. Nothing else.</td></tr>
+          <tr><td>Ignoring UWG and GDPR</td><td>German B2B cold email needs prior consent. A complaint from one prospect is a much bigger problem than a slow quarter.</td><td>Inbound-first via the public audit; per-market rules encoded in the sending queue, not in someone's memory.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="sequence">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The order to build it</h2>
+      <p>Phases 1 and 2 have standalone value even if nothing else is ever built — which is the test of whether a sequence is honest.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="when">Weeks 1–4 · alongside the Monday Brief</span><b>Cartographer, and one system of record</b><span class="txt">Build the named list. Turn “600–1,000 estimated” into named operators with brand, stations, fleet estimate, PMS vendor and language. <b>This has value on its own</b> — it is also the denominator for every market-share and TAM claim Emmanuel will ever make to an investor.</span></li>
+      <li><span class="when">Weeks 5–8</span><b>Scout, shipped as a public self-serve audit</b><span class="txt">Not as an outbound weapon — as a <b>free tool on the website</b>. Operators run it on themselves. Those who do are the pipeline, and they arrive with consent. This is also the lead magnet for WeYield Start.</span></li>
+      <li><span class="when">Months 3–4</span><b>Approach Writer and the human-send queue</b><span class="txt">Now outbound, drafted from the specific audit finding, in the prospect's language, with per-market sending rules encoded in the queue. Reps stop prospecting entirely and only take qualified conversations.</span></li>
+      <li><span class="when">Months 4–6</span><b>Onboarding and Account Health</b><span class="txt">The onboarding agent is the gate on WeYield Start — no agent, no self-serve tier. Account Health turns the Brief's engine inward and gives the coaching team a churn queue.</span></li>
+      <li><span class="when">Months 6–9</span><b>Network Agent and the content engine</b><span class="txt">Network briefs and league tables make the franchisor pitch demonstrable rather than conceptual — and the franchisor conversation was opened in month one, so this arrives exactly when it is needed.</span></li>
+      <li><span class="when">Continuous</span><b>Structure the corpus for the answer layer</b><span class="txt">Forum, podcast and Academy into a machine-readable public knowledge base. Slow-burning, compounding, and it is the proof point for selling answer-layer monitoring to customers.</span></li>
+    </ol>
+
+    <div class="call w">
+      <div class="hd">One thing to decide before any of it</div>
+      <p><b>Who owns this?</b> Not the product team — that is the point. This is “AI inside the company”, the fast and cheap move, and it must not compete with the product roadmap for the same engineers.</p>
+      <p>At WeYield's size the honest answer is one engineer at roughly half time for a quarter, or the AI-native pod between product sprints. If it is given to whoever is least busy, it will not get built.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Provenance.</b> Prepared by Ram Badrinathan, September 2026, for Emmanuel Scuto. Fourth in a set with <em>Building the AI-Native Business</em>, the <em>Monday Brief</em> specification, <em>WeYield's Five Moves</em> and <em>Residual Radar</em>. Given figures: €1.5M revenue, ~120 customers, 600–1,000 addressable, 9 staff of whom 2 in sales, 10–15% growth (Olivier Jager, 10 September 2026). Everything else — rep productivity, agent running costs, the three timeline scenarios — is an estimate built on those, at current frontier-model list prices with batching and caching assumed; replace with measured usage after one month of running. The German §7 UWG and GDPR points are a flag for counsel, not legal advice, and per-market rules should be confirmed before any outbound sending queue goes live.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('wy-tog');
+  if(!b)return;
+  function cur(){var a=r.getAttribute('data-theme');if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=cur()==='dark'?'Light':'Dark';
+    b.setAttribute('aria-label','Switch to '+(cur()==='dark'?'light':'dark')+' theme');}
+  paint();
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);try{localStorage.setItem('wy-theme',n);}catch(e){}paint();});
+})();
+</script>
+</body>
+</html>

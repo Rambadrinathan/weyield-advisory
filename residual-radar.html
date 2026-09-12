@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.92em%22 font-size=%2290%22>%F0%9F%9A%99</text></svg>">
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>
+(function(){try{var t=localStorage.getItem('wy-theme');
+if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>
+<title>Residual Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --warn:#B3661A; --warn-soft:#F7E9DA;
+  --bad:#A8341C; --bad-soft:#F7E3DE;
+  --ok:#1D7049; --ok-soft:#DEEDE5;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+    --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+    --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+    --warn:#E0A25C; --warn-soft:#3A2A17;
+    --bad:#EE8468; --bad-soft:#3D1E16;
+    --ok:#59C08C; --ok-soft:#16352A;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --bad:#EE8468; --bad-soft:#3D1E16;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+p{margin:0 0 1em;max-width:66ch}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.hero{padding:52px 0 40px}
+.hero h1{font-size:clamp(34px,4.6vw,58px);font-weight:700;max-width:17ch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:44px;align-items:end}
+.hero-note{border-left:2px solid var(--warn);padding:2px 0 2px 18px;font-size:15.5px;color:var(--ink-2)}
+.hero-note p{margin:0 0 .7em}.hero-note p:last-child{margin:0}
+.hero-note b{color:var(--ink);font-weight:600}
+
+/* the equation */
+.eq{margin:26px 0 0;padding:22px 26px;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+.eq .line{font-family:Archivo,sans-serif;font-size:clamp(16px,2vw,23px);font-weight:600;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;letter-spacing:-.01em}
+.eq .op{color:var(--muted);font-weight:500}
+.eq .t1{color:var(--muted)}
+.eq .t2{color:var(--warn);border-bottom:3px solid var(--warn);padding-bottom:2px}
+.eq .t3{color:var(--muted)}
+.eq .note{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 24px;margin-top:18px;font-size:13.5px;color:var(--muted);line-height:1.45}
+.eq .note b{display:block;font-family:Archivo,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.eq .note div:nth-child(2) b{color:var(--warn)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-bottom:26px}
+.sec-head h2{font-size:clamp(25px,3vw,34px);font-weight:600}
+.sec-head p{font-size:16px;color:var(--ink-2);margin:0}
+.sec-head p+p{margin-top:.8em}
+h3.sub{font-size:19px;font-weight:600;margin:34px 0 10px}
+
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px 16px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2);max-width:84ch}
+figcaption b{color:var(--ink);font-weight:600}
+svg text{font-family:Archivo,system-ui,sans-serif;fill:var(--ink)}
+svg .tm{fill:var(--muted)} svg .ta{fill:var(--accent)} svg .tw{fill:var(--warn)}
+svg .tk{fill:var(--ok)} svg .tb{fill:var(--bad)} svg .ti{fill:var(--accent-ink)}
+svg .num{font-family:"JetBrains Mono",monospace}
+svg .fp{fill:var(--paper)} svg .fs{fill:var(--sunk)} svg .fa{fill:var(--accent)}
+svg .fas{fill:var(--accent-soft)} svg .fw{fill:var(--warn)} svg .fws{fill:var(--warn-soft)}
+svg .fb{fill:var(--bad)} svg .fbs{fill:var(--bad-soft)} svg .fk{fill:var(--ok)} svg .fks{fill:var(--ok-soft)}
+svg .fn{fill:none}
+svg .sl{stroke:var(--line)} svg .sl2{stroke:var(--line-2)} svg .si{stroke:var(--ink)}
+svg .sa{stroke:var(--accent)} svg .sw{stroke:var(--warn)} svg .sb{stroke:var(--bad)}
+svg .sk{stroke:var(--ok)} svg .sm{stroke:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.stat b{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:27px;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+.stat.a b{color:var(--accent)} .stat.w b{color:var(--warn)} .stat.k b{color:var(--ok)} .stat.b b{color:var(--bad)}
+
+.tablewrap{overflow-x:auto;margin:6px 0 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:bottom}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px;white-space:nowrap}
+td.wrap-ok:first-child{white-space:normal}
+td.n{font-family:"JetBrains Mono",monospace;font-size:13.5px;white-space:nowrap}
+.badge{display:inline-block;font-family:Archivo,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+.b-free{background:var(--ok-soft);color:var(--ok)}
+.b-lic{background:var(--warn-soft);color:var(--warn)}
+.b-own{background:var(--accent-soft);color:var(--accent)}
+.b-scr{background:var(--sunk);color:var(--muted)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px}
+.panel h3{font-size:18px;font-weight:600;margin-bottom:4px}
+.panel .lede{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.panel.d .lede{color:var(--warn)} .panel.e .lede{color:var(--accent)}
+.panel p{font-size:15px;margin:0 0 .8em}
+.panel p:last-child{margin:0}
+.panel ul{margin:0;padding-left:1.1em;font-size:15px;color:var(--ink-2)}
+.panel li{margin-bottom:.4em}
+.panel b{color:var(--ink);font-weight:600}
+
+.call{padding:18px 22px;border-radius:8px;background:var(--accent-soft);margin:22px 0;max-width:76ch}
+.call.w{background:var(--warn-soft)}
+.call p{margin:0 0 .6em;font-size:15.5px;color:var(--ink)}
+.call p:last-child{margin:0}
+.call b{font-weight:600}
+.call .hd{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.call.w .hd{color:var(--warn)}
+
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0;max-width:76ch}
+ol.steps li{position:relative;padding:0 0 20px 46px;border-left:1px solid var(--line);margin-left:15px}
+ol.steps li:last-child{border-left-color:transparent}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:30px;height:30px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+ol.steps li b{font-family:Archivo,sans-serif;font-size:15.5px;display:block;margin-bottom:2px;color:var(--ink)}
+ol.steps li span{font-size:15px;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 54px;font-size:13.5px;color:var(--muted)}
+footer p{max-width:88ch}
+
+@media (max-width:940px){
+  .hero-grid,.sec-head,.two{grid-template-columns:1fr;gap:26px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .eq .note{grid-template-columns:1fr}
+  figure{padding:16px 16px 12px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 18px}
+  .stats{grid-template-columns:1fr}
+}
+</style>
+<style>
+/* --- pack navigation (site build) --- */
+.pack-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:4px 14px;
+  padding:10px 30px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap;
+  font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+.pack-nav .home{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;
+  letter-spacing:-.01em;padding-right:16px;border-right:1px solid var(--line);white-space:nowrap}
+.pack-nav .home span{color:var(--muted);font-weight:500}
+.pack-nav .links{display:flex;gap:3px;flex-wrap:wrap;flex:1 1 auto}
+.pack-nav .links a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:5px 11px;border-radius:5px;white-space:nowrap;line-height:1.3}
+.pack-nav .links a:hover{color:var(--ink);background:var(--sunk,var(--line-2))}
+.pack-nav .links a[aria-current="page"]{color:var(--accent-ink);background:var(--accent);font-weight:600}
+.pack-nav .tog{flex:0 0 auto;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line);
+  border-radius:5px;padding:5px 10px;cursor:pointer;line-height:1.3}
+.pack-nav .tog:hover{color:var(--ink);border-color:var(--muted)}
+@media (max-width:700px){
+  .pack-nav{padding:9px 18px;gap:4px 10px}
+  .pack-nav .home{border-right:none;padding-right:0;width:100%}
+  .pack-nav .links a{font-size:12px;padding:4px 8px}
+}
+@media print{.pack-nav{display:none}}
+</style>
+</head>
+<body>
+<nav class="pack-nav" aria-label="Advisory pack"><a class="home" href="/">WeYield <span>· advisory pack</span></a><div class="links"><a href="/deck">Deck</a><a href="/five-moves">Five Moves</a><a href="/monday-brief">Monday Brief</a><a href="/residual-radar" aria-current="page">Residual Radar</a><a href="/agentic-gtm">Agentic GTM</a><a href="/tech-stack">Tech Stack</a></div><button class="tog" id="wy-tog" type="button">Dark</button></nav>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="r-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="r-arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fa"/></marker>
+    <marker id="r-arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fw"/></marker>
+    <marker id="r-arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fb"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">WeYield · Horizon 2 product &amp; data plan · Sept 2026</span>
+        <h1 style="margin-top:14px">The car is the asset. The rental is just the carry.</h1>
+      </div>
+      <div class="hero-note">
+        <p>Revenue management optimises what a car earns while you own it. That number pays the clerks, the airport concession and the wash bay.</p>
+        <p><b>The year's actual result is set on the day the car is sold</b> — against a depreciation figure someone estimated two years earlier.</p>
+        <p>No vendor sells that decision to this segment. WeYield holds two of the three things needed to.</p>
+      </div>
+    </div>
+
+    <div class="eq">
+      <div class="line">
+        <span>Year's result</span><span class="op">=</span>
+        <span class="t1">Rental margin</span><span class="op">+</span>
+        <span class="t2">(Sale price − Purchase price)</span><span class="op">−</span>
+        <span class="t3">Holding cost</span>
+      </div>
+      <div class="note">
+        <div><b>Rental margin</b>What WeYield optimises today. On a 1,000-car fleet at 4% net: about €336K a year.</div>
+        <div><b>Residual delta</b>The pool is ~€14M on the same fleet. A 5% miss is €700K — <span style="color:var(--warn);font-weight:600">two years of profit.</span></div>
+        <div><b>Holding cost</b>Financing, insurance, maintenance, tyres, unrecovered damage, storage.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="model">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>How the buy-versus-sell model works</h2>
+      <div>
+        <p>A residual curve is not a straight line, and that is the entire opportunity. Value falls in a smooth glide punctuated by <b>cliffs</b> — dated, knowable events that knock several points off in a week.</p>
+        <p>Hold past a cliff and you pay for it. The decision is not <em>whether</em> to sell but <em>which side of which cliff</em>, and no long-tail operator has the curve in front of them.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>~€22M</b><span>acquisition value, 1,000-car fleet at €22K a unit</span></div>
+      <div class="stat w"><b>~€14M</b><span>expected disposal pool at 24 months</span></div>
+      <div class="stat b"><b>€700K</b><span>impact of a 5% residual miss</span></div>
+      <div class="stat"><b>€336K</b><span>the whole year's net profit, for comparison</span></div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 460" role="img" aria-label="A residual value curve falling from one hundred percent at zero months to about thirty-five percent at forty-eight months, with two step drops: a model facelift announcement at twenty months and warranty expiry at thirty-six months. The optimal disposal window sits between them, from about month twenty to month thirty-four.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">RESIDUAL VALUE AS A SHARE OF ORIGINAL PRICE — TYPICAL EUROPEAN C-SEGMENT, RENTAL SPEC</text>
+
+        <!-- optimal window -->
+        <rect x="476" y="52" width="334" height="288" class="fks" opacity=".7"/>
+        <text x="643" y="76" class="tk" font-size="14" font-weight="700" text-anchor="middle">The window</text>
+        <text x="643" y="94" class="tk" font-size="12" text-anchor="middle">after the facelift hit, before the warranty cliff</text>
+
+        <!-- axes -->
+        <line x1="80" y1="52" x2="80" y2="340" class="sl" stroke-width="1"/>
+        <line x1="80" y1="340" x2="1120" y2="340" class="si" stroke-width="1.2"/>
+        <g class="tm num" font-size="11" text-anchor="end">
+          <text x="72" y="64">100%</text><text x="72" y="144">80%</text><text x="72" y="224">60%</text><text x="72" y="304">40%</text>
+        </g>
+        <g class="sl2" stroke-width="1" stroke-dasharray="3 5">
+          <line x1="80" y1="140" x2="1120" y2="140"/><line x1="80" y1="220" x2="1120" y2="220"/><line x1="80" y1="300" x2="1120" y2="300"/>
+        </g>
+        <g class="tm num" font-size="11" text-anchor="middle">
+          <text x="80" y="358">0</text><text x="330" y="358">12</text><text x="580" y="358">24</text><text x="830" y="358">36</text><text x="1080" y="358">48</text>
+        </g>
+        <text x="600" y="378" class="tm" font-size="12" text-anchor="middle">months in service →</text>
+
+        <!-- curve -->
+        <polyline points="80,60 205,124 330,156 455,188 476,188 476,204 580,216 705,248 830,268 851,268 851,290 955,304 1080,320"
+          class="fn sa" stroke-width="2.6" stroke-linejoin="round"/>
+
+        <!-- cliff 1 -->
+        <line x1="476" y1="52" x2="476" y2="340" class="sw" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <circle cx="476" cy="196" r="5" class="fw"/>
+        <text x="486" y="128" class="tw" font-size="13" font-weight="700">Facelift announced</text>
+        <text x="486" y="145" class="tm" font-size="11.5">the outgoing model reprices overnight</text>
+        <text x="486" y="161" class="tw" font-size="11.5" font-weight="600">−4 points, month 20</text>
+
+        <!-- cliff 2 -->
+        <line x1="851" y1="52" x2="851" y2="340" class="sb" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <circle cx="851" cy="279" r="5" class="fb"/>
+        <text x="861" y="200" class="tb" font-size="13" font-weight="700">Warranty expires</text>
+        <text x="861" y="217" class="tm" font-size="11.5">the retail buyer disappears; you are</text>
+        <text x="861" y="233" class="tm" font-size="11.5">left with trade and export</text>
+        <text x="861" y="249" class="tb" font-size="11.5" font-weight="600">−4 points, month 36</text>
+
+        <!-- other cliffs listed -->
+        <line x1="0" y1="400" x2="1200" y2="400" class="sl" stroke-width="1"/>
+        <text x="0" y="422" font-size="12.5" font-weight="700">Other dated cliffs the curve hides:</text>
+        <g font-size="12.5" class="tm">
+          <text x="250" y="422">mileage thresholds (60k, 100k km)</text>
+          <text x="560" y="422">· registration-year rollover</text>
+          <text x="810" y="422">· the seasonal de-fleet wave →</text>
+        </g>
+        <text x="0" y="446" class="tw" font-size="12.5" font-weight="600">Every one of them is knowable in advance. None of them is on an operator's desk today.</text>
+      </svg>
+      <figcaption><b>Illustrative curve shape.</b> Depths and dates vary by market, model and channel — which is exactly why this has to be driven by a licensed valuation feed rather than a rule of thumb. The <em>structure</em> is what matters: a glide with dated cliffs, and a window between them worth several points of the disposal pool.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="wave">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The signal only WeYield can compute</h2>
+      <div>
+        <p>In a seasonal market every rental operator de-fleets in the same weeks. They flood their own local used market and sell into the trough they collectively created.</p>
+        <p>No operator can see the wave — they see only their own cars. Autovista and Indicata cannot see it either; it hasn't reached the market yet. <b>WeYield can see it forming, months ahead, across its own customer base.</b></p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 440" role="img" aria-label="Monthly bars showing units coming off rental fleets across all operators in one Mediterranean market, spiking sharply in October and November. A price index line overlaid falls about seven percent across exactly those two months, then recovers.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">ONE MEDITERRANEAN MARKET · UNITS COMING OFF FLEET, ALL OPERATORS · AND WHAT IT DOES TO THE LOCAL PRICE</text>
+
+        <line x1="70" y1="46" x2="70" y2="300" class="sl" stroke-width="1"/>
+        <line x1="70" y1="300" x2="1130" y2="300" class="si" stroke-width="1.2"/>
+        <text x="70" y="36" class="tm" font-size="11">units de-fleeted</text>
+        <text x="1130" y="36" class="tw" font-size="11" text-anchor="end">local used price index</text>
+
+        <!-- price gridline at 100 -->
+        <line x1="70" y1="86" x2="1130" y2="86" class="sl2" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="1136" y="90" class="tm num" font-size="10.5">100</text>
+        <text x="1136" y="146" class="tm num" font-size="10.5">93</text>
+
+        <!-- bars: baseline y=300, scale 240px = 240 units -->
+        <g class="fs">
+          <rect x="86" y="260" width="62" height="40"/>
+          <rect x="174" y="270" width="62" height="30"/>
+          <rect x="262" y="255" width="62" height="45"/>
+          <rect x="350" y="240" width="62" height="60"/>
+          <rect x="438" y="250" width="62" height="50"/>
+          <rect x="526" y="270" width="62" height="30"/>
+          <rect x="614" y="280" width="62" height="20"/>
+          <rect x="702" y="280" width="62" height="20"/>
+        </g>
+        <g class="fw">
+          <rect x="790" y="210" width="62" height="90"/>
+          <rect x="878" y="80" width="62" height="220"/>
+          <rect x="966" y="120" width="62" height="180"/>
+        </g>
+        <rect x="1054" y="240" width="62" height="60" class="fs"/>
+
+        <g class="tm num" font-size="11" text-anchor="middle">
+          <text x="117" y="318">Jan</text><text x="205" y="318">Feb</text><text x="293" y="318">Mar</text><text x="381" y="318">Apr</text>
+          <text x="469" y="318">May</text><text x="557" y="318">Jun</text><text x="645" y="318">Jul</text><text x="733" y="318">Aug</text>
+          <text x="821" y="318" class="tw">Sep</text><text x="909" y="318" class="tw">Oct</text><text x="997" y="318" class="tw">Nov</text><text x="1085" y="318">Dec</text>
+        </g>
+
+        <!-- price line: y=86 at index 100, y=146 at 93 -->
+        <polyline points="117,86 205,86 293,88 381,86 469,86 557,88 645,90 733,88 821,102 909,146 997,138 1085,110"
+          class="fn sb" stroke-width="2.6"/>
+        <g class="fb">
+          <circle cx="909" cy="146" r="5"/><circle cx="733" cy="88" r="4"/>
+        </g>
+
+        <!-- annotations -->
+        <path d="M733 76 L733 56 L640 56" class="fn sk" stroke-width="1.4" color="var(--ok)" marker-end="url(#r-ar)"/>
+        <text x="632" y="52" class="tk" font-size="12.5" font-weight="700" text-anchor="end">Sell here</text>
+        <text x="632" y="68" class="tm" font-size="11.5" text-anchor="end">before the wave, at index 100</text>
+
+        <text x="909" y="170" class="tb" font-size="12.5" font-weight="700" text-anchor="middle">Everyone sells here</text>
+        <text x="909" y="187" class="tb" font-size="11.5" text-anchor="middle">−7% on the units that matter most</text>
+
+        <line x1="0" y1="352" x2="1200" y2="352" class="sl" stroke-width="1"/>
+        <text x="0" y="376" font-size="13" font-weight="700">Why nobody else has this:</text>
+        <text x="0" y="398" class="tm" font-size="12.5">The operator sees only their own cars. The valuation providers see the market <tspan font-style="italic">after</tspan> the stock arrives — by then the price has already moved.</text>
+        <text x="0" y="420" class="ta" font-size="12.5" font-weight="600">WeYield sees the forward de-fleet plans of many operators in the same market. That is a local supply forecast, and supply is what sets the trough.</text>
+      </svg>
+      <figcaption><b>Illustrative shape, real mechanism.</b> Telling one operator to bring 40% of its disposals forward to August is worth roughly 5–7% on those units — on a €14M pool with 40% in the window, about <b>€300K</b>. This is a cross-tenant benchmark product, not a data licence, and it is the reason a competitor cannot copy the module by buying the same feed.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="sensitivity">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Diesel and electricity are not the same kind of risk</h2>
+      <div>
+        <p>Both get called “powertrain risk” and lumped together. They behave completely differently — different speed, different signal, different response — and confusing them is how a fleet plan goes wrong.</p>
+        <p>One is a policy cliff announced years ahead. The other is a price shock with no warning at all.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 380" role="img" aria-label="Two contrasting timelines. A diesel low-emission-zone announcement causes a slow eighteen to twenty-four month bleed in residual value starting immediately. A new electric vehicle price cut passes through to used values almost fully within four to eight weeks with no warning.">
+        <!-- diesel -->
+        <text x="0" y="18" class="tw" font-size="12" font-weight="700" letter-spacing="1.2">DIESEL — A POLICY CLIFF, ANNOUNCED YEARS AHEAD, BLEEDING SLOWLY</text>
+        <line x1="30" y1="120" x2="1000" y2="120" class="sl" stroke-width="1.5"/>
+        <polyline points="30,60 150,62 300,74 470,92 660,110 850,124 1000,130" class="fn sw" stroke-width="2.6"/>
+        <circle cx="150" cy="62" r="6" class="fw"/>
+        <line x1="150" y1="40" x2="150" y2="150" class="sw" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <text x="160" y="52" class="tw" font-size="12.5" font-weight="700">City announces a 2029 restriction</text>
+        <text x="160" y="68" class="tm" font-size="11.5">public, dated, geographic — you can price it today</text>
+        <text x="470" y="152" class="tm" font-size="12" text-anchor="middle">18–24 months of steady bleed as the resale catchment shrinks</text>
+        <text x="1010" y="126" class="tw" font-size="12.5" font-weight="700">−8 to −15%</text>
+        <text x="1010" y="142" class="tm" font-size="11">vs a compliant equivalent</text>
+        <text x="30" y="176" class="tk" font-size="12.5" font-weight="600">Response: you have two years. Change what you buy, and shift disposal to a compliant catchment.</text>
+
+        <line x1="0" y1="200" x2="1200" y2="200" class="sl" stroke-width="1"/>
+
+        <!-- EV -->
+        <text x="0" y="230" class="ta" font-size="12" font-weight="700" letter-spacing="1.2">ELECTRIC — A PRICE SHOCK, NO WARNING, ALMOST INSTANT</text>
+        <line x1="30" y1="330" x2="1000" y2="330" class="sl" stroke-width="1.5"/>
+        <polyline points="30,262 380,262 400,268 440,300 500,314 660,318 850,320 1000,320" class="fn sa" stroke-width="2.6"/>
+        <circle cx="390" cy="262" r="6" class="fa"/>
+        <line x1="390" y1="246" x2="390" y2="352" class="sa" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <text x="400" y="252" class="ta" font-size="12.5" font-weight="700">A maker cuts new prices 8%</text>
+        <text x="400" y="268" class="tm" font-size="11.5">no notice — a used EV competes directly with a new one</text>
+        <text x="470" y="352" class="tm" font-size="12">4–8 weeks to near-full pass-through</text>
+        <text x="1010" y="322" class="ta" font-size="12.5" font-weight="700">−10 to −15%</text>
+        <text x="1010" y="338" class="tm" font-size="11">decaying with vehicle age</text>
+        <text x="30" y="374" class="tw" font-size="12.5" font-weight="600">Response: you cannot dodge it. You can only limit exposure in advance — which means the buy decision, not the sell decision.</text>
+      </svg>
+      <figcaption><b>The practical consequence.</b> Diesel exposure is managed on the <em>disposal</em> side, because you get years of warning. EV exposure can only be managed on the <em>acquisition</em> side, because by the time it happens the loss is already taken. A product that treats them the same gives the wrong advice for one of them.</figcaption>
+    </figure>
+
+    <h3 class="sub">What actually moves fleet value — and what does not</h3>
+    <p>Ranked for a Mediterranean franchisee: 1,000 cars, 60% diesel, 20% BEV, 20% petrol, €14M disposal pool, 24-month hold. Annual net profit for scale: <b>€336K</b>.</p>
+
+    <figure>
+      <svg viewBox="0 0 1200 420" role="img" aria-label="A ranked bar chart of value at risk. Diesel policy shift is the largest at six hundred and seventy-two thousand euros, then new electric vehicle price cut at four hundred and twenty thousand, selling into the de-fleet wave at three hundred thousand, hold-length miss at two hundred and fifty thousand, wrong disposal channel at one hundred and forty thousand, and electricity price shock smallest at one hundred and twelve thousand. Annual profit of three hundred and thirty-six thousand is marked as a reference line.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">VALUE AT RISK IN ONE YEAR, € THOUSAND · ILLUSTRATIVE</text>
+
+        <!-- profit reference -->
+        <line x1="754" y1="40" x2="754" y2="330" class="sk" stroke-width="1.6" stroke-dasharray="6 4"/>
+        <text x="762" y="54" class="tk" font-size="12" font-weight="700">€336K = the whole year's profit</text>
+        <text x="762" y="70" class="tm" font-size="11">everything to the right of this line exceeds it</text>
+
+        <!-- bars: x0=400, scale 700px = 700k -->
+        <g font-size="13">
+          <text x="392" y="102" text-anchor="end" font-weight="600">Diesel policy shift</text>
+          <text x="392" y="118" text-anchor="end" class="tm" font-size="11">a new LEZ in your resale catchment · −8% on 60% of the pool</text>
+          <rect x="400" y="88" width="672" height="30" class="fw"/>
+          <text x="1080" y="108" class="tw num" font-size="13" font-weight="700">672</text>
+
+          <text x="392" y="152" text-anchor="end" font-weight="600">New-EV price cut</text>
+          <text x="392" y="168" text-anchor="end" class="tm" font-size="11">−15% on 20% of the pool, passed through in weeks</text>
+          <rect x="400" y="138" width="420" height="30" class="fa"/>
+          <text x="828" y="158" class="ta num" font-size="13" font-weight="700">420</text>
+
+          <text x="392" y="202" text-anchor="end" font-weight="600">Selling into the de-fleet wave</text>
+          <text x="392" y="218" text-anchor="end" class="tm" font-size="11">−5% on the 40% you dispose of in October</text>
+          <rect x="400" y="188" width="300" height="30" class="fb"/>
+          <text x="708" y="208" class="tb num" font-size="13" font-weight="700">300</text>
+
+          <text x="392" y="252" text-anchor="end" font-weight="600">Hold-length miss</text>
+          <text x="392" y="268" text-anchor="end" class="tm" font-size="11">three months past the cliff on half the fleet</text>
+          <rect x="400" y="238" width="250" height="30" class="fs"/>
+          <text x="658" y="258" class="num" font-size="13" font-weight="700">250</text>
+
+          <text x="392" y="302" text-anchor="end" font-weight="600">Wrong disposal channel</text>
+          <text x="392" y="318" text-anchor="end" class="tm" font-size="11">auction where retail or export would have paid more</text>
+          <rect x="400" y="288" width="140" height="30" class="fs"/>
+          <text x="548" y="308" class="num" font-size="13" font-weight="700">140</text>
+
+          <text x="392" y="352" text-anchor="end" font-weight="600">Electricity price shock</text>
+          <text x="392" y="368" text-anchor="end" class="tm" font-size="11">a large sustained move, softening used EV demand via running cost</text>
+          <rect x="400" y="338" width="112" height="30" class="fs"/>
+          <text x="520" y="358" class="num" font-size="13" font-weight="700">112</text>
+        </g>
+
+        <line x1="400" y1="82" x2="400" y2="374" class="si" stroke-width="1.4"/>
+        <line x1="0" y1="394" x2="1200" y2="394" class="sl2" stroke-width="1"/>
+        <text x="0" y="414" class="tw" font-size="13" font-weight="700">Electricity price is the one everybody asks about and it ranks last — four times smaller than the new-EV price cut nobody models.</text>
+      </svg>
+      <figcaption><b>Illustrative magnitudes on a stated fleet profile</b> — the ranking is the finding, not the exact euros. Note the shape: <b>four of the six exceed the entire annual profit</b>, and the two largest are powertrain, not operations. For an EV-heavy Nordic fleet the order inverts; for a petrol-heavy island fleet the top two collapse and the de-fleet wave leads. Running this per account is the product.</figcaption>
+    </figure>
+
+    <div class="two" style="margin-top:26px">
+      <div class="panel d">
+        <div class="lede">Diesel — the mechanism</div>
+        <h3>It is not the fuel price. It is whether the car can enter the city.</h3>
+        <ul>
+          <li><b>Euro standard vs zone rules</b> decide the resale catchment. A Euro 6b that cannot enter Paris, Brussels or Milan is sold to a smaller, poorer pool — or exported at a discount.</li>
+          <li><b>The announcements are public and dated.</b> A 2029 restriction announced in 2026 is a priceable event three years early. This is unusually forecastable for a residual driver.</li>
+          <li><b>Export demand is the floor</b> — North Africa, the Caucasus, Eastern Europe. It moves with FX and with those markets' own emission rules.</li>
+          <li>Pump-price spread between diesel and petrol matters, but it is second order behind access rules.</li>
+        </ul>
+      </div>
+      <div class="panel e">
+        <div class="lede">Electric — the mechanism</div>
+        <h3>A used EV competes with a new one, and new EV prices move overnight.</h3>
+        <ul>
+          <li><b>New-price cuts pass through at close to 1:1</b> within 4–8 weeks, decaying with age. This is the dominant driver and the fastest.</li>
+          <li><b>Subsidy changes cut both ways.</b> A <em>new</em>-car purchase subsidy <em>depresses</em> used values by making new cheaper — a counter-intuitive result worth modelling explicitly.</li>
+          <li><b>Battery State of Health</b> is becoming a priced attribute. A certificate (AVILOO, TÜV and similar) is starting to be worth real money at disposal.</li>
+          <li><b>Electricity price</b> works only through total cost of ownership: expensive power narrows the running-cost advantage and softens used demand. Real, but small next to the above.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="call w">
+      <div class="hd">Be honest about what the product can and cannot do</div>
+      <p>WeYield cannot forecast diesel policy or a manufacturer's pricing decision, and should never claim to. What it can do is tell an operator <b>what their exposure is</b>, <b>alert them the day a driver moves</b>, and <b>say what to do about it</b>.</p>
+      <p>Exposure, alerting and response is a complete and saleable product. Claiming macro forecasting is the black-box-distrust trap all over again — in a market that has already named distrust as its adoption blocker.</p>
+    </div>
+  </div>
+</section>
+
+<section id="feeds">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Where the data comes from</h2>
+      <div>
+        <p>Four tiers. Two are free and available on Monday, one is a scraping job WeYield already has the machinery for, and one is a commercial negotiation that has to start now because it is the long pole.</p>
+        <p>The fifth input is the one nobody can buy — and it is why this becomes a moat rather than a resale of somebody else's feed.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 470" role="img" aria-label="Five input tiers feeding a residual model: licensed valuation data, wholesale transaction data, free public policy and energy signals, scraped classified listings, and WeYield's own proprietary disposal records and forward de-fleet plans. The model outputs a mark-to-market fleet position, a hold-versus-sell recommendation, a sensitivity view and a buy-mix plan.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">THE DATA SUPPLY CHAIN</text>
+
+        <!-- tiers -->
+        <g font-size="12.5">
+          <rect x="0" y="34" width="300" height="66" rx="6" class="fws"/>
+          <text x="16" y="56" class="tw" font-size="13" font-weight="700">1 · Licensed valuation</text>
+          <text x="16" y="74" class="tm">Autovista / Schwacke / Glass's · Indicata</text>
+          <text x="16" y="90" class="tm">cap hpi · JATO · DAT</text>
+          <text x="290" y="56" class="tw" font-size="10.5" font-weight="700" text-anchor="end">LICENSED</text>
+
+          <rect x="0" y="112" width="300" height="66" rx="6" class="fws"/>
+          <text x="16" y="134" class="tw" font-size="13" font-weight="700">2 · Wholesale transactions</text>
+          <text x="16" y="152" class="tm">BCA / Constellation · Manheim / Cox</text>
+          <text x="16" y="168" class="tm">OPENLANE · Autorola</text>
+          <text x="290" y="134" class="tw" font-size="10.5" font-weight="700" text-anchor="end">LICENSED</text>
+
+          <rect x="0" y="190" width="300" height="66" rx="6" class="fks"/>
+          <text x="16" y="212" class="tk" font-size="13" font-weight="700">3 · Public policy &amp; energy</text>
+          <text x="16" y="230" class="tm">urbanaccessregulations.eu · EC Oil Bulletin</text>
+          <text x="16" y="246" class="tm">ENTSO-E · OEM list prices</text>
+          <text x="290" y="212" class="tk" font-size="10.5" font-weight="700" text-anchor="end">FREE</text>
+
+          <rect x="0" y="268" width="300" height="66" rx="6" class="fs"/>
+          <text x="16" y="290" font-size="13" font-weight="700">4 · Classified listings</text>
+          <text x="16" y="308" class="tm">AutoScout24 · mobile.de · La Centrale</text>
+          <text x="16" y="324" class="tm">Autotrader · Coches.net · Otomoto</text>
+          <text x="290" y="290" class="tm" font-size="10.5" font-weight="700" text-anchor="end">SCRAPED</text>
+
+          <rect x="0" y="346" width="300" height="80" rx="6" class="fas"/>
+          <text x="16" y="368" class="ta" font-size="13" font-weight="700">5 · WeYield's own</text>
+          <text x="16" y="386" class="ta">disposal prices achieved, 50+ countries</text>
+          <text x="16" y="402" class="ta">forward de-fleet plans by market</text>
+          <text x="16" y="418" class="ta">rental contribution per unit</text>
+          <text x="290" y="368" class="ta" font-size="10.5" font-weight="700" text-anchor="end">PROPRIETARY</text>
+        </g>
+
+        <!-- arrows in -->
+        <g stroke-width="1.3" color="var(--muted)">
+          <line x1="304" y1="67" x2="386" y2="150" class="sm" marker-end="url(#r-ar)"/>
+          <line x1="304" y1="145" x2="386" y2="180" class="sm" marker-end="url(#r-ar)"/>
+          <line x1="304" y1="223" x2="386" y2="210" class="sm" marker-end="url(#r-ar)"/>
+          <line x1="304" y1="301" x2="386" y2="240" class="sm" marker-end="url(#r-ar)"/>
+        </g>
+        <line x1="304" y1="386" x2="386" y2="272" class="sa" stroke-width="2.2" marker-end="url(#r-arA)"/>
+
+        <!-- model -->
+        <rect x="392" y="130" width="230" height="164" rx="7" class="fa"/>
+        <text x="507" y="164" class="ti" font-size="15" font-weight="700" text-anchor="middle">Residual model</text>
+        <text x="507" y="188" class="ti" font-size="11.5" text-anchor="middle">per unit, per market, per channel</text>
+        <line x1="412" y1="202" x2="602" y2="202" stroke="var(--accent-ink)" stroke-width="1" opacity=".4"/>
+        <text x="412" y="222" class="ti" font-size="11.5">base curve × powertrain factor</text>
+        <text x="412" y="240" class="ti" font-size="11.5">× zone compliance × local supply</text>
+        <text x="412" y="258" class="ti" font-size="11.5">× channel × season × condition</text>
+        <text x="412" y="280" class="ti" font-size="11" font-style="italic">coefficients fitted, not assumed</text>
+
+        <!-- outputs -->
+        <g stroke-width="1.3" color="var(--ink)">
+          <line x1="626" y1="160" x2="700" y2="86" class="si" marker-end="url(#r-ar)"/>
+          <line x1="626" y1="196" x2="700" y2="176" class="si" marker-end="url(#r-ar)"/>
+          <line x1="626" y1="228" x2="700" y2="266" class="si" marker-end="url(#r-ar)"/>
+          <line x1="626" y1="264" x2="700" y2="356" class="si" marker-end="url(#r-ar)"/>
+        </g>
+        <g font-size="12.5">
+          <rect x="706" y="52" width="330" height="66" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="722" y="74" font-size="13" font-weight="700">Fleet P&amp;L, marked to market</text>
+          <text x="722" y="94" class="tm">booked depreciation vs today's real value —</text>
+          <text x="722" y="110" class="tm">the screen that makes the owner the buyer</text>
+
+          <rect x="706" y="142" width="330" height="66" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="722" y="164" font-size="13" font-weight="700">Hold or sell, per cohort</text>
+          <text x="722" y="184" class="tm">the disposal window, the channel,</text>
+          <text x="722" y="200" class="tm">and what waiting costs you</text>
+
+          <rect x="706" y="232" width="330" height="66" rx="6" class="fp sl" stroke-width="1"/>
+          <text x="722" y="254" font-size="13" font-weight="700">Sensitivity and alerts</text>
+          <text x="722" y="274" class="tm">your exposure to each driver, and a</text>
+          <text x="722" y="290" class="tm">notification the day one of them moves</text>
+
+          <rect x="706" y="322" width="330" height="66" rx="6" class="fp sa" stroke-width="1.8"/>
+          <text x="722" y="344" class="ta" font-size="13" font-weight="700">Next year's buy mix</text>
+          <text x="722" y="364" class="tm">how much diesel, how much electric —</text>
+          <text x="722" y="380" class="tm">the question actually keeping owners up</text>
+        </g>
+
+        <line x1="0" y1="446" x2="1200" y2="446" class="sl2" stroke-width="1"/>
+        <text x="0" y="466" class="ta" font-size="12.5" font-weight="600">Tiers 1–4 are available to any competitor. Tier 5 is not, and it is what turns a bought feed into a defensible product.</text>
+      </svg>
+      <figcaption><b>Buy the baseline, build the edge.</b> Licence the valuation data for the curve, take the free policy and energy signals for the sensitivity layer, and instrument WeYield's own customers' disposals for the part nobody else can assemble.</figcaption>
+    </figure>
+
+    <h3 class="sub">The feeds, named</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Source</th><th>Coverage</th><th>What it gives you</th><th>Access</th></tr></thead>
+        <tbody>
+          <tr><td>Indicata <span class="badge b-lic">licensed</span></td><td>Pan-European, some other markets</td><td><b>Live market</b>: stock, asking prices, <b>days-to-sell</b>, market days' supply, by model and region. Velocity leads price by weeks — the best early warning available.</td><td class="n">API · <b>start here</b></td></tr>
+          <tr><td>Autovista Group <span class="badge b-lic">licensed</span></td><td>DE (Schwacke), UK (Glass's), CH/AT/Nordics/CEE (Eurotax), ES, IT</td><td><b>Forward residual forecasts</b> at 12/24/36/48 months by make, model, spec, mileage. The European industry standard, used by every leasing captive.</td><td class="n">API</td></tr>
+          <tr><td>cap hpi <span class="badge b-lic">licensed</span></td><td>UK</td><td>The UK standard — current and future residual values.</td><td class="n">API</td></tr>
+          <tr><td>JATO Dynamics <span class="badge b-lic">licensed</span></td><td>Global</td><td><b>New-car prices, specs and registrations</b>, plus the model-change calendar. The input for EV pass-through and facelift cliffs.</td><td class="n">API</td></tr>
+          <tr><td>BCA / Constellation <span class="badge b-lic">licensed</span></td><td>Europe</td><td><b>Actual wholesale transactions</b>, not asking prices. Rental fleets are among their largest vendors, so the mix matches WeYield's customers.</td><td class="n">Data product · or via disposals</td></tr>
+          <tr><td>Manheim / Cox <span class="badge b-lic">licensed</span></td><td>US, UK, EU</td><td>Wholesale transactions. The <b>Manheim Index</b> is published monthly and free as a directional benchmark.</td><td class="n">API · index free</td></tr>
+          <tr class="wrap-ok"><td>urbanaccessregulations.eu / CLARS <span class="badge b-free">free</span></td><td>Europe-wide</td><td><b>The diesel signal.</b> Every low-emission and zero-emission zone, with dates and vehicle-class rules. Dated, forward-looking and geographic.</td><td class="n">Public registry</td></tr>
+          <tr><td>EC Weekly Oil Bulletin <span class="badge b-free">free</span></td><td>EU member states</td><td>Diesel and petrol pump prices, weekly, machine-readable.</td><td class="n">Public download</td></tr>
+          <tr><td>ENTSO-E Transparency <span class="badge b-free">free</span></td><td>Europe</td><td>Wholesale electricity prices. Pair with national retail tariffs for the EV running-cost input.</td><td class="n">Free API</td></tr>
+          <tr><td>OEM configurators <span class="badge b-scr">scraped</span></td><td>Per market</td><td><b>New list prices.</b> A price cut is a same-day used-EV event — this is the highest-value, lowest-cost signal on the whole list.</td><td class="n">Existing scraper</td></tr>
+          <tr class="wrap-ok"><td>AutoScout24, mobile.de, La Centrale, Autotrader, Coches.net, Otomoto <span class="badge b-scr">scraped</span></td><td>Per market</td><td>Asking price, <b>listing count</b> (supply) and <b>time-on-site</b> (velocity) by model, spec, age, region. WeYield already runs rate-shop scraping — this is a small extension, not a new capability.</td><td class="n">Check ToS and EU database rights</td></tr>
+          <tr class="wrap-ok"><td>WeYield customers' disposals <span class="badge b-own">proprietary</span></td><td>50+ countries, incl. markets the indices barely cover</td><td>Date, vehicle, mileage, channel, <b>price actually achieved</b>. A transaction dataset in the exact segment commercial coverage is weakest — islands, North Africa, secondary markets.</td><td class="n">Instrument now — cannot be backfilled</td></tr>
+          <tr class="wrap-ok"><td>WeYield forward de-fleet plans <span class="badge b-own">proprietary</span></td><td>Cross-tenant, per market</td><td><b>Local used-supply forecast.</b> Nobody else can compute it — not the operator, not the valuation providers.</td><td class="n">Derived from the fleet ledger</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="call">
+      <div class="hd">The negotiating position worth opening with</div>
+      <p>Do not open as a procurement conversation. <b>Open as a barter.</b> Indicata and Autovista genuinely want rental de-fleet transaction data in secondary and island markets, which is where their coverage is thinnest and where WeYield has customers.</p>
+      <p>Data-for-data, or a heavily reduced licence with contributed data, is a realistic structure — and it is far cheaper than buying <b>redistribution rights</b>, which is the expensive part and the one that takes months, because the whole point is to show the numbers to 120+ operators.</p>
+    </div>
+  </div>
+</section>
+
+<section id="do">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What to do about it, in order</h2>
+      <p>Steps 1 to 3 cost nothing and can start this week. Step 4 is the long pole and is why the conversation opens now rather than when the module is designed.</p>
+    </div>
+    <ol class="steps">
+      <li><b>Instrument disposals immediately — before anything else.</b><span>Every unit WeYield's customers sell from today: date, vehicle, spec, mileage, channel, price achieved. This is the proprietary asset, it costs almost nothing to start capturing, and <b>it cannot be backfilled.</b> Six months of delay is six months of the moat never built.</span></li>
+      <li><b>Build the fleet ledger from data you already have.</b><span>Acquisition date and price, in-service date, mileage, planned disposal. Kill-risk 2 from the strategy applies here: confirm which of these fields actually flow from the PMS integrations before promising a timeline.</span></li>
+      <li><b>Wire the free signals and ship the exposure view.</b><span>The LEZ registry, the oil bulletin, ENTSO-E and OEM list prices are free and available now. On their own they give you an <em>exposure</em> report — “61% of your fleet is diesel, and 40% of it cannot enter your two largest resale cities from 2029” — which is a sellable artefact before a single valuation licence is signed.</span></li>
+      <li><b>Open the Indicata conversation as a barter.</b><span>Critical path for everything above. Commercial negotiation runs longer than any integration, so it starts in week one of Horizon 2, not when the module is designed.</span></li>
+      <li><b>Fit the coefficients; do not assume them.</b><span>Powertrain factors, LEZ elasticity and EV pass-through can all be estimated from 2022–2026 history, which contains a real energy shock and a real EV price war to learn from. A fitted coefficient is defensible to a customer; a rule of thumb is not.</span></li>
+      <li><b>Ship the de-fleet wave first among the paid features.</b><span>It needs no valuation licence — only WeYield's own forward plans — it is worth real money on its own, and it is the one thing a competitor cannot copy by buying the same feed.</span></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Provenance and health warning.</b> Prepared by Ram Badrinathan, September 2026, for Emmanuel Scuto. Companion to <em>WeYield — Building the AI-Native Business</em>, the <em>Monday Brief</em> specification and <em>WeYield's Five Moves</em>. Only the WeYield figures are given — €1.5M revenue, ~120 customers, 600–1,000 addressable, ~4% operator net margin (Olivier Jager, 10 September 2026). Every fleet figure on this page — €22K acquisition, €14M disposal pool, the curve shape, the sensitivity magnitudes, the de-fleet wave — is an illustrative construction on a stated fleet profile, built to show the mechanism and its order of magnitude, not to forecast. Vendor coverage, API availability and commercial terms are as understood at the date of writing and <b>must be confirmed directly with each provider</b>, particularly for WeYield's island, North African and New Zealand markets where I have no basis to assume coverage exists. Replace every number here with WeYield's own before any of it reaches a customer, a partner or an investor.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('wy-tog');
+  if(!b)return;
+  function cur(){var a=r.getAttribute('data-theme');if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=cur()==='dark'?'Light':'Dark';
+    b.setAttribute('aria-label','Switch to '+(cur()==='dark'?'light':'dark')+' theme');}
+  paint();
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);try{localStorage.setItem('wy-theme',n);}catch(e){}paint();});
+})();
+</script>
+</body>
+</html>

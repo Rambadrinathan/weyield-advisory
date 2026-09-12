@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.92em%22 font-size=%2290%22>%F0%9F%9A%99</text></svg>">
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>
+(function(){try{var t=localStorage.getItem('wy-theme');
+if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>
+<title>WeYield's Five Moves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-2:#0E7C8F; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --warn:#B3661A; --warn-soft:#F7E9DA;
+  --ok:#1D7049; --ok-soft:#DEEDE5;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+    --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+    --accent:#4FC2D4; --accent-2:#7BD8E6; --accent-soft:#12363E; --accent-ink:#08181C;
+    --warn:#E0A25C; --warn-soft:#3A2A17;
+    --ok:#59C08C; --ok-soft:#16352A;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-2:#7BD8E6; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.ui{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.1}
+p{margin:0 0 1em;max-width:66ch}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* hero */
+.hero{padding:52px 0 42px}
+.hero h1{font-size:clamp(36px,5vw,62px);font-weight:700;max-width:16ch}
+.hero .thesis{font-size:clamp(19px,2.1vw,23px);line-height:1.45;max-width:40ch;color:var(--ink-2);margin:20px 0 0}
+.hero .thesis b{color:var(--ink);font-weight:600}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:44px;align-items:end}
+.hero-note{border-left:2px solid var(--accent);padding:2px 0 2px 18px;font-size:15px;color:var(--ink-2)}
+.hero-note p{margin:0 0 .7em}
+.hero-note p:last-child{margin:0}
+
+/* generic section */
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-bottom:26px}
+.sec-head h2{font-size:clamp(25px,3vw,34px);font-weight:600}
+.sec-head p{font-size:16px;color:var(--ink-2);margin:0}
+.sec-head p+p{margin-top:.8em}
+
+/* figures */
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px 16px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2);max-width:80ch}
+figcaption b{color:var(--ink);font-weight:600}
+svg text{font-family:Archivo,system-ui,sans-serif;fill:var(--ink)}
+svg .tm{fill:var(--muted)}
+svg .ta{fill:var(--accent)}
+svg .tw{fill:var(--warn)}
+svg .tk{fill:var(--ok)}
+svg .ti{fill:var(--accent-ink)}
+svg .num{font-family:"JetBrains Mono",monospace}
+svg .fp{fill:var(--paper)}
+svg .fs{fill:var(--sunk)}
+svg .fa{fill:var(--accent)}
+svg .fas{fill:var(--accent-soft)}
+svg .fw{fill:var(--warn)}
+svg .fws{fill:var(--warn-soft)}
+svg .fk{fill:var(--ok)}
+svg .fks{fill:var(--ok-soft)}
+svg .fn{fill:none}
+svg .sl{stroke:var(--line)}
+svg .sl2{stroke:var(--line-2)}
+svg .si{stroke:var(--ink)}
+svg .sa{stroke:var(--accent)}
+svg .sw{stroke:var(--warn)}
+svg .sk{stroke:var(--ok)}
+svg .sm{stroke:var(--muted)}
+
+/* stat tiles */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 28px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.stat b{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:27px;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+.stat.a b{color:var(--accent)} .stat.w b{color:var(--warn)} .stat.k b{color:var(--ok)}
+
+/* product blocks */
+.prod{padding:44px 0;border-top:1px solid var(--line)}
+.prod-head{display:flex;gap:18px;align-items:flex-start;margin-bottom:8px}
+.rank{flex:0 0 auto;width:44px;height:44px;border-radius:8px;display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:700;font-size:19px;background:var(--accent);color:var(--accent-ink)}
+.rank.now{background:var(--ok)}
+.prod-head h2{font-size:clamp(24px,2.8vw,32px);font-weight:600}
+.prod-head .kick{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.prod-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-top:22px}
+.qa{display:grid;grid-template-columns:118px minmax(0,1fr);gap:6px 18px;font-size:15.5px;align-items:baseline}
+.qa dt{font-family:Archivo,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding-top:4px}
+.qa dd{margin:0 0 12px;color:var(--ink-2)}
+.qa dd b{color:var(--ink);font-weight:600}
+.pill{display:inline-block;font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:var(--accent-soft);color:var(--accent);vertical-align:2px}
+.pill.k{background:var(--ok-soft);color:var(--ok)}
+.pill.w{background:var(--warn-soft);color:var(--warn)}
+.risk{margin-top:16px;padding:13px 16px;background:var(--warn-soft);border-radius:6px;font-size:14.5px;color:var(--ink)}
+.risk b{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--warn);display:block;margin-bottom:3px}
+
+/* misc */
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px}
+td.n{font-family:"JetBrains Mono",monospace;font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th.n{text-align:right}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.aside{background:var(--sunk);border-radius:8px;padding:20px 24px}
+.aside h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.aside p{font-size:15px;color:var(--ink-2);margin:0 0 .7em}
+.aside p:last-child{margin:0}
+footer{border-top:1px solid var(--line);padding:26px 0 54px;font-size:13.5px;color:var(--muted)}
+footer p{max-width:86ch}
+
+@media (max-width:940px){
+  .hero-grid,.sec-head,.prod-grid,.two{grid-template-columns:1fr;gap:26px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  figure{padding:16px 16px 12px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 18px}
+  .stats{grid-template-columns:1fr}
+  .qa{grid-template-columns:1fr;gap:0}
+  .qa dt{padding-top:8px}
+}
+</style>
+<style>
+/* --- pack navigation (site build) --- */
+.pack-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:4px 14px;
+  padding:10px 30px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap;
+  font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+.pack-nav .home{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;
+  letter-spacing:-.01em;padding-right:16px;border-right:1px solid var(--line);white-space:nowrap}
+.pack-nav .home span{color:var(--muted);font-weight:500}
+.pack-nav .links{display:flex;gap:3px;flex-wrap:wrap;flex:1 1 auto}
+.pack-nav .links a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:5px 11px;border-radius:5px;white-space:nowrap;line-height:1.3}
+.pack-nav .links a:hover{color:var(--ink);background:var(--sunk,var(--line-2))}
+.pack-nav .links a[aria-current="page"]{color:var(--accent-ink);background:var(--accent);font-weight:600}
+.pack-nav .tog{flex:0 0 auto;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--line);
+  border-radius:5px;padding:5px 10px;cursor:pointer;line-height:1.3}
+.pack-nav .tog:hover{color:var(--ink);border-color:var(--muted)}
+@media (max-width:700px){
+  .pack-nav{padding:9px 18px;gap:4px 10px}
+  .pack-nav .home{border-right:none;padding-right:0;width:100%}
+  .pack-nav .links a{font-size:12px;padding:4px 8px}
+}
+@media print{.pack-nav{display:none}}
+</style>
+</head>
+<body>
+<nav class="pack-nav" aria-label="Advisory pack"><a class="home" href="/">WeYield <span>· advisory pack</span></a><div class="links"><a href="/deck">Deck</a><a href="/five-moves" aria-current="page">Five Moves</a><a href="/monday-brief">Monday Brief</a><a href="/residual-radar">Residual Radar</a><a href="/agentic-gtm">Agentic GTM</a><a href="/tech-stack">Tech Stack</a></div><button class="tog" id="wy-tog" type="button">Dark</button></nav>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fa"/></marker>
+    <marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fw"/></marker>
+    <marker id="arM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">WeYield · AI-native product &amp; GTM portfolio · Sept 2026</span>
+      <h1 style="margin-top:14px">Decision-rich,<br>judgement-poor.</h1>
+      <p class="thesis">A 300-car operator makes the same decisions as Hertz. Hertz has a department for each one. <b>The operator has their gut, one clerk, and a spreadsheet.</b></p>
+    </div>
+    <div class="hero-note">
+      <p>AI does not fix this by forecasting better — Revenue Horizon already forecasts.</p>
+      <p>It fixes it by putting <b>expert judgement at the point of every decision</b>, in the operator's language, on their channel, at near-zero marginal cost. The department without the headcount.</p>
+      <p>WeYield owns the ingredients: cross-tenant data, an encoded method, the integrations, a coaching culture. Five moves put that judgement where it is missing.</p>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The problem, drawn</h2>
+      <div>
+        <p>Five decisions run a car rental business. They differ by a factor of a thousand in frequency, and every one of them is made late, on partial data, by someone with forty other things to do.</p>
+        <p>Read down each column: who makes that call at a major, who makes it at a long-tail operator, and whether WeYield is in the room.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 452" role="img" aria-label="Five decisions from annual fleet buying to per-rental counter upsell. At a major each has a dedicated department; at a 300-car operator each falls to the owner or one clerk. WeYield covers only the two middle columns, weekly rate strategy and daily rate moves.">
+        <!-- column headers -->
+        <text x="0" y="18" class="tm" font-size="12" font-weight="600" letter-spacing="1.4">THE DECISION</text>
+        <g font-size="15" font-weight="600">
+          <text x="196" y="46">Buy the fleet</text>
+          <text x="398" y="46">Size &amp; place it</text>
+          <text x="600" y="46">Set rate strategy</text>
+          <text x="802" y="46">Move rates &amp; cars</text>
+          <text x="1004" y="46">Sell at the counter</text>
+        </g>
+        <g font-size="12" class="tm">
+          <text x="196" y="65">1–2× a year</text>
+          <text x="398" y="65">quarterly</text>
+          <text x="600" y="65">weekly</text>
+          <text x="802" y="65">daily</text>
+          <text x="1004" y="65">every rental</text>
+        </g>
+        <g font-size="12" class="tm">
+          <text x="196" y="83">how many, which models, at what price</text>
+          <text x="398" y="83">how many of each group, at which station</text>
+          <text x="600" y="83">where to sit against the market</text>
+          <text x="802" y="83">this rate, this transfer, this window</text>
+          <text x="1004" y="83">upgrade, waiver, extras</text>
+        </g>
+        <line x1="0" y1="96" x2="1200" y2="96" class="sl" stroke-width="1"/>
+
+        <!-- row A -->
+        <text x="0" y="128" font-size="13" font-weight="600">At Hertz or Europcar</text>
+        <text x="0" y="146" class="tm" font-size="12">a department each</text>
+        <g font-size="13">
+          <rect x="190" y="110" width="190" height="52" rx="5" class="fs"/><text x="204" y="132">Fleet &amp;</text><text x="204" y="149">procurement team</text>
+          <rect x="392" y="110" width="190" height="52" rx="5" class="fs"/><text x="406" y="141">Network planning</text>
+          <rect x="594" y="110" width="190" height="52" rx="5" class="fs"/><text x="608" y="132">Revenue</text><text x="608" y="149">management team</text>
+          <rect x="796" y="110" width="190" height="52" rx="5" class="fs"/><text x="810" y="132">RM analysts</text><text x="810" y="149">+ an RMS</text>
+          <rect x="998" y="110" width="190" height="52" rx="5" class="fs"/><text x="1012" y="132">Trained staff,</text><text x="1012" y="149">scripts, incentives</text>
+        </g>
+
+        <!-- row B -->
+        <text x="0" y="206" font-size="13" font-weight="600">At a 300-car operator</text>
+        <text x="0" y="224" class="tw" font-size="12">one person each</text>
+        <g font-size="13">
+          <rect x="190" y="188" width="190" height="52" rx="5" class="fws"/><text x="204" y="219" class="tw" font-weight="600">Owner's gut</text>
+          <rect x="392" y="188" width="190" height="52" rx="5" class="fws"/><text x="406" y="219" class="tw" font-weight="600">Owner's gut</text>
+          <rect x="594" y="188" width="190" height="52" rx="5" class="fws"/><text x="608" y="219" class="tw" font-weight="600">One clerk</text>
+          <rect x="796" y="188" width="190" height="52" rx="5" class="fws"/><text x="810" y="219" class="tw" font-weight="600">One clerk</text>
+          <rect x="998" y="188" width="190" height="52" rx="5" class="fws"/><text x="1012" y="219" class="tw" font-weight="600">Whoever is on shift</text>
+        </g>
+
+        <!-- row C -->
+        <text x="0" y="284" font-size="13" font-weight="600">WeYield today</text>
+        <text x="0" y="302" class="tm" font-size="12">two of five</text>
+        <g font-size="13">
+          <rect x="190" y="266" width="190" height="52" rx="5" class="fn sl" stroke-dasharray="4 4" stroke-width="1.2"/><text x="204" y="297" class="tm">Not covered</text>
+          <rect x="392" y="266" width="190" height="52" rx="5" class="fn sa" stroke-dasharray="4 4" stroke-width="1.4"/><text x="406" y="290" class="ta">Demand side only —</text><text x="406" y="306" class="ta">no value, no timing</text>
+          <rect x="594" y="266" width="190" height="52" rx="5" class="fa"/><text x="608" y="297" class="ti" font-weight="600">Covered</text>
+          <rect x="796" y="266" width="190" height="52" rx="5" class="fa"/><text x="810" y="297" class="ti" font-weight="600">Covered</text>
+          <rect x="998" y="266" width="190" height="52" rx="5" class="fn sl" stroke-dasharray="4 4" stroke-width="1.2"/><text x="1012" y="297" class="tm">Not covered</text>
+        </g>
+
+        <!-- brackets -->
+        <line x1="190" y1="342" x2="582" y2="342" class="sw" stroke-width="1.5"/>
+        <line x1="190" y1="342" x2="190" y2="334" class="sw" stroke-width="1.5"/>
+        <line x1="582" y1="342" x2="582" y2="334" class="sw" stroke-width="1.5"/>
+        <text x="196" y="362" class="tw" font-size="13" font-weight="600">The year's profit is decided here</text>
+        <text x="196" y="379" class="tm" font-size="12">resale value of the car, minus what you paid for it</text>
+
+        <line x1="594" y1="342" x2="986" y2="342" class="sa" stroke-width="1.5"/>
+        <line x1="594" y1="342" x2="594" y2="334" class="sa" stroke-width="1.5"/>
+        <line x1="986" y1="342" x2="986" y2="334" class="sa" stroke-width="1.5"/>
+        <text x="600" y="362" class="ta" font-size="13" font-weight="600">WeYield sells here</text>
+        <text x="600" y="379" class="tm" font-size="12">€12,500 average contract</text>
+
+        <line x1="998" y1="342" x2="1188" y2="342" class="sw" stroke-width="1.5"/>
+        <line x1="998" y1="342" x2="998" y2="334" class="sw" stroke-width="1.5"/>
+        <line x1="1188" y1="342" x2="1188" y2="334" class="sw" stroke-width="1.5"/>
+        <text x="1004" y="362" class="tw" font-size="13" font-weight="600">And a third of it here</text>
+        <text x="1004" y="379" class="tm" font-size="12">ancillaries, at 80–90% margin</text>
+
+        <line x1="0" y1="404" x2="1200" y2="404" class="sl2" stroke-width="1"/>
+        <text x="0" y="428" font-size="13.5" font-weight="600">Net margin on the whole business:</text>
+        <text x="252" y="428" class="tw" font-size="13.5" font-weight="600">about 4%</text>
+        <text x="330" y="428" class="tm" font-size="13">— which is why a small mistake in any column is the whole year.</text>
+      </svg>
+      <figcaption><b>The gap is not analysis. It is judgement, at the moment of the decision.</b> WeYield's software is excellent in the two columns it occupies. The other three have no vendor at all in this segment — and two of them decide most of the profit.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Five moves, and what each one changes</h2>
+      <div>
+        <p>Two of them raise <b>revenue per account</b>. Two change <b>how many accounts WeYield can reach</b> — solving "two salespeople, 600 operators" without hiring a rep. One is the engine the others run on.</p>
+        <p>Bars show build-and-land windows, not effort. Network Edition starts on Monday and lands last, because franchisor procurement is the long pole.</p>
+      </div>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 1200 470" role="img" aria-label="Timeline from month 0 to 18 with two lanes. Raising revenue per account: Monday Brief lands at month 2, Ancillary Yield at month 6, Managed Revenue at month 12. Raising number of accounts: WeYield Start at month 8, Network Edition begins immediately but lands between months 9 and 18.">
+        <!-- time axis -->
+        <g class="tm num" font-size="12">
+          <text x="150" y="26" text-anchor="middle" class="tm">month 0</text>
+          <text x="430" y="26" text-anchor="middle" class="tm">6</text>
+          <text x="710" y="26" text-anchor="middle" class="tm">12</text>
+          <text x="1130" y="26" text-anchor="middle" class="tm">18</text>
+        </g>
+        <line x1="150" y1="38" x2="1170" y2="38" class="sl" stroke-width="1"/>
+        <g class="sl2" stroke-width="1" stroke-dasharray="3 5">
+          <line x1="150" y1="38" x2="150" y2="440"/>
+          <line x1="430" y1="38" x2="430" y2="440"/>
+          <line x1="710" y1="38" x2="710" y2="440"/>
+          <line x1="1130" y1="38" x2="1130" y2="440"/>
+        </g>
+
+        <!-- lane 1 -->
+        <text x="0" y="72" font-size="14" font-weight="700">Raises revenue</text>
+        <text x="0" y="90" font-size="14" font-weight="700">per account</text>
+        <text x="0" y="110" class="tm" font-size="12">same customers, bigger contract</text>
+
+        <rect x="150" y="60" width="105" height="56" rx="6" class="fk"/>
+        <text x="164" y="82" class="ti" font-size="14" font-weight="700">Monday Brief</text>
+        <text x="164" y="101" class="ti" font-size="11.5">engine + first product</text>
+        <text x="270" y="82" font-size="13.5" font-weight="600">Retention, tier pull, and the rules engine everything else runs on</text>
+        <text x="270" y="101" class="tm" font-size="12.5">8 weeks · 2 engineers · €0.12 a brief · ships without a hire or a partnership</text>
+
+        <rect x="290" y="132" width="200" height="56" rx="6" class="fa"/>
+        <text x="304" y="154" class="ti" font-size="14" font-weight="700">Ancillary Yield</text>
+        <text x="304" y="173" class="ti" font-size="11.5">the counter moment</text>
+        <text x="505" y="154" font-size="13.5" font-weight="600">Prices the highest-margin third of the business, which nobody yields today</text>
+        <text x="505" y="173" class="tm" font-size="12.5">+€75K a year on a 300-car account, at ~90% margin · outcome-priceable from day one</text>
+
+        <rect x="430" y="204" width="330" height="56" rx="6" class="fa"/>
+        <text x="444" y="226" class="ti" font-size="14" font-weight="700">Managed Revenue</text>
+        <text x="444" y="245" class="ti" font-size="11.5">RM-as-a-service</text>
+        <text x="775" y="226" font-size="13.5" font-weight="600">Sells a revenue manager, not a tool — 2× today's contract</text>
+        <text x="775" y="245" class="tm" font-size="12.5">one coach supervises 25 accounts · needs the Brief's telemetry first</text>
+
+        <line x1="0" y1="286" x2="1200" y2="286" class="sl" stroke-width="1"/>
+
+        <!-- lane 2 -->
+        <text x="0" y="318" font-size="14" font-weight="700">Raises number</text>
+        <text x="0" y="336" font-size="14" font-weight="700">of accounts</text>
+        <text x="0" y="356" class="tm" font-size="12">fixes GTM structurally</text>
+
+        <rect x="336" y="306" width="240" height="56" rx="6" class="fa"/>
+        <text x="350" y="328" class="ti" font-size="14" font-weight="700">WeYield Start</text>
+        <text x="350" y="347" class="ti" font-size="11.5">self-serve, agent-onboarded</text>
+        <text x="591" y="328" font-size="13.5" font-weight="600">Opens the 20–150 car segment that implementation cost has always excluded</text>
+        <text x="591" y="347" class="tm" font-size="12.5">2,000 operators × €2,400 = €4.8M of new TAM · every one densifies the benchmark</text>
+
+        <rect x="150" y="378" width="980" height="56" rx="6" class="fn sa" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="164" y="400" class="ta" font-size="14" font-weight="700">Network Edition</text>
+        <text x="164" y="419" class="ta" font-size="11.5">franchisors &amp; consultants</text>
+        <text x="360" y="400" font-size="13.5" font-weight="600">One deal = 50–200 operators. Start the conversation Monday; it lands last.</text>
+        <text x="360" y="419" class="tm" font-size="12.5">consultant channel converts in weeks · franchisor procurement runs 9–18 months</text>
+        <text x="1142" y="404" class="ta" font-size="11.5" font-weight="600">↑</text>
+        <text x="1142" y="419" class="ta" font-size="11.5" font-weight="600">lands</text>
+      </svg>
+      <figcaption><b>Solid bars are decided; the dashed bar is a conversation that has to start before it can land.</b> Every move attaches to what WeYield already has — no rewrite of the integrations, no rewrite of the forecasting core.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ PRODUCT 1 ============ -->
+<div class="prod" id="p1">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="rank now">0</div>
+      <div>
+        <div class="kick">Ships first · already specified</div>
+        <h2>Monday Brief</h2>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <dl class="qa">
+          <dt>Decision</dt><dd>The <b>weekly</b> one — and it is the only column where an owner currently gets nothing at all in writing.</dd>
+          <dt>What it is</dt><dd>Every Monday, the owner gets a 500-word brief in a coach's voice: what moved, what the market did, what is coming, and <b>three actions each with a euro value</b>. They reply <span class="mono">DONE</span>, <span class="mono">SKIP</span> or <span class="mono">WHY</span>.</dd>
+          <dt>Why now</dt><dd>Uses only data WeYield already holds. No partnership, no new integration, <b>no user interface</b> — tier-A briefs land as drafts in the coach's own mailbox.</dd>
+          <dt>The catch</dt><dd>It is also the <b>engine</b>. Facts builder, rules engine, composer and verifier are shared by everything below.</dd>
+        </dl>
+        <div class="risk"><b>Gate</b>Does Performance Hub expose per-account data at station × car group × day grain? If not, week 1 is a data-access sprint and the plan slips two weeks — not eight.</div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 620 400" role="img" aria-label="One shared engine of four deterministic and generative stages feeding five product surfaces. Facts builder and rules engine are code; the composer writes and the verifier checks every number against a fact before send.">
+          <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">THE SHARED ENGINE</text>
+
+          <rect x="0" y="30" width="620" height="132" rx="7" class="fs"/>
+          <g font-size="12.5">
+            <rect x="14" y="46" width="136" height="46" rx="5" class="fp sl" stroke-width="1"/><text x="26" y="66" font-weight="600">Facts builder</text><text x="26" y="83" class="tm" font-size="11">every number, with an ID</text>
+            <rect x="166" y="46" width="136" height="46" rx="5" class="fp sl" stroke-width="1"/><text x="178" y="66" font-weight="600">Rules engine</text><text x="178" y="83" class="tm" font-size="11">the coach's method, coded</text>
+            <rect x="318" y="46" width="136" height="46" rx="5" class="fa"/><text x="330" y="66" class="ti" font-weight="600">Composer</text><text x="330" y="83" class="ti" font-size="11">writes · never computes</text>
+            <rect x="470" y="46" width="136" height="46" rx="5" class="fp sa" stroke-width="1.6"/><text x="482" y="66" class="ta" font-weight="600">Verifier</text><text x="482" y="83" class="ta" font-size="11">hard gate on every figure</text>
+          </g>
+          <g class="si" stroke-width="1.3" color="var(--ink)" marker-end="url(#ar)">
+            <line x1="152" y1="69" x2="162" y2="69"/><line x1="304" y1="69" x2="314" y2="69"/><line x1="456" y1="69" x2="466" y2="69"/>
+          </g>
+          <text x="14" y="118" class="tm" font-size="11.5">code</text>
+          <text x="166" y="118" class="tm" font-size="11.5">code</text>
+          <text x="318" y="118" class="ta" font-size="11.5" font-weight="600">model</text>
+          <text x="470" y="118" class="tm" font-size="11.5">code + sampled judge</text>
+          <text x="14" y="145" font-size="12">A sentence whose numbers do not match a fact is <tspan font-weight="600">dropped before send</tspan>.</text>
+
+          <!-- surfaces -->
+          <text x="0" y="196" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">FIVE SURFACES ON IT</text>
+          <g class="sm" stroke-width="1.2" stroke-dasharray="3 3">
+            <line x1="70" y1="162" x2="70" y2="212"/><line x1="188" y1="162" x2="188" y2="212"/>
+            <line x1="306" y1="162" x2="306" y2="212"/><line x1="424" y1="162" x2="424" y2="212"/><line x1="542" y1="162" x2="542" y2="212"/>
+          </g>
+          <g font-size="12" text-anchor="middle">
+            <rect x="14" y="212" width="112" height="60" rx="5" class="fks"/><text x="70" y="235" class="tk" font-weight="700">Monday</text><text x="70" y="251" class="tk" font-weight="700">Brief</text><text x="70" y="266" class="tk" font-size="10.5">weekly, to owners</text>
+            <rect x="132" y="212" width="112" height="60" rx="5" class="fas"/><text x="188" y="235" class="ta" font-weight="700">Managed</text><text x="188" y="251" class="ta" font-weight="700">Revenue</text><text x="188" y="266" class="ta" font-size="10.5">daily, guardrailed</text>
+            <rect x="250" y="212" width="112" height="60" rx="5" class="fas"/><text x="306" y="235" class="ta" font-weight="700">Ancillary</text><text x="306" y="251" class="ta" font-weight="700">Yield</text><text x="306" y="266" class="ta" font-size="10.5">per reservation</text>
+            <rect x="368" y="212" width="112" height="60" rx="5" class="fas"/><text x="424" y="235" class="ta" font-weight="700">Network</text><text x="424" y="251" class="ta" font-weight="700">Edition</text><text x="424" y="266" class="ta" font-size="10.5">rolled up to 200</text>
+            <rect x="486" y="212" width="112" height="60" rx="5" class="fas"/><text x="542" y="235" class="ta" font-weight="700">WeYield</text><text x="542" y="251" class="ta" font-weight="700">Start</text><text x="542" y="266" class="ta" font-size="10.5">self-serve tier</text>
+          </g>
+
+          <line x1="0" y1="300" x2="620" y2="300" class="sl" stroke-width="1"/>
+          <text x="0" y="324" font-size="12.5" font-weight="600">Build the engine once.</text>
+          <text x="0" y="344" font-size="12.5" class="tm">The four products below are new fact types, new rules, and a different</text>
+          <text x="0" y="362" font-size="12.5" class="tm">delivery surface — not four new systems.</text>
+          <text x="0" y="388" font-size="12" class="tw" font-weight="600">This is the whole reason to build the Brief first.</text>
+        </svg>
+        <figcaption><b>Why order matters.</b> Each later product is the same pipeline with new facts and new rules. Build them in any other order and the engine gets written four times.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT 2 ============ -->
+<div class="prod" id="p2">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="rank">1</div>
+      <div>
+        <div class="kick">Raises revenue per account · month 6–12</div>
+        <h2>Managed Revenue <span class="pill">RM-as-a-Service</span></h2>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <dl class="qa">
+          <dt>Decision</dt><dd>The <b>daily</b> rate — for the operators who have nobody to make it.</dd>
+          <dt>Problem</dt><dd>Most of the long tail cannot hire a revenue manager: €40–60K loaded, scarce skill, and a 200-car fleet does not justify it. Rates get set by copying the neighbour. <b>WeYield's software needs a user who does not exist in the building.</b></dd>
+          <dt>Product</dt><dd>WeYield runs your revenue function. Guardrails set at onboarding — floors, ceilings, maximum daily move, channels. The agent acts inside them; anything outside goes to a coach.</dd>
+          <dt>Sold as</dt><dd>A <b>salary substitute, not a tool</b>. “A revenue manager for €2,000 a month instead of €4,500.” Or base plus a share of RPD uplift — the Aircar +6% is the proof point.</dd>
+        </dl>
+        <div class="stats" style="grid-template-columns:1fr 1fr;margin:18px 0 0">
+          <div class="stat k"><b>€75K</b><span>value of +3% RPD to a 300-car operator, per year</span></div>
+          <div class="stat a"><b>€600K</b><span>one coach × 25 accounts × €24K, at ~88% gross margin</span></div>
+        </div>
+        <div class="risk"><b>Risk</b>Liability for autonomous moves. Start at <em>recommend + one-tap approve</em>; graduate to <em>execute within guardrails</em> per account, only as that account's telemetry earns it.</div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 620 396" role="img" aria-label="Today one coach serves three or four accounts doing the analysis themselves. With an agent inside guardrails, one coach supervises twenty-five accounts and only handles the exceptions the guardrail rejects.">
+          <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">TODAY</text>
+          <rect x="0" y="28" width="92" height="40" rx="5" class="fp sl" stroke-width="1"/><text x="14" y="53" font-size="13" font-weight="600">Coach</text>
+          <g class="sm" stroke-width="1.2" color="var(--muted)" marker-end="url(#arM)">
+            <line x1="96" y1="38" x2="180" y2="30"/><line x1="96" y1="48" x2="180" y2="48"/><line x1="96" y1="58" x2="180" y2="66"/>
+          </g>
+          <text x="106" y="84" class="tm" font-size="11">analysis + judgement, by hand</text>
+          <g font-size="12.5">
+            <rect x="186" y="18" width="86" height="24" rx="4" class="fs"/><text x="196" y="35">Account</text>
+            <rect x="186" y="48" width="86" height="24" rx="4" class="fs"/><text x="196" y="65">Account</text>
+            <rect x="186" y="78" width="86" height="24" rx="4" class="fs"/><text x="196" y="95">Account</text>
+          </g>
+          <text x="290" y="52" class="tw" font-size="22" font-weight="700">1 : 3</text>
+          <text x="290" y="72" class="tm" font-size="12">the coaching business does not scale</text>
+
+          <line x1="0" y1="122" x2="620" y2="122" class="sl" stroke-width="1"/>
+
+          <text x="0" y="150" class="ta" font-size="11.5" font-weight="600" letter-spacing="1.3">WITH AN AGENT INSIDE GUARDRAILS</text>
+          <!-- loop -->
+          <g font-size="12">
+            <rect x="0" y="166" width="104" height="44" rx="5" class="fp sl" stroke-width="1"/><text x="12" y="184" font-weight="600">Facts pack</text><text x="12" y="200" class="tm" font-size="10.5">pace · rates · fleet</text>
+            <rect x="132" y="166" width="104" height="44" rx="5" class="fa"/><text x="144" y="184" class="ti" font-weight="600">Agent</text><text x="144" y="200" class="ti" font-size="10.5">proposes a move</text>
+            <rect x="264" y="166" width="104" height="44" rx="5" class="fp sa" stroke-width="1.6"/><text x="276" y="184" class="ta" font-weight="600">Guardrail</text><text x="276" y="200" class="ta" font-size="10.5">floor · ceiling · step</text>
+            <rect x="396" y="166" width="112" height="44" rx="5" class="fp sl" stroke-width="1"/><text x="408" y="184" font-weight="600">PMS write-back</text><text x="408" y="200" class="tm" font-size="10.5">the rate actually moves</text>
+            <rect x="536" y="166" width="84" height="44" rx="5" class="fp sl" stroke-width="1"/><text x="548" y="184" font-weight="600">Outcome</text><text x="548" y="200" class="tm" font-size="10.5">at T+7</text>
+          </g>
+          <g class="si" stroke-width="1.3" color="var(--ink)" marker-end="url(#ar)">
+            <line x1="106" y1="188" x2="128" y2="188"/><line x1="238" y1="188" x2="260" y2="188"/><line x1="370" y1="188" x2="392" y2="188"/><line x1="510" y1="188" x2="532" y2="188"/>
+          </g>
+          <text x="240" y="160" class="tk" font-size="10.5" font-weight="600">inside</text>
+
+          <!-- feedback -->
+          <path d="M578 212 L578 244 L168 244 L168 214" class="fn sa" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arA)"/>
+          <text x="330" y="260" class="ta" font-size="11.5" text-anchor="middle">telemetry — which rules make money, for whom</text>
+
+          <!-- exception path -->
+          <path d="M316 212 L316 292" class="fn sw" stroke-width="1.6" marker-end="url(#arW)"/>
+          <text x="326" y="252" class="tw" font-size="11.5" font-weight="600">outside the guardrail</text>
+          <rect x="252" y="296" width="128" height="40" rx="5" class="fws"/><text x="266" y="321" class="tw" font-size="13" font-weight="700">Coach decides</text>
+
+          <line x1="0" y1="356" x2="620" y2="356" class="sl2" stroke-width="1"/>
+          <text x="0" y="382" class="tk" font-size="22" font-weight="700">1 : 25</text>
+          <text x="86" y="376" font-size="12.5" font-weight="600">The coach stops being an analyst and becomes a supervisor.</text>
+          <text x="86" y="392" class="tm" font-size="12">This is the gross-margin unlock in the whole plan, sold as a product.</text>
+        </svg>
+        <figcaption><b>The guardrail is the product, not the model.</b> It is what lets an operator hand over the daily rate, and what lets one coach hold twenty-five accounts instead of three.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT 3 ============ -->
+<div class="prod" id="p3">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="rank">2</div>
+      <div>
+        <div class="kick">Raises revenue per account · month 3–6</div>
+        <h2>Ancillary Yield <span class="pill">the counter moment</span></h2>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <dl class="qa">
+          <dt>Decision</dt><dd>The <b>counter moment</b> — thousands of times a day, by whoever is on shift.</dd>
+          <dt>Problem</dt><dd>Upgrades, waivers, GPS, child seats, fuel, additional driver, cross-border are <b>25–35% of revenue at 80–90% margin</b> — priced flat, sold inconsistently, by high-turnover staff. WeYield yields the daily rate to the euro and leaves the highest-margin third of the business unmanaged.</dd>
+          <dt>Why now</dt><dd>ML prices the upsell per reservation; a language model writes the script for <em>this</em> booking in the agent's language — <em>“compact, 9 days, two adults: offer the intermediate at +€9 a day, here is the sentence.”</em> Plus a pre-arrival offer 48 hours out — the airline pattern that converts 8–15%.</dd>
+          <dt>Sold as</dt><dd>Pure upsell to the base. Buyer is the RM <em>and</em> the COO — already a persona on WeYield's own site. <b>Outcome-priceable from day one</b>, because the metric is clean.</dd>
+        </dl>
+        <div class="risk"><b>Scope discipline</b>Needs a counter touchpoint, which WeYield does not own. Ship pre-arrival email and price write-back first — no counter integration required. Leave the handheld screen to the PMS partners.</div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 620 430" role="img" aria-label="A width-by-height chart where width is share of revenue and height is contribution margin, so area is profit. Base rental is seventy percent of revenue at forty percent margin. Ancillaries are thirty percent of revenue at eighty-five percent margin, producing almost as much gross profit from a third of the revenue.">
+          <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">WIDTH = SHARE OF REVENUE · HEIGHT = MARGIN · AREA = PROFIT</text>
+
+          <!-- y axis -->
+          <line x1="46" y1="40" x2="46" y2="250" class="sl" stroke-width="1"/>
+          <g class="tm num" font-size="11" text-anchor="end">
+            <text x="40" y="44">100%</text><text x="40" y="128">50%</text><text x="40" y="254">0%</text>
+          </g>
+          <text x="46" y="30" class="tm" font-size="11">contribution margin</text>
+
+          <!-- bars: y0 = 250, scale 210px = 100% -->
+          <rect x="46" y="166" width="378" height="84" class="fs"/>
+          <rect x="424" y="72" width="162" height="178" class="fa"/>
+
+          <text x="60" y="196" font-size="14" font-weight="700">Base rental</text>
+          <text x="60" y="215" class="tm" font-size="12">70% of revenue · ~40% margin</text>
+          <text x="60" y="234" class="ta" font-size="12" font-weight="600">WeYield prices this to the euro, daily</text>
+
+          <text x="438" y="100" class="ti" font-size="14" font-weight="700">Ancillaries</text>
+          <text x="438" y="118" class="ti" font-size="11.5">30% of revenue</text>
+          <text x="438" y="134" class="ti" font-size="11.5">80–90% margin</text>
+          <text x="438" y="160" class="ti" font-size="11.5" font-weight="600">Priced flat.</text>
+          <text x="438" y="176" class="ti" font-size="11.5" font-weight="600">Sold on a hunch.</text>
+          <text x="438" y="192" class="ti" font-size="11.5" font-weight="600">Nobody yields it.</text>
+
+          <line x1="46" y1="250" x2="586" y2="250" class="si" stroke-width="1.2"/>
+          <text x="46" y="268" class="tm" font-size="11">share of revenue →</text>
+
+          <text x="235" y="290" text-anchor="middle" font-size="12.5" font-weight="600">Two-thirds of the revenue.</text>
+          <text x="505" y="290" text-anchor="middle" class="ta" font-size="12.5" font-weight="700">A third of revenue. Nearly half the profit.</text>
+
+          <line x1="0" y1="306" x2="620" y2="306" class="sl" stroke-width="1"/>
+
+          <!-- reservation timeline -->
+          <text x="0" y="330" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">WHERE THE TWO INTERVENTIONS LAND</text>
+          <line x1="20" y1="368" x2="600" y2="368" class="sl" stroke-width="2"/>
+          <g>
+            <circle cx="20" cy="368" r="5" class="fs sl" stroke-width="1.4"/>
+            <circle cx="240" cy="368" r="6" class="fa"/>
+            <circle cx="440" cy="368" r="6" class="fa"/>
+            <circle cx="600" cy="368" r="5" class="fs sl" stroke-width="1.4"/>
+          </g>
+          <g font-size="12" text-anchor="middle">
+            <text x="20" y="390" class="tm">booking</text>
+            <text x="240" y="390" class="ta" font-weight="700">48h before</text>
+            <text x="240" y="406" class="tm" font-size="11">pre-arrival upgrade offer</text>
+            <text x="240" y="421" class="tk" font-size="11" font-weight="600">no integration needed</text>
+            <text x="440" y="390" class="ta" font-weight="700">pickup</text>
+            <text x="440" y="406" class="tm" font-size="11">priced script to the counter</text>
+            <text x="440" y="421" class="tm" font-size="11">via PMS write-back</text>
+            <text x="600" y="390" class="tm">return</text>
+          </g>
+        </svg>
+        <figcaption><b>Illustrative proportions</b> — 25–35% ancillary share and 80–90% ancillary margin are industry norms; the base-rental margin shown is contribution before fleet depreciation. Confirm both against WeYield's own account data before quoting them to a customer.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT 4 ============ -->
+<div class="prod" id="p4">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="rank">3</div>
+      <div>
+        <div class="kick">Raises number of accounts · start now, lands month 9–18</div>
+        <h2>Network Edition <span class="pill">one deal, 200 operators</span></h2>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <dl class="qa">
+          <dt>Decision</dt><dd>WeYield's own — how <b>two salespeople</b> reach 480 operators they do not have.</dd>
+          <dt>Problem</dt><dd>WeYield sells one operator at a time, at ~7 logos per rep per year. Meanwhile franchisors run field-support teams that cannot scale across 50–200 franchisees, and <b>royalties are a percentage of revenue</b> — so network RPD is their P&amp;L, not a nice-to-have. Consultants cap out at about eight clients.</dd>
+          <dt>Product</dt><dd>A franchisor console: Monday network brief, league table, benchmark cells, underperformer alerts. Franchisee briefs carry the network's branding. A consultant workspace with per-client drafts.</dd>
+          <dt>Why WeYield</dt><dd>It already serves franchisees of <em>several</em> brands. A cross-brand benchmark is the one thing no franchisor can build — <b>each sees only its own network.</b></dd>
+        </dl>
+        <div class="risk"><b>Sequencing</b>Franchisor procurement runs 9–18 months, so open it Monday. The consultant channel converts in weeks and is the fast first step — and a pilot with one franchisor <em>regional division</em> beats a pitch to the group.</div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 620 400" role="img" aria-label="Today one salesperson lands about seven operators a year directly. With Network Edition, one franchisor deal reaches fifty to two hundred operators at once, and one consultant deal reaches up to twenty-five.">
+          <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">TODAY — ONE AT A TIME</text>
+          <rect x="0" y="30" width="96" height="38" rx="5" class="fp sl" stroke-width="1"/><text x="14" y="54" font-size="13" font-weight="600">Rep</text>
+          <g class="sm" stroke-width="1.2" color="var(--muted)" marker-end="url(#arM)">
+            <line x1="100" y1="49" x2="188" y2="49"/>
+          </g>
+          <rect x="194" y="34" width="96" height="30" rx="4" class="fs"/><text x="206" y="54" font-size="12.5">1 operator</text>
+          <text x="306" y="46" class="tw" font-size="17" font-weight="700">~7 logos a year</text>
+          <text x="306" y="64" class="tm" font-size="12">≈ €85K of new ARR — barely pays for the rep</text>
+
+          <line x1="0" y1="90" x2="620" y2="90" class="sl" stroke-width="1"/>
+
+          <text x="0" y="116" class="ta" font-size="11.5" font-weight="600" letter-spacing="1.3">NETWORK EDITION — ONE TO MANY</text>
+
+          <!-- franchisor fan -->
+          <rect x="0" y="132" width="118" height="46" rx="5" class="fa"/><text x="14" y="152" class="ti" font-size="13" font-weight="700">Franchisor</text><text x="14" y="169" class="ti" font-size="10.5">Avis · Europcar · Hertz</text>
+          <g class="sa" stroke-width="1.1" opacity=".85">
+            <line x1="122" y1="155" x2="214" y2="118"/><line x1="122" y1="155" x2="214" y2="134"/>
+            <line x1="122" y1="155" x2="214" y2="150"/><line x1="122" y1="155" x2="214" y2="166"/>
+            <line x1="122" y1="155" x2="214" y2="182"/><line x1="122" y1="155" x2="214" y2="198"/>
+          </g>
+          <g class="fas">
+            <rect x="216" y="112" width="74" height="13" rx="3"/><rect x="216" y="128" width="74" height="13" rx="3"/>
+            <rect x="216" y="144" width="74" height="13" rx="3"/><rect x="216" y="160" width="74" height="13" rx="3"/>
+            <rect x="216" y="176" width="74" height="13" rx="3"/><rect x="216" y="192" width="74" height="13" rx="3"/>
+          </g>
+          <text x="300" y="140" class="ta" font-size="17" font-weight="700">50–200 operators</text>
+          <text x="300" y="158" font-size="12" font-weight="600">one deal</text>
+          <text x="300" y="176" class="tm" font-size="12">Their case: 1% network RPD on €500M</text>
+          <text x="300" y="192" class="tm" font-size="12">at a 6% royalty = <tspan class="tk" font-weight="600">€300K a year to them</tspan></text>
+
+          <!-- consultant fan -->
+          <rect x="0" y="226" width="118" height="46" rx="5" class="fp sa" stroke-width="1.6"/><text x="14" y="246" class="ta" font-size="13" font-weight="700">Consultant</text><text x="14" y="263" class="ta" font-size="10.5">already a WeYield segment</text>
+          <g class="sa" stroke-width="1.1" opacity=".85">
+            <line x1="122" y1="249" x2="214" y2="224"/><line x1="122" y1="249" x2="214" y2="240"/>
+            <line x1="122" y1="249" x2="214" y2="256"/><line x1="122" y1="249" x2="214" y2="272"/>
+          </g>
+          <g class="fas">
+            <rect x="216" y="218" width="74" height="13" rx="3"/><rect x="216" y="234" width="74" height="13" rx="3"/>
+            <rect x="216" y="250" width="74" height="13" rx="3"/><rect x="216" y="266" width="74" height="13" rx="3"/>
+          </g>
+          <text x="300" y="240" class="ta" font-size="17" font-weight="700">8 → 25 clients</text>
+          <text x="300" y="258" class="tm" font-size="12">agents draft, the consultant edits and</text>
+          <text x="300" y="274" class="tm" font-size="12">forwards under their own name</text>
+
+          <line x1="0" y1="300" x2="620" y2="300" class="sl2" stroke-width="1"/>
+          <text x="0" y="326" font-size="13" font-weight="700">The deal count stays small. The operator count explodes.</text>
+          <text x="0" y="348" class="tm" font-size="12.5">This is how “move money from product to sales” gets solved without</text>
+          <text x="0" y="366" class="tm" font-size="12.5">hiring a single rep — which matters, because at €12.5K a contract</text>
+          <text x="0" y="384" class="tm" font-size="12.5">a rep takes thirteen months to pay for themselves.</text>
+        </svg>
+        <figcaption><b>The comparison is deal shape, not effort.</b> A direct rep and a franchisor deal cost roughly the same to work; one returns seven operators, the other returns fifty to two hundred.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT 5 ============ -->
+<div class="prod" id="p5">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="rank">4</div>
+      <div>
+        <div class="kick">Raises number of accounts · month 4–8</div>
+        <h2>WeYield Start <span class="pill">agent-onboarded, self-serve</span></h2>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div>
+        <dl class="qa">
+          <dt>Decision</dt><dd>Where WeYield's <b>addressable market stops</b> — and why it stops there.</dd>
+          <dt>Problem</dt><dd>Implementation — schema mapping, car groups, seasons, stations, training — costs more than a small operator's whole contract. So the market is quoted as 600–1,000, while thousands of 20–150 car operators exist in islands, resort towns and emerging markets. <b>Exactly where WeYield already has a footprint.</b></dd>
+          <dt>Why now</dt><dd>An onboarding agent reads a messy PMS export, maps it to the schema, proposes car groups and seasons, asks three questions, and is live in an hour. The Academy becomes an in-product tutor. Support is AI-first. <b>Zero human implementation.</b></dd>
+          <dt>Lead magnet</dt><dd>A free <b>AI Visibility Audit</b> — “here is how you appear when a traveller asks an assistant for a car at your airport.” Nobody else can offer it, and it is a rate-shopping problem, which is what WeYield already is.</dd>
+        </dl>
+        <div class="risk"><b>Risk</b>Support load. Strict scope, AI-first support, community forum. Cannibalisation is negligible — this is a segment that has never bought, not a discount for one that has.</div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 620 400" role="img" aria-label="Contract value rises with fleet size while cost to serve is flat. With human implementation at thirteen thousand euros a year, operators below about two hundred cars are unservable. With AI-native onboarding at fifteen hundred euros, the floor drops to about twenty-five cars, opening the whole band between.">
+          <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">WHY THE MARKET “IS” 600–1,000 — AND WHY THAT IS A CHOICE</text>
+
+          <!-- axes -->
+          <line x1="64" y1="44" x2="64" y2="284" class="sl" stroke-width="1"/>
+          <line x1="64" y1="284" x2="594" y2="284" class="si" stroke-width="1.2"/>
+          <g class="tm num" font-size="11" text-anchor="end">
+            <text x="58" y="48">€70K</text><text x="58" y="148">€35K</text><text x="58" y="288">0</text>
+          </g>
+          <text x="64" y="32" class="tm" font-size="11">per account, per year</text>
+          <g class="tm num" font-size="11" text-anchor="middle">
+            <text x="64" y="302">20</text><text x="240" y="302">50</text><text x="450" y="302">150</text><text x="583" y="302">300</text>
+          </g>
+          <text x="330" y="322" class="tm" font-size="11.5" text-anchor="middle">fleet size (log scale) →</text>
+
+          <!-- new TAM band -->
+          <rect x="91" y="44" width="411" height="240" class="fks" opacity=".55"/>
+          <text x="296" y="70" class="tk" font-size="13" font-weight="700" text-anchor="middle">2,000 operators nobody can serve today</text>
+          <text x="296" y="88" class="tk" font-size="12" text-anchor="middle">× €2,400 a year = €4.8M of new TAM</text>
+
+          <!-- ACV curve -->
+          <polyline points="64,279 240,271 450,244 583,205" class="fn sa" stroke-width="2.4"/>
+          <text x="470" y="196" class="ta" font-size="12.5" font-weight="700">Contract value</text>
+          <text x="470" y="212" class="ta" font-size="11">rises with the fleet</text>
+
+          <!-- cost to serve: human -->
+          <line x1="64" y1="232" x2="594" y2="232" class="sw" stroke-width="2" stroke-dasharray="7 4"/>
+          <text x="70" y="226" class="tw" font-size="12.5" font-weight="700">Cost to serve — human implementation ≈ €13K</text>
+          <circle cx="502" cy="232" r="5" class="fw"/>
+          <text x="512" y="252" class="tw" font-size="12" font-weight="700">floor today</text>
+          <text x="512" y="267" class="tw" font-size="11">≈ 200 cars</text>
+
+          <!-- cost to serve: AI -->
+          <line x1="64" y1="279" x2="594" y2="279" class="sk" stroke-width="2"/>
+          <text x="70" y="273" class="tk" font-size="12.5" font-weight="700">Cost to serve — agent onboarding ≈ €1.5K</text>
+          <circle cx="91" cy="279" r="5" class="fk"/>
+          <text x="99" y="264" class="tk" font-size="12" font-weight="700">new floor ≈ 25 cars</text>
+
+          <line x1="0" y1="340" x2="620" y2="340" class="sl2" stroke-width="1"/>
+          <text x="0" y="364" font-size="13" font-weight="700">The market size was never a fact about the market.</text>
+          <text x="0" y="384" class="tm" font-size="12.5">It was a fact about the cost of onboarding — and that cost just collapsed.</text>
+        </svg>
+        <figcaption><b>Illustrative cost lines.</b> Contract value assumes per-vehicle pricing at roughly €66 a car a year; the two cost-to-serve lines are estimates to be replaced with WeYield's real implementation and support costs. The <em>shape</em> of the argument is what matters: a flat cost floor sets the market size, and the floor moved.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<section id="setaside">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Two I considered and set aside</h2>
+      <p>Listing what was rejected, and why, is what makes the other five a portfolio rather than a brainstorm.</p>
+    </div>
+    <div class="two">
+      <div class="aside">
+        <h3>Damage &amp; claims agent</h3>
+        <p>The second-largest cost line, and vision models make photo-based assessment genuinely real now.</p>
+        <p>But it sits outside WeYield's pricing-and-data core, needs counter workflow and photo capture WeYield does not own, and specialist vendors already exist. <b>Partner, do not build.</b></p>
+      </div>
+      <div class="aside">
+        <h3>Better forecasting</h3>
+        <p>Not the constraint. Gradient-boosted models already do this well, language models will not beat them at it, and Revenue Horizon exists.</p>
+        <p>Improving forecast accuracy a few points changes nothing an owner can feel. <b>The gap is judgement, not prediction.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="shape">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>How the five fit</h2>
+      <p>Two expand the contract. Two expand the reach. One is the engine all four run on — which is the entire argument for building it first.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Move</th><th>Decision it reaches</th><th>What it changes</th><th class="n">Order of value</th><th>Depends on</th></tr></thead>
+        <tbody>
+          <tr><td>Monday Brief</td><td>Weekly strategy</td><td>Retention, tier pull, and the engine</td><td class="n">the enabler</td><td>Data access only</td></tr>
+          <tr><td>Ancillary Yield</td><td>Every reservation</td><td>Revenue per account</td><td class="n">+€75K / account·yr</td><td>Engine + pre-arrival channel</td></tr>
+          <tr><td>Managed Revenue</td><td>The daily rate</td><td>Revenue per account — 2× ACV</td><td class="n">€600K / coach·yr</td><td>Engine + guardrails + telemetry</td></tr>
+          <tr><td>WeYield Start</td><td>Weekly, new segment</td><td>Number of accounts</td><td class="n">+€4.8M TAM</td><td>Engine + onboarding agent</td></tr>
+          <tr><td>Network Edition</td><td>Rolled up to the network</td><td>Number of accounts</td><td class="n">50–200 per deal</td><td>Cross-brand benchmark</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Provenance.</b> Prepared by Ram Badrinathan, September 2026, for Emmanuel Scuto. Companion to <em>WeYield — Building the AI-Native Business</em> and the <em>Monday Brief</em> product specification. WeYield facts from weyield.io and Olivier Jager's strategic review of 10 September 2026 — €1.5M revenue, ~120 customers, 600–1,000 addressable, 9 staff, 2 in sales, ~4% operator net margin. Everything else on this page is an estimate built on those figures and on industry norms, and none of it has been verified against WeYield's accounts. Figures marked illustrative in a caption are shape-of-the-argument, not forecasts — replace them with real numbers before any of this reaches a customer or an investor.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('wy-tog');
+  if(!b)return;
+  function cur(){var a=r.getAttribute('data-theme');if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=cur()==='dark'?'Light':'Dark';
+    b.setAttribute('aria-label','Switch to '+(cur()==='dark'?'light':'dark')+' theme');}
+  paint();
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);try{localStorage.setItem('wy-theme',n);}catch(e){}paint();});
+})();
+</script>
+</body>
+</html>
