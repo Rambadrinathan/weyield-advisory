@@ -1,0 +1,413 @@
+<title>The Fleet Exposure Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF1F2; --paper:#FFFFFF; --sunk:#E4E8EA;
+  --ink:#111A1E; --ink-2:#39474D; --muted:#6E7C82; --line:#CBD3D6; --line-2:#E1E7E9;
+  --accent:#0B5D6E; --accent-soft:#DCECEF; --accent-ink:#FFFFFF;
+  --warn:#B3661A; --warn-soft:#F7E9DA;
+  --bad:#A8341C; --bad-soft:#F7E3DE;
+  --ok:#1D7049; --ok-soft:#DEEDE5;
+  --shadow:0 1px 2px rgba(17,26,30,.05),0 14px 34px -20px rgba(17,26,30,.28);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --bad:#EE8468; --bad-soft:#3D1E16;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --bg:#0C1315; --paper:#141F23; --sunk:#0F1A1D;
+  --ink:#E6EDEF; --ink-2:#BCCACF; --muted:#8698A0; --line:#2A3B41; --line-2:#1D2B30;
+  --accent:#4FC2D4; --accent-soft:#12363E; --accent-ink:#08181C;
+  --warn:#E0A25C; --warn-soft:#3A2A17;
+  --bad:#EE8468; --bad-soft:#3D1E16;
+  --ok:#59C08C; --ok-soft:#16352A;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 14px 34px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+p{margin:0 0 1em;max-width:66ch}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.hero{padding:48px 0 38px}
+.hero .tag{display:inline-block;font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 11px;border-radius:4px;background:var(--ok);color:#fff}
+.hero h1{font-size:clamp(34px,4.6vw,58px);font-weight:700;max-width:17ch;margin-top:16px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:44px;align-items:end}
+.hero-note{border-left:2px solid var(--ok);padding:2px 0 2px 18px;font-size:15.5px;color:var(--ink-2)}
+.hero-note p{margin:0 0 .7em}.hero-note p:last-child{margin:0}
+.hero-note b{color:var(--ink);font-weight:600}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;margin-bottom:26px}
+.sec-head h2{font-size:clamp(25px,3vw,34px);font-weight:600}
+.sec-head p{font-size:16px;color:var(--ink-2);margin:0}
+.sec-head p+p{margin-top:.8em}
+
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px 16px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2);max-width:84ch}
+figcaption b{color:var(--ink);font-weight:600}
+svg text{font-family:Archivo,system-ui,sans-serif;fill:var(--ink)}
+svg .tm{fill:var(--muted)} svg .ta{fill:var(--accent)} svg .tw{fill:var(--warn)}
+svg .tk{fill:var(--ok)} svg .tb{fill:var(--bad)} svg .ti{fill:#FFFFFF}
+svg .fp{fill:var(--paper)} svg .fs{fill:var(--sunk)} svg .fa{fill:var(--accent)}
+svg .fas{fill:var(--accent-soft)} svg .fw{fill:var(--warn)} svg .fws{fill:var(--warn-soft)}
+svg .fb{fill:var(--bad)} svg .fk{fill:var(--ok)} svg .fks{fill:var(--ok-soft)} svg .fn{fill:none}
+svg .sl{stroke:var(--line)} svg .si{stroke:var(--ink)} svg .sa{stroke:var(--accent)}
+svg .sk{stroke:var(--ok)} svg .sm{stroke:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.stat b{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:27px;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+.stat.a b{color:var(--accent)} .stat.k b{color:var(--ok)} .stat.w b{color:var(--warn)}
+
+.report{background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.report .ribbon{font-family:Archivo,sans-serif;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;color:var(--warn);background:var(--warn-soft);padding:7px 22px}
+.report .body{padding:22px 24px}
+.report h3{font-family:Archivo,sans-serif;font-size:19px;font-weight:600;margin-bottom:3px}
+.report .sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.report h4{font-family:Archivo,sans-serif;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin:20px 0 8px;font-weight:600}
+.report p{font-size:15px;color:var(--ink-2);margin:0 0 9px;max-width:none}
+.report p b{color:var(--ink)}
+.rtab{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums}
+.rtab td{padding:7px 8px;border-bottom:1px solid var(--line-2)}
+.rtab td:first-child{color:var(--ink)}
+.rtab td:last-child{text-align:right;font-family:"JetBrains Mono",monospace;font-size:13.5px;color:var(--ink-2)}
+.rtab tr:last-child td{border-bottom:0}
+.bignum{background:var(--bad-soft);border-radius:6px;padding:16px 18px;margin:14px 0}
+.bignum b{display:block;font-family:Archivo,sans-serif;font-size:30px;font-weight:700;color:var(--bad);line-height:1.05;letter-spacing:-.02em}
+.bignum span{display:block;font-size:14.5px;color:var(--ink);margin-top:6px}
+.cta{margin-top:18px;padding-top:14px;border-top:1px solid var(--line-2);font-size:14.5px;color:var(--ink-2)}
+.cta b{color:var(--accent)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 24px}
+.panel.k{border-color:var(--ok);background:var(--ok-soft)}
+.panel h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.panel p{font-size:15px;margin:0 0 .8em}.panel p:last-child{margin:0}
+.panel b{color:var(--ink);font-weight:600}
+.panel .lede{font-family:Archivo,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.panel.k .lede{color:var(--ok)}
+.panel ul{margin:0;padding-left:1.1em;font-size:15px;color:var(--ink-2)}
+.panel li{margin-bottom:.4em}
+
+.tablewrap{overflow-x:auto;margin:6px 0 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:bottom}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px}
+td.n{font-family:"JetBrains Mono",monospace;font-size:13.5px;white-space:nowrap;text-align:right}
+th.n{text-align:right}
+
+.call{padding:18px 22px;border-radius:8px;background:var(--accent-soft);margin:22px 0;max-width:80ch}
+.call.k{background:var(--ok-soft)} .call.w{background:var(--warn-soft)}
+.call p{margin:0 0 .6em;font-size:15.5px;color:var(--ink)}
+.call p:last-child{margin:0}
+.call .hd{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.call.k .hd{color:var(--ok)} .call.w .hd{color:var(--warn)}
+
+ol.wk{counter-reset:s;list-style:none;padding:0;margin:8px 0 0;max-width:80ch}
+ol.wk li{position:relative;padding:0 0 20px 48px;border-left:1px solid var(--line);margin-left:15px}
+ol.wk li:last-child{border-left-color:transparent;padding-bottom:0}
+ol.wk li::before{counter-increment:s;content:"D" counter(s);position:absolute;left:-15px;top:-2px;width:30px;height:30px;
+  border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink-2)}
+ol.wk li b{font-family:Archivo,sans-serif;font-size:16px;display:block;margin-bottom:3px;color:var(--ink)}
+ol.wk li span{font-size:15px;color:var(--ink-2);display:block}
+
+footer{border-top:1px solid var(--line);padding:26px 0 54px;font-size:13.5px;color:var(--muted)}
+footer p{max-width:88ch}
+
+@media (max-width:940px){.hero-grid,.sec-head,.two{grid-template-columns:1fr;gap:24px}.stats{grid-template-columns:repeat(2,1fr)}figure{padding:16px 16px 12px}}
+@media (max-width:560px){.wrap{padding:0 18px}.stats{grid-template-columns:1fr}}
+</style>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="q-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="q-arK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fk"/></marker>
+    <marker id="q-arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="fa"/></marker>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">New in version 2 · ships in two weeks</span>
+      <h1>The Fleet Exposure Check</h1>
+    </div>
+    <div class="hero-note">
+      <p>Ten questions. One page back. It tells an operator, in euros, <b>what a five per cent move in used-car values would cost them</b> — and compares it to their whole year's profit.</p>
+      <p>It needs no data partnership, no new integration, and no product. It uses public indices and answers the operator gives you.</p>
+      <p><b>And every submission answers the research question you cannot currently answer.</b></p>
+    </div>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Three things you said, which collide into one move</h2>
+      <div>
+        <p>This did not exist in version 1. It comes entirely out of the conversation of 13 September, and it is the fastest thing on the whole page.</p>
+      </div>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat k"><b>Validated</b><span>“The thing with the car was a <b>mind blower</b> for me. I was discussing over the last two days with some of my customers.” The message already works — you tested it.</span></div>
+      <div class="stat a"><b>€0 marginal</b><span>“We don't buy any tokens because it's on our side.” You can give away personalised analysis to nine hundred non-customers. <b>Nobody paying per token can match that.</b></span></div>
+      <div class="stat w"><b>Unanswered</b><span>You do not know what share of your customers' fleets is on OEM buyback. It is kill-risk one, and it gates the entire fleet strategy.</span></div>
+    </div>
+    <div class="call k">
+      <div class="hd">The move</div>
+      <p>Put the three together. <b>A free diagnostic that gives the operator a number about their own business, and gives you the answer to kill-risk one — from the same ten questions.</b></p>
+      <p>The lead magnet <em>is</em> the market research. You are not choosing between validating the thesis and generating pipeline; the same form does both, across the whole addressable market rather than just your customers.</p>
+    </div>
+  </div>
+</section>
+
+<section id="report">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What the operator gets back</h2>
+      <div>
+        <p>One page. No dashboard, no login, no jargon — for a buyer who runs the business like a craftsman and will not open a portal.</p>
+        <p>Every figure is arithmetic on what they told you plus a public index. <b>Nothing here requires a residual data feed</b>, because it measures exposure, not valuation.</p>
+      </div>
+    </div>
+    <div class="two" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:start">
+      <div class="report">
+        <div class="ribbon">Illustrative · fictional operator and figures · format demonstration</div>
+        <div class="body">
+          <h3>Fleet Exposure Check — Riviera Cars</h3>
+          <div class="sub">Prepared 14 September 2026 · from ten answers you gave us · WeYield</div>
+
+          <h4>Your fleet, as you described it</h4>
+          <table class="rtab">
+            <tr><td>Vehicles</td><td>340</td></tr>
+            <tr><td>Average age at disposal</td><td>24 months</td></tr>
+            <tr><td>Owned at risk (not on buyback)</td><td><b>61%</b> · 207 cars</td></tr>
+            <tr><td>Powertrain — diesel / petrol / electric</td><td>58% / 31% / 11%</td></tr>
+            <tr><td>Main disposal markets</td><td>France, Spain</td></tr>
+          </table>
+
+          <h4>What that exposes you to</h4>
+          <table class="rtab">
+            <tr><td>Residual pool you carry the risk on</td><td>≈ €2.9M</td></tr>
+            <tr><td>Effect of a 5% adverse move</td><td><b>−€145,000</b></td></tr>
+            <tr><td>Your annual net profit at a 4% margin</td><td>≈ €114,000</td></tr>
+          </table>
+
+          <div class="bignum">
+            <b>1.3× your year</b>
+            <span>A five per cent move in used-car values is worth more than everything the business earns in a year — and it is the one number nobody on your team tracks.</span>
+          </div>
+
+          <h4>The three things moving it</h4>
+          <p><b>Diesel, 58% of your at-risk fleet.</b> Access rules are tightening in both your disposal markets, and the resale catchment for a non-compliant diesel shrinks every year. This is announced years ahead, which means it is the one you can plan around.</p>
+          <p><b>Electric, 11%.</b> Used values move with new-car pricing you do not control. A manufacturer price cut passes through in four to eight weeks with no warning.</p>
+          <p><b>Timing.</b> If you de-fleet in October, so does everyone else in your market. You sell into a trough you helped create.</p>
+
+          <div class="cta">Want this tracked monthly instead of once? <b>That is what we are building next — reply and we will put you on the list.</b></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="lede">Why this format</div>
+          <h3>It speaks to the owner, not the revenue manager</h3>
+          <p>Everything WeYield sells today is read by a revenue clerk. <b>This is read by whoever signs the cheques</b> — because it is denominated in the year's profit, not in RPD.</p>
+          <p>That is the “change the buyer” move from the strategy, executed in two weeks for the cost of a form, rather than in eighteen months for the cost of a product.</p>
+        </div>
+        <div class="panel" style="margin-top:14px">
+          <div class="lede">Why it lands with this buyer</div>
+          <h3>One number, in their currency</h3>
+          <p>A craftsman-entrepreneur who still runs an Excel macro will not read a dashboard and will not act on a percentage. <b>“€145,000, which is 1.3 times your year”</b> needs no abstraction at all.</p>
+          <p>And it is a number they cannot get anywhere else — not from their ERP, not from their accountant, not from a competitor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loop">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The same ten answers do two jobs</h2>
+      <div>
+        <p>This is what makes it worth doing before anything else. Every operator who fills the form hands you the exact dataset the fleet strategy is currently blocked on — and they hand it over willingly, because they get something for it.</p>
+      </div>
+    </div>
+    <figure>
+      <svg viewBox="0 0 1200 400" role="img" aria-label="One ten-question form produces two outputs: a one-page exposure report for the operator, and for WeYield the buyback mix, fleet size distribution and powertrain mix across the whole addressable market, which answers kill-risks one and three and question eighteen.">
+        <text x="0" y="16" class="tm" font-size="11.5" font-weight="600" letter-spacing="1.3">ONE FORM, TWO OUTPUTS</text>
+
+        <rect x="0" y="34" width="270" height="200" rx="8" class="fa"/>
+        <text x="20" y="62" class="ti" font-size="16" font-weight="700">Ten questions</text>
+        <g class="ti" font-size="12.5">
+          <text x="20" y="90">Fleet size</text>
+          <text x="20" y="112">Average age at disposal</text>
+          <text x="20" y="134">Buyback / lease / owned at risk</text>
+          <text x="20" y="156">Powertrain mix</text>
+          <text x="20" y="178">Disposal markets and channel</text>
+          <text x="20" y="200">De-fleet month</text>
+        </g>
+        <text x="20" y="224" class="ti" font-size="11.5" font-style="italic">five minutes, on a phone</text>
+
+        <line x1="278" y1="98" x2="352" y2="98" class="sk" stroke-width="1.8" marker-end="url(#q-arK)"/>
+        <line x1="278" y1="176" x2="352" y2="176" class="sa" stroke-width="1.8" marker-end="url(#q-arA)"/>
+
+        <!-- operator output -->
+        <rect x="360" y="34" width="420" height="128" rx="8" class="fks"/>
+        <text x="382" y="62" class="tk" font-size="15" font-weight="700">For the operator</text>
+        <text x="382" y="86" font-size="12.5">A one-page exposure report, in euros, against</text>
+        <text x="382" y="106" font-size="12.5">their own annual profit. Something they cannot</text>
+        <text x="382" y="126" font-size="12.5">get from their ERP, accountant or competitor.</text>
+        <text x="382" y="150" class="tk" font-size="12.5" font-weight="600">Costs you nothing to produce.</text>
+
+        <!-- weyield output -->
+        <rect x="360" y="176" width="420" height="180" rx="8" class="fas"/>
+        <text x="382" y="204" class="ta" font-size="15" font-weight="700">For WeYield</text>
+        <text x="382" y="228" font-size="12.5">Buyback mix &mdash; <tspan font-weight="600">kill-risk 1</tspan></text>
+        <text x="382" y="250" font-size="12.5">Fleet-size distribution &mdash; <tspan font-weight="600">kill-risk 3</tspan></text>
+        <text x="382" y="272" font-size="12.5">Powertrain mix &mdash; <tspan font-weight="600">open question 18</tspan></text>
+        <text x="382" y="294" font-size="12.5">De-fleet timing by market &mdash; <tspan font-weight="600">the wave</tspan></text>
+        <text x="382" y="322" class="ta" font-size="12.5" font-weight="600">Across the whole market of ~1,000 &mdash;</text>
+        <text x="382" y="340" class="ta" font-size="12.5" font-weight="600">not just the hundred who are customers.</text>
+
+        <line x1="788" y1="98" x2="862" y2="98" class="sk" stroke-width="1.8" marker-end="url(#q-arK)"/>
+        <line x1="788" y1="266" x2="862" y2="266" class="sa" stroke-width="1.8" marker-end="url(#q-arA)"/>
+
+        <rect x="870" y="34" width="330" height="128" rx="8" class="fp sl" stroke-width="1"/>
+        <text x="892" y="62" font-size="14" font-weight="700">A qualified conversation</text>
+        <text x="892" y="86" class="tm" font-size="12.5">They arrive with intent and with consent,</text>
+        <text x="892" y="106" class="tm" font-size="12.5">having already seen a number that worries</text>
+        <text x="892" y="126" class="tm" font-size="12.5">them. No cold email, no compliance risk.</text>
+        <text x="892" y="150" class="tk" font-size="12.5" font-weight="600">&rarr; Residual Radar waiting list</text>
+
+        <rect x="870" y="176" width="330" height="180" rx="8" class="fp sa" stroke-width="1.6"/>
+        <text x="892" y="204" class="ta" font-size="14" font-weight="700">The dataset nobody else can build</text>
+        <text x="892" y="228" class="tm" font-size="12.5">A picture of buyback exposure and de-fleet</text>
+        <text x="892" y="248" class="tm" font-size="12.5">timing across a whole worldwide segment.</text>
+        <text x="892" y="276" class="tm" font-size="12.5">Autovista cannot compute it. Indicata cannot.</text>
+        <text x="892" y="296" class="tm" font-size="12.5">The operators themselves cannot.</text>
+        <text x="892" y="324" class="ta" font-size="12.5" font-weight="600">It becomes the benchmark product, and</text>
+        <text x="892" y="342" class="ta" font-size="12.5" font-weight="600">your side of the Indicata barter.</text>
+
+        <line x1="0" y1="376" x2="1200" y2="376" class="sl" stroke-width="1"/>
+        <text x="0" y="396" class="tk" font-size="13" font-weight="600">You are not choosing between validating the thesis and building pipeline. The same ten answers do both.</text>
+      </svg>
+      <figcaption><b>And it strengthens the Indicata conversation.</b> The strategy proposes opening that partnership as a data barter rather than a purchase. This gives you something concrete to barter with — de-fleet timing and buyback exposure in exactly the secondary markets where their coverage is thinnest.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Two weeks, using only what you already have</h2>
+      <div>
+        <p>No residual data feed. No PMS integration. No new model. The hardest part is deciding the ten questions, and that is a conversation with a coach, not an engineering task.</p>
+      </div>
+    </div>
+    <ol class="wk">
+      <li><span class="when"></span><b>Decide the ten questions</b><span>With a coach, in one sitting. They must be answerable from memory by an owner on a phone — no lookups, no exports. If a question needs the ERP, it is the wrong question.</span></li>
+      <li><b>Write the exposure calculation</b><span>Fleet × at-risk share × average disposal value × the move. Public indices for the powertrain and market adjustments. This is a spreadsheet before it is code, and the coach should be able to check it by hand.</span></li>
+      <li><b>Build the form and the report</b><span>A page on weyield.io, and a one-page PDF. Your own model writes the three narrative paragraphs; everything numeric is computed. <b>Same discipline as the brief: the model writes, it never calculates.</b></span></li>
+      <li><b>Test on ten existing customers</b><span>People who will tell you if the number is wrong. This is also the moment you find out whether the ten questions are answerable — and it doubles as the kill-risk validation you owe yourself anyway.</span></li>
+      <li><b>Publish it, and put it through the four channels you already run</b><span>Nothing new to build here — see below.</span></li>
+    </ol>
+    <div class="call">
+      <div class="hd">Distribution — all four already exist</div>
+      <p><b>The market-trends product.</b> Already free, already gated behind a form, already has an audience that expects something from you. Add this alongside it.</p>
+      <p><b>ERP partner introductions.</b> You already contact their clients on their behalf. This is a better thing to arrive with than a product pitch — and it makes the partner look good.</p>
+      <p><b>LinkedIn.</b> Already being scraped for contacts. Now there is a reason to write.</p>
+      <p><b>Emmanuel's own platform.</b> Conferences, the reputation, twenty years of being the name people know. <b>“Come and find out what your fleet exposure is”</b> is a better talk than any product demo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="econ">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What it costs, and what it should return</h2>
+      <div>
+        <p>The economics are unusual because of the one advantage that is genuinely yours: a model on your own infrastructure with no token bill.</p>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Line</th><th>Detail</th><th class="n">Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Build</td><td>Two weeks of one engineer, plus a coach at roughly a day</td><td class="n">internal</td></tr>
+          <tr><td>Running cost per report</td><td>Three narrative paragraphs from your own self-hosted model</td><td class="n">≈ €0.00</td></tr>
+          <tr><td>Public data</td><td>Fuel prices, access-zone registry, published used-car indices</td><td class="n">free</td></tr>
+          <tr><td>Distribution</td><td>Four channels you already run</td><td class="n">€0 incremental</td></tr>
+          <tr><td><b>Total to reach the whole addressable market</b></td><td>Two weeks, and then effectively nothing per report</td><td class="n"><b>~€0 variable</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two" style="margin-top:26px">
+      <div class="panel k">
+        <div class="lede">What good looks like at 90 days</div>
+        <ul>
+          <li><b>150–250 completed checks</b> across the market, most from operators who are not customers</li>
+          <li><b>A buyback-exposure picture</b> for a meaningful slice of the 1,000 — kill-risk one, answered with data rather than ten calls</li>
+          <li><b>A waiting list</b> for the fleet product, made of people who have already seen their own number</li>
+          <li><b>Something to barter</b> with Indicata that is worth more than money to them</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="lede">What could go wrong</div>
+        <ul>
+          <li><b>The number is wrong for someone.</b> Mitigate by testing on ten customers first, and by stating the method on the page — this is a diagnostic, not a valuation, and it should say so.</li>
+          <li><b>Owners cannot answer the ten questions.</b> That is itself a finding, and a serious one: it would mean the fleet product has a data problem before it has a product problem.</li>
+          <li><b>It cannibalises the paid conversation.</b> Unlikely — it deliberately stops at exposure. What it cannot tell them is <em>when to sell</em>, which is the product.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fit">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Where it sits in the plan</h2>
+      <p>It does not replace anything. It brings forward the two things that were furthest away — the owner as a buyer, and the residual thesis — and pays for the research at the same time.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Move</th><th>Was</th><th>With the Exposure Check</th></tr></thead>
+        <tbody>
+          <tr><td>Validate kill-risk 1</td><td>Ten customer calls, one week, a small sample</td><td><b>A continuous dataset across the whole market</b>, arriving on its own</td></tr>
+          <tr><td>Change the buyer to the owner</td><td>Horizon 2 — needs the Fleet P&amp;L built first</td><td><b>Starts in two weeks</b>, with a page instead of a product</td></tr>
+          <tr><td>Residual Radar</td><td>Blocked on the Indicata partnership</td><td>Unblocked at the front — exposure needs no feed, and the check <b>builds the barter</b></td></tr>
+          <tr><td>Minimum viable distribution</td><td>A principle</td><td><b>The first concrete move</b>, through channels that already work</td></tr>
+          <tr><td>The Monday Brief work</td><td>Eight weeks on the missing layer</td><td>Unaffected — different people, different fortnight. Run both.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call w">
+      <div class="hd">The one thing to hold on to</div>
+      <p>This works because of a constraint most companies would call a weakness: <b>your customers cannot be reached with sophistication.</b> A dashboard fails, a percentage fails, a demo fails.</p>
+      <p>One number, in euros, against their own year — that reaches a craftsman. And you are the only company in this market with the data to compute it and no marginal cost to give it away.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Provenance.</b> Prepared by Ram Badrinathan, 14 September 2026, for Emmanuel Scuto. New in version 2 — it comes entirely out of the conversation of 13 September. The sample report is a fictional operator with illustrative figures, built to show the format and the arithmetic, not to forecast. The underlying assumptions — €700 revenue per unit per month, €14,000 average disposal value, 4% operator net margin — are listed with everything else in <code>OPEN-QUESTIONS.md</code>. The 4% margin is Olivier's figure; the rest are mine and should be replaced with WeYield's own before any of this reaches an operator.</p>
+  </div>
+</footer>

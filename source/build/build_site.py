@@ -17,6 +17,8 @@ PAGES = [
      "How does a nine-person company reach six hundred operators?"),
     ("tech-stack",    "tech-stack.html",    "Tech Stack",     "5",
      "What do two engineers build it on?"),
+    ("quick-win",     "quick-win.html",     "Quick Win",      "6",
+     "What can ship in two weeks and answer the research question at the same time?"),
 ]
 
 CARD_POINTS = {
@@ -44,6 +46,11 @@ CARD_POINTS = {
         "Seven rules that settle the next fifty technology arguments, starting with the 3am test.",
         "The strangler seam: a shared warehouse, and write-back only through the existing API.",
         "Three things are built — facts builder, rules engine, verifier. Everything else is bought.",
+    ],
+    "quick-win": [
+        "Ten questions, one page back: what a 5% move in used-car values costs you, against your whole year's profit.",
+        "No data partnership, no integration, no new model — and your marginal cost per report is zero.",
+        "Every submission answers kill-risk 1 across the whole market. The lead magnet is the research.",
     ],
 }
 
@@ -167,6 +174,23 @@ HEAD_BASE = """<meta charset="utf-8">
 """ % FAVICON
 
 
+BANNERS = {'five-moves': 'Three things from the conversation change this page. WeYield has <b>already built</b> the daily-summary agent, so Move 0 is about completing it rather than starting it. <b>The counter is being disintermediated</b>, which puts a clock on Ancillary Yield and reduces it to its pre-arrival half. And <b>WeYield Start is withdrawn as designed</b> — this buyer does not onboard themselves, though an agent that reads their messy export is exactly right. A sixth move has been added.', 'monday-brief': 'This specification was written before I knew <b>Christian had already trained a 3B model on three years of recorded consultant calls</b> — self-hosted, at 95–97%, already in customer testing. Read it as a description of <b>the layer that is missing around that model</b> — facts pack, rules engine, verifier, telemetry — not as a proposal to build one. Two figures here are now wrong for WeYield: the €0.12 per brief (your marginal cost is zero) and the assumption that the coaching method would need writing down (three years of it is already in the weights, which is its own problem).', 'residual-radar': 'This is now <b>the most validated idea in the pack</b> — Emmanuel called the car question a mind blower and has been testing it with customers. Two corrections: the customer base is <b>worldwide, not Europe-centric</b>, so the low-emission-zone analysis covers only part of it and the data-partner search must go wider. And a force to add — <b>European manufacturers are renting factory capacity to Chinese EV makers</b>, who then reach the European market with no import tariff. Sustained downward pressure on new prices, and therefore on every residual behind them.', 'agentic-gtm': "Two things change the arithmetic here. WeYield's model runs on their own infrastructure at <b>zero marginal cost</b> — so the agent fleet costs a fraction of what this page assumes, and they can give analysis away to non-customers in a way no competitor paying per token can. And they already run <b>four distribution channels this page did not credit</b>: a gated market-trends product, LinkedIn sourcing, ERP-partner introductions, and Emmanuel's own conference platform.", 'tech-stack': "The current-stack question is partly answered. <b>Christian, a PhD in mathematics and computer science, runs a self-hosted fine-tuned 3B model with no external token cost.</b> For the daily summary that is a better default than the frontier model recommended here, and the recommendation is narrowed accordingly: keep the fine-tune for what it was trained on, and reach for a frontier model only for multilingual writing across a worldwide base, the reply loop, agentic work, and the verifier's judge."}
+
+BANNER_CSS = '\n/* --- v2 update banner (site build) --- */\n.v2note{max-width:1180px;margin:0 auto;padding:0 30px}\n.v2note .inner{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px;align-items:start;\n  margin:22px 0 0;padding:16px 20px;border-radius:8px;\n  background:var(--accent-soft,#DCECEF);border-left:3px solid var(--accent,#0B5D6E)}\n.v2note .tag{font-family:Archivo,system-ui,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.09em;\n  text-transform:uppercase;color:var(--accent-ink,#fff);background:var(--accent,#0B5D6E);\n  padding:4px 9px;border-radius:4px;white-space:nowrap}\n.v2note p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink,#111A1E);max-width:none}\n.v2note p b{font-weight:600}\n.v2note a{color:var(--accent,#0B5D6E)}\n@media (max-width:700px){.v2note{padding:0 18px}.v2note .inner{grid-template-columns:1fr;gap:9px}}\n@media print{.v2note{display:none}}\n'
+
+QW_LINK = ' <a href="/quick-win"><b>See the Quick Win →</b></a>'
+
+
+def banner_html(slug):
+    txt = BANNERS.get(slug)
+    if not txt:
+        return ""
+    link = QW_LINK if slug in ("five-moves", "residual-radar", "agentic-gtm") else ""
+    return ('<div class="v2note"><div class="inner">'
+            '<span class="tag">Updated 14 Sep &middot; v2</span>'
+            '<p>%s%s</p></div></div>' % (txt, link))
+
+
 def build_page(slug, srcfile, active):
     raw = io.open(os.path.join(SRC, srcfile), encoding="utf-8").read()
     i = raw.index("</style>") + len("</style>")
@@ -176,8 +200,9 @@ def build_page(slug, srcfile, active):
     doc = (
         "<!doctype html>\n<html lang=\"en\">\n<head>\n"
         + HEAD_BASE + THEME_SCRIPT + "\n" + head_part
-        + "\n<style>" + extra + NAV_CSS + "</style>\n</head>\n<body>\n"
-        + nav_html(active) + "\n" + body_part.strip() + "\n" + TOGGLE_SCRIPT + "\n</body>\n</html>\n"
+        + "\n<style>" + extra + NAV_CSS + BANNER_CSS + "</style>\n</head>\n<body>\n"
+        + nav_html(active) + "\n" + banner_html(slug) + "\n" + body_part.strip()
+        + "\n" + TOGGLE_SCRIPT + "\n</body>\n</html>\n"
     )
     io.open(os.path.join(OUT, slug + ".html"), "w", encoding="utf-8").write(doc)
     return title
@@ -203,7 +228,7 @@ def build_index(titles):
     <h1>WeYield<br><em>the AI-native advisory pack</em></h1>
     <p class="thesis">Five decisions run a car rental business. At Hertz, each one has a department. At a 300-car
       operator, each one has the owner — and only two of the five have a vendor in the room.
-      <b>A deck, then five documents.</b></p>
+      <b>Version 2, rewritten after 13 September.</b></p>
   </div>
 </header>
 
@@ -213,11 +238,11 @@ def build_index(titles):
 
     <div class="ctx-grid">
       <div class="ctx">
-        <h3>The question</h3>
-        <p>Following the strategic review of 10 September 2026, the question put to me was a narrow one:
-          <b>how does WeYield become AI-native</b> — not by adding features to what exists, but by changing
-          what it sells, who it sells to, and what it costs to serve them.</p>
-        <p>These six documents are the answer. They are written to be argued with.</p>
+        <h3>What changed in version 2</h3>
+        <p>Version 1 was built from Olivier's briefing and the website. The conversation of 13 September
+          replaced several inferences with facts — the largest being that <b>Christian has already trained a
+          model on three years of your own recorded consultant calls</b>, self-hosted, at 95–97%%.</p>
+        <p>So this is no longer about building an agent. It is about the layer around it, and about the car.</p>
       </div>
       <div class="ctx">
         <h3>What it is not</h3>
@@ -231,8 +256,9 @@ def build_index(titles):
         <h3>Where to start</h3>
         <p>Not with code. Three facts would collapse most of what follows: <b>how much of the customer base still
           sits on OEM buyback</b>, whether fleet financials actually reach the integrated PMS systems, and the
-          median fleet size across the base.</p>
-        <p>Ten customer calls settle all three inside a week. That is the first move, and it costs nothing.</p>
+          median fleet size across the base. You have already begun the first.</p>
+        <p><a href="/OPEN-QUESTIONS" style="color:var(--accent)">The open-questions list</a> now records nine answers
+          from the call and adds six new questions. It is the fastest place to push back.</p>
       </div>
     </div>
 
@@ -289,15 +315,15 @@ def build_index(titles):
 
 <section class="pack">
   <div class="wrap">
-    <div class="secline"><span class="eyebrow">Start here</span><span class="rule"></span><span class="eyebrow">21 slides · about 15 minutes</span></div>
+    <div class="secline"><span class="eyebrow">Start here</span><span class="rule"></span><span class="eyebrow">22 slides · version 2 · about 15 minutes</span></div>
     <a class="deckcard" href="/deck">
       <div class="shot"><img src="/slides/t01.webp" alt="Deck cover slide" width="240" height="135" loading="eager"></div>
       <div class="c">
-        <h3>Building the AI-Native WeYield</h3>
-        <p class="q">The whole argument, in presentation form.</p>
-        <ul><li>Why the current product is structurally capped, and what the market pays for the profile it produces.</li>
-        <li>The recommendation: change the object, the buyer and the cost-to-serve — in that order.</li>
-        <li>Three horizons, three kill-risks, and six decisions for Monday.</li></ul>
+        <h3>Building the AI-Native WeYield <em style="font-style:normal;color:var(--muted)">&middot; v2</em></h3>
+        <p class="q">The whole argument, rewritten after the conversation of 13 September.</p>
+        <ul><li><b>You have already built the hard half</b> — three years of recorded calls, a self-hosted fine-tune, 95–97%%. What is missing is the layer that makes an answer defensible.</li>
+        <li>Your customer is a craftsman, not an analyst — and 60–70%% of their cost is the car, which nobody sells to them.</li>
+        <li>Two clocks: the counter is being engineered away, and OEMs are entering rental themselves.</li></ul>
         <span class="go">Open the deck →</span>
       </div>
     </a>

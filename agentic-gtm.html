@@ -163,10 +163,25 @@ footer p{max-width:88ch}
   .pack-nav .links a{font-size:12px;padding:4px 8px}
 }
 @media print{.pack-nav{display:none}}
+
+/* --- v2 update banner (site build) --- */
+.v2note{max-width:1180px;margin:0 auto;padding:0 30px}
+.v2note .inner{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px;align-items:start;
+  margin:22px 0 0;padding:16px 20px;border-radius:8px;
+  background:var(--accent-soft,#DCECEF);border-left:3px solid var(--accent,#0B5D6E)}
+.v2note .tag{font-family:Archivo,system-ui,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent-ink,#fff);background:var(--accent,#0B5D6E);
+  padding:4px 9px;border-radius:4px;white-space:nowrap}
+.v2note p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink,#111A1E);max-width:none}
+.v2note p b{font-weight:600}
+.v2note a{color:var(--accent,#0B5D6E)}
+@media (max-width:700px){.v2note{padding:0 18px}.v2note .inner{grid-template-columns:1fr;gap:9px}}
+@media print{.v2note{display:none}}
 </style>
 </head>
 <body>
-<nav class="pack-nav" aria-label="Advisory pack"><a class="home" href="/">WeYield <span>· advisory pack</span></a><div class="links"><a href="/deck">Deck</a><a href="/five-moves">Five Moves</a><a href="/monday-brief">Monday Brief</a><a href="/residual-radar">Residual Radar</a><a href="/agentic-gtm" aria-current="page">Agentic GTM</a><a href="/tech-stack">Tech Stack</a></div><button class="tog" id="wy-tog" type="button">Dark</button></nav>
+<nav class="pack-nav" aria-label="Advisory pack"><a class="home" href="/">WeYield <span>· advisory pack</span></a><div class="links"><a href="/deck">Deck</a><a href="/five-moves">Five Moves</a><a href="/monday-brief">Monday Brief</a><a href="/residual-radar">Residual Radar</a><a href="/agentic-gtm" aria-current="page">Agentic GTM</a><a href="/tech-stack">Tech Stack</a><a href="/quick-win">Quick Win</a></div><button class="tog" id="wy-tog" type="button">Dark</button></nav>
+<div class="v2note"><div class="inner"><span class="tag">Updated 14 Sep &middot; v2</span><p>Two things change the arithmetic here. WeYield's model runs on their own infrastructure at <b>zero marginal cost</b> — so the agent fleet costs a fraction of what this page assumes, and they can give analysis away to non-customers in a way no competitor paying per token can. And they already run <b>four distribution channels this page did not credit</b>: a gated market-trends product, LinkedIn sourcing, ERP-partner introductions, and Emmanuel's own conference platform. <a href="/quick-win"><b>See the Quick Win →</b></a></p></div></div>
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
   <defs>
     <marker id="g-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>

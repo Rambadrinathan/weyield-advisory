@@ -3,30 +3,31 @@
 import io, json, os
 
 OUT = r"E:\weyield-advisory"
-N = 21
+N = 22
 
 TITLES = [
     "Cover",
+    "What version 1 got wrong",
+    "You already built the hard half",
     "Executive summary",
     "Where WeYield stands",
-    "Rule of 40 — what the market pays",
-    "The addressable ceiling",
-    "Salesperson payback",
-    "Five levers, one covered",
-    "Where the profit is made",
-    "Why now — five conditions",
-    "The stack, and the plugin risk",
+    "Your customer is a craftsman",
+    "Five levers — 60–70% is the car",
+    "The year is decided on the residual",
+    "Six forces — two are yours",
+    "The counter is disappearing",
     "The recommendation",
+    "What is missing from the agent",
+    "Your model, and when to reach further",
     "Fleet P&L Copilot",
     "Rebuild — and what never to touch",
-    "The data moat",
+    "Four data assets",
     "Three horizons",
-    "Organisation",
-    "Three-year shape",
-    "Growth comes from ACV",
-    "Three kill-risks",
-    "Six decisions for Monday",
-    "Appendix — provenance",
+    "Minimum viable distribution",
+    "Organisation and succession",
+    "Three kill-risks, plus a fourth",
+    "Six decisions for this week",
+    "Appendix — provenance and conflicts",
 ]
 
 FAVICON = ('data:image/svg+xml,'
@@ -61,7 +62,7 @@ TOGGLE_SCRIPT = """<script>
 
 NAV_ITEMS = [("deck", "Deck"), ("five-moves", "Five Moves"), ("monday-brief", "Monday Brief"),
              ("residual-radar", "Residual Radar"), ("agentic-gtm", "Agentic GTM"),
-             ("tech-stack", "Tech Stack")]
+             ("tech-stack", "Tech Stack"), ("quick-win", "Quick Win")]
 
 NAV_CSS = """
 .pack-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:4px 14px;
@@ -165,8 +166,8 @@ thumbs = "".join(
 BODY = """<div class="wrap">
   <div class="dhead">
     <div>
-      <span class="eyebrow">Strategy deck &middot; 21 slides &middot; September 2026</span>
-      <h1>Building the AI-Native WeYield</h1>
+      <span class="eyebrow">Strategy deck &middot; 22 slides &middot; September 2026</span>
+      <h1>Building the AI-Native WeYield <span style="color:var(--accent);font-weight:500">&middot; v2</span></h1>
     </div>
     <div class="src">Editable original in
       <a href="https://docs.google.com/presentation/d/1-tBUAFx9sy_matkUt6UWys64sCcNvBaI3-guEI2WtqM/edit"
@@ -174,13 +175,13 @@ BODY = """<div class="wrap">
   </div>
 
   <div class="stage">
-    <img id="sl" src="/slides/01.webp" alt="Slide 1 of 21 — Cover" width="1800" height="1014">
+    <img id="sl" src="/slides/01.webp" alt="Slide 1 of 22 — Cover" width="1800" height="1014">
   </div>
 
   <div class="bar">
     <button id="prev" type="button">&larr; Prev</button>
     <button id="next" type="button">Next &rarr;</button>
-    <span class="count"><span id="cur">1</span><i> / 21</i></span>
+    <span class="count"><span id="cur">1</span><i> / 22</i></span>
     <span class="caption" id="cap">Cover</span>
     <span class="hint">&larr; &rarr; arrow keys &middot; Home &middot; End</span>
   </div>
