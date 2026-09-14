@@ -1,4 +1,1 @@
-source
-.github
-README.md
-CONTRIBUTING.md
+*.py
